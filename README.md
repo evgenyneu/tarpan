@@ -53,12 +53,12 @@ python eight_schools.py
 The function generates the following files in [model_info/eight_schools](docs/examples/analyse/model_info/eight_schools) directory:
 
 
-##### [diagnostic.txt](docs/examples/analyse/model_info/eight_schools/diagnostic.txt)
+#### [diagnostic.txt](docs/examples/analyse/model_info/eight_schools/diagnostic.txt)
 
 Stan's diagnostic output. Usually, this is the first thing I look at, to see if there were any problems with sampling.
 
 
-##### [summary.txt](docs/examples/analyse/model_info/eight_schools/summary.txt)
+#### [summary.txt](docs/examples/analyse/model_info/eight_schools/summary.txt)
 
 A table showing summaries of distributions for all parameters. The table's format is such that the text can be pasted in Github's Markdown file, like this:
 
