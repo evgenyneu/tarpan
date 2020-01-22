@@ -15,7 +15,14 @@ python3 setup.py sdist bdist_wheel
 twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 ```
 
-4. Install
+4. Uninstall tarpan
+
+
+```
+pip uninstall tarpan-evgenyneu
+```
+
+5. Install tarpan
 
 ```
 pip install --index-url https://test.pypi.org/simple/ --no-deps tarpan-evgenyneu

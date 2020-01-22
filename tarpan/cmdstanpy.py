@@ -342,7 +342,7 @@ def traceplot(fit, param_names=None, params=TraceplotParams()):
     return figures_and_axes
 
 
-def cmdtandpy_analyse(fit, param_names=None, info_path=InfoPath()):
+def analyse(fit, param_names=None, info_path=InfoPath()):
     """
     Save diagnostic, summary informatino, trace and posterior.
 
