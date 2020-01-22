@@ -26,7 +26,7 @@ pip install tarpan
 
 ### `analyse`
 
-The main method of the library is `analyse` function.
+The main method of the library is the `analyse` function:
 
 ```Python
 from tarpan.cmdstanpy import analyse
@@ -34,7 +34,7 @@ from tarpan.cmdstanpy import analyse
 model = CmdStanModel(stan_file="your_model.stan")
 fit = model.sample(data=your_data)
 
-analyse(fit)
+analyse(fit)  # Creates analysis files in `model_info` directory
 ```
 
 The purpose of `analyse` is to make full analysis of the sampling output
