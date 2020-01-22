@@ -34,7 +34,7 @@ from tarpan.cmdstanpy import analyse
 model = CmdStanModel(stan_file="your_model.stan")
 fit = model.sample(data=your_data)
 
-analyse(fit)  # Creates analysis files in `model_info` directory
+analyse(fit)  # <-- Creates analysis files in `model_info` directory
 ```
 
 The purpose of `analyse` is to make full analysis of the sampling output
