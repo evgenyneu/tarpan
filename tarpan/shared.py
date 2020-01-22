@@ -128,7 +128,8 @@ def get_info_path(info_path=InfoPath()):
     return os.path.join(full_path, filename)
 
 
-def save_summary(samples, info_path=InfoPath()):
+def save_summary(samples, info_path=InfoPath(),
+                 summary_params=SummaryParams()):
     """
     Generates and saves statistical summary of the samples using mean, std, mode, hpdi.
 
@@ -144,7 +145,7 @@ def save_summary(samples, info_path=InfoPath()):
         Path information for creating summaries.
     """
 
-    df_summary, table = sample_summary(samples)
+    df_summary, table = sample_summary(samples, params=summary_params)
     return save_summary_to_disk(df_summary, table, info_path)
 
 
@@ -301,14 +302,15 @@ def sample_summary(df, extra_values=None, params=SummaryParams()):
 
 
 def make_tree_plot(df_summary, param_names=None, info_path=InfoPath(),
-                   tree_params: TreePlotParams = TreePlotParams()):
+                   tree_params: TreePlotParams = TreePlotParams(),
+                   summary_params=SummaryParams()):
     """
     Make tree plot of parameters.
     """
 
     info_path = InfoPath(**info_path.__dict__)
     tree_plot_data = extract_tree_plot_data(
-        df_summary, param_names=param_names)
+        df_summary, param_names=param_names, summary_params=summary_params)
 
     fig, ax = tree_plot(tree_plot_data, params=tree_params)
     info_path.base_name = info_path.base_name or 'summary'
@@ -771,8 +773,8 @@ def plot_posterior(samples, summary, param_names=None,
     param_names = param_filtered
 
     # Total number of plots
-    n_plots = math.ceil(math.ceil(len(param_names) / params.ncols) / \
-        params.num_plot_rows)
+    n_plots = math.ceil(math.ceil(len(param_names) / params.ncols) /
+                        params.num_plot_rows)
 
     if n_plots > params.max_plot_pages:
         print((
@@ -787,7 +789,7 @@ def plot_posterior(samples, summary, param_names=None,
 
     figures_and_axes = []
 
-    # Make multople traceplots
+    # Make multiple traceplots
     for i_plot in range(n_plots):
         fig, ax = make_single_posterior_plot(
             i_start=i_plot * params.num_plot_rows * params.ncols,

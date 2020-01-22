@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from .shared import (
     sample_summary, save_summary_to_disk,
     InfoPath, get_info_path, make_tree_plot,
-    save_posterior_plot)
+    save_posterior_plot, SummaryParams)
 
 
 @dataclass
@@ -38,7 +38,8 @@ stan_technical_columns = [
     'energy__']
 
 
-def save_summary(fit, param_names=None, info_path=InfoPath()):
+def save_summary(fit, param_names=None, info_path=InfoPath(),
+                 summary_params=SummaryParams()):
     """
     Saves statistical summary of the samples using mean, std, mode, hpdi.
 
@@ -76,7 +77,7 @@ def save_summary(fit, param_names=None, info_path=InfoPath()):
     }
 
 
-def make_summary(fit, param_names):
+def make_summary(fit, param_names, summary_params=SummaryParams()):
     """
     Returns statistical summary table for parameters:
     mean, std, mode, hpdi.
@@ -128,7 +129,8 @@ def make_summary(fit, param_names):
     df_summary['N_Eff'] = df_summary['N_Eff'].astype(int)
 
     # Get the summary
-    df_summary, table = sample_summary(df=samples, extra_values=df_summary)
+    df_summary, table = sample_summary(df=samples, extra_values=df_summary,
+                                       params=summary_params)
 
     return df_summary, table, samples
 
@@ -342,7 +344,8 @@ def traceplot(fit, param_names=None, params=TraceplotParams()):
     return figures_and_axes
 
 
-def analyse(fit, param_names=None, info_path=InfoPath()):
+def analyse(fit, param_names=None, info_path=InfoPath(),
+            summary_params=SummaryParams()):
     """
     Save diagnostic, summary information, trace and posterior.
 
@@ -361,11 +364,14 @@ def analyse(fit, param_names=None, info_path=InfoPath()):
     save_diagnostic(fit, info_path=info_path)
 
     summary = save_summary(
-        fit, param_names=param_names, info_path=info_path)
+        fit, param_names=param_names, info_path=info_path,
+        summary_params=summary_params)
 
-    make_tree_plot(summary['df'], param_names=param_names, info_path=info_path)
+    make_tree_plot(summary['df'], param_names=param_names, info_path=info_path,
+                   summary_params=summary_params)
+
     make_traceplot(fit, param_names=param_names, info_path=info_path)
 
     save_posterior_plot(
         summary['samples'], summary['df'], param_names=param_names,
-        info_path=info_path)
+        info_path=info_path, summary_params=summary_params)
