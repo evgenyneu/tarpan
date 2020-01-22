@@ -62,7 +62,7 @@ def save_summary(fit, param_names=None, info_path=InfoPath()):
     info_path = InfoPath(**info_path.__dict__)
     info_path.stack_depth += 1
 
-    df_summary, summary, samples = summary(
+    df_summary, summary, samples = make_summary(
         fit, param_names=param_names)
 
     output = save_summary_to_disk(df_summary, summary, info_path=info_path)
@@ -76,7 +76,7 @@ def save_summary(fit, param_names=None, info_path=InfoPath()):
     }
 
 
-def summary(fit, param_names):
+def make_summary(fit, param_names):
     """
     Returns statistical summary table for parameters:
     mean, std, mode, hpdi.
