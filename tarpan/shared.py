@@ -618,7 +618,8 @@ def extract_tree_plot_data(df, param_names=None, groups=None,
 
 def save_posterior_plot(samples, summary, param_names=None,
                         info_path=InfoPath(),
-                        posterior_plot_params=PosteriorPlotParams()):
+                        posterior_plot_params=PosteriorPlotParams(),
+                        summary_params=SummaryParams()):
     """
     Make histograms for the parameters from posterior destribution.
 
@@ -642,7 +643,8 @@ def save_posterior_plot(samples, summary, param_names=None,
 
     figures_and_axes = plot_posterior(
         samples, summary, param_names=param_names,
-        params=posterior_plot_params)
+        params=posterior_plot_params,
+        summary_params=summary_params)
 
     base_name = info_path.base_name or "posterior"
     info_path.extension = info_path.extension or 'pdf'
@@ -740,7 +742,8 @@ def make_single_posterior_plot(i_start, samples, summary, param_names,
 
 
 def plot_posterior(samples, summary, param_names=None,
-                   params=PosteriorPlotParams()):
+                   params=PosteriorPlotParams(),
+                   summary_params=SummaryParams()):
     """
     Make histograms for the parameters from posterior destribution.
 
@@ -796,7 +799,8 @@ def plot_posterior(samples, summary, param_names=None,
             samples=samples,
             summary=summary,
             param_names=param_names,
-            params=params)
+            params=params,
+            summary_params=summary_params)
 
         figures_and_axes.append([fig, ax])
 
