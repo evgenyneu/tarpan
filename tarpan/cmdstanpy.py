@@ -344,7 +344,7 @@ def traceplot(fit, param_names=None, params=TraceplotParams()):
 
 def analyse(fit, param_names=None, info_path=InfoPath()):
     """
-    Save diagnostic, summary informatino, trace and posterior.
+    Save diagnostic, summary information, trace and posterior.
 
     Parameters
     -----------
