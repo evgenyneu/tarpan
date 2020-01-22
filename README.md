@@ -1,6 +1,6 @@
 # Tools for cmdstanpy
 
-This is a collection of functions for analysing output of [cmdstanpy](https://github.com/stan-dev/cmdstanpy) library. The functions are for making:
+This is a collection of functions for analysing output of [cmdstanpy](https://github.com/stan-dev/cmdstanpy) library, written in Python. The functions are for making:
 
 * traceplots of samples,
 
