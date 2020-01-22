@@ -13,7 +13,7 @@ python3 setup.py sdist bdist_wheel
 3. Upload
 
 ```
-twine upload dist/*
+twine upload --repository-url https://upload.pypi.org/legacy/ dist/*
 ```
 
 4. Uninstall tarpan
