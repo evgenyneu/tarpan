@@ -11,7 +11,7 @@ This is a collection of functions for analysing output of [cmdstanpy](https://gi
 
 <img src='images/tarpan.jpg' alt='Picture of Tarpan'>
 
-*Only known illustration of a tarpan made from life, depicting a five month old colt (Borisov, 1841). Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tarpan.png).*
+*The only known illustration of a tarpan made from life, depicting a five month old colt (Borisov, 1841). Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tarpan.png).*
 
 ## 🐴🐴🐴
 
