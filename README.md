@@ -24,7 +24,7 @@ pip install tarpan
 
 ## Usage
 
-### Doing full analysis with `analyse`
+### `analyse`
 
 The main method of the library is `analyse` function.
 
