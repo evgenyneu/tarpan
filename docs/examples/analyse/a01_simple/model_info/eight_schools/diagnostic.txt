@@ -1,10 +1,13 @@
-Processing csv files: /var/folders/4s/0b1x7wr50dbdvx5skpv8j0sm0000gn/T/tmp1no0z57t/eight_schools-202001230955-1-6xqzwzqg.csv, /var/folders/4s/0b1x7wr50dbdvx5skpv8j0sm0000gn/T/tmp1no0z57t/eight_schools-202001230955-2-_a053zh1.csv, /var/folders/4s/0b1x7wr50dbdvx5skpv8j0sm0000gn/T/tmp1no0z57t/eight_schools-202001230955-3-cgjna7ov.csv, /var/folders/4s/0b1x7wr50dbdvx5skpv8j0sm0000gn/T/tmp1no0z57t/eight_schools-202001230955-4-q7xsjq6q.csv
+Processing csv files: /var/folders/4s/0b1x7wr50dbdvx5skpv8j0sm0000gn/T/tmprxdjd03i/eight_schools-202001231009-1-o3w20byn.csv, /var/folders/4s/0b1x7wr50dbdvx5skpv8j0sm0000gn/T/tmprxdjd03i/eight_schools-202001231009-2-ekg3izjr.csv, /var/folders/4s/0b1x7wr50dbdvx5skpv8j0sm0000gn/T/tmprxdjd03i/eight_schools-202001231009-3-1k7ayp6f.csv, /var/folders/4s/0b1x7wr50dbdvx5skpv8j0sm0000gn/T/tmprxdjd03i/eight_schools-202001231009-4-v2jgkmpp.csv
 
 Checking sampler transitions treedepth.
 Treedepth satisfactory for all transitions.
 
 Checking sampler transitions for divergences.
-No divergent transitions found.
+4 of 4000 (0.1%) transitions ended with a divergence.
+These divergent transitions indicate that HMC is not fully able to explore the posterior distribution.
+Try increasing adapt delta closer to 1.
+If this doesn't remove all divergences, try to reparameterize the model.
 
 Checking E-BFMI - sampler transitions HMC potential energy.
 E-BFMI satisfactory for all transitions.
@@ -13,4 +16,4 @@ Effective sample size satisfactory.
 
 Split R-hat values satisfactory all parameters.
 
-Processing complete, no problems detected.
+Processing complete.

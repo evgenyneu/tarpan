@@ -38,13 +38,13 @@ analyse(fit)  # <-- Creates analysis files in `model_info` directory
 ```
 
 The purpose of `analyse` is to make full analysis of the sampling output
-with a single call and save results in [model_info](docs/examples/analyse/model_info/eight_schools) directory.
+with a single call and save results in [model_info](docs/examples/analyse/a01_simple/model_info) directory.
 
 
 #### Example of `analyse`
 
-See the [example code](docs/examples/analyse) of using `analyse`. To run the example,
-download [eight_schools.py](docs/examples/analyse/eight_schools.py) and [eight_schools.stan](docs/examples/analyse/eight_schools.stan) into the same directory and run
+See the [example code](docs/examples/analyse/a01_simple) of using `analyse`. To run the example,
+download into the same directory and run
 
 ```
 python eight_schools.py
@@ -53,12 +53,12 @@ python eight_schools.py
 The function generates the following files in [model_info/eight_schools](docs/examples/analyse/model_info/eight_schools) directory:
 
 
-#### 1. [diagnostic.txt](docs/examples/analyse/model_info/eight_schools/diagnostic.txt)
+#### 1. [diagnostic.txt](docs/examples/analyse/a01_simple/model_info/eight_schools/diagnostic.txt)
 
 Stan's diagnostic output. Usually, this is the first thing I look at, to see if there were any problems with sampling.
 
 
-#### 2. [summary.txt](docs/examples/analyse/model_info/eight_schools/summary.txt)
+#### 2. [summary.txt](docs/examples/analyse/a01_simple/model_info/eight_schools/summary.txt)
 
 A table showing summaries of distributions for all parameters. The table's format is such that the text can be pasted in Github's Markdown file, like this:
 
