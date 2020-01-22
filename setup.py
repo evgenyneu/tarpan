@@ -13,6 +13,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/evgenyneu/tarpan",
     packages=setuptools.find_packages(),
+    license='Public Domain',
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: Public Domain",
