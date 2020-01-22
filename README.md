@@ -50,7 +50,7 @@ download into the same directory and run
 python eight_schools.py
 ```
 
-The function generates the following files in [model_info/eight_schools](docs/examples/analyse/model_info/eight_schools) directory:
+The function generates the following files in [model_info/eight_schools](docs/examples/analyse/a01_simple/model_info/eight_schools) directory:
 
 
 #### 1. [diagnostic.txt](docs/examples/analyse/a01_simple/model_info/eight_schools/diagnostic.txt)
