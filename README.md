@@ -115,11 +115,11 @@ pytest
 ```
 
 
-## 🐴🐴🐴
-
-This work is dedicated to [Tarpan](https://en.wikipedia.org/wiki/Tarpan), an extinct subspecies of wild horse.
-
-
 ## The unlicense
 
 This work is in [public domain](LICENSE).
+
+
+## 🐴🐴🐴
+
+This work is dedicated to [Tarpan](https://en.wikipedia.org/wiki/Tarpan), an extinct subspecies of wild horse.
