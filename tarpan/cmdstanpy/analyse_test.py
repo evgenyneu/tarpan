@@ -14,9 +14,18 @@ def test_save_analysis():
 
     save_analysis(fit)
 
-    file_path = os.path.join(outdir, "cmdstanpy/diagnostic.txt")
+    # Check summary files
+    # ---------------
+
+    file_path = os.path.join(outdir, "diagnostic.txt")
     assert os.path.isfile(file_path)
-    #
+
+    file_path = os.path.join(outdir, "summary.csv")
+    assert os.path.isfile(file_path)
+
+    file_path = os.path.join(outdir, "summary.pdf")
+    assert os.path.isfile(file_path)
+
     # file_path = os.path.join(outdir, "cmdstanpy_utils_test/posterior_01.pdf")
     # assert os.path.isfile(file_path)
     #
@@ -26,11 +35,6 @@ def test_save_analysis():
     # file_path = os.path.join(outdir, "cmdstanpy_utils_test/posterior_03.pdf")
     # assert os.path.isfile(file_path)
     #
-    # file_path = os.path.join(outdir, "cmdstanpy_utils_test/summary.csv")
-    # assert os.path.isfile(file_path)
-    #
-    # file_path = os.path.join(outdir, "cmdstanpy_utils_test/summary.pdf")
-    # assert os.path.isfile(file_path)
     #
     # file_path = os.path.join(outdir, "cmdstanpy_utils_test/summary.txt")
     # assert os.path.isfile(file_path)
