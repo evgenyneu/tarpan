@@ -1,6 +1,12 @@
 # Functions for dealing with plots
 
+import numpy as np
+import seaborn as sns
+
+
 def remove_ticks_labels(ax, remove_x=True, remove_y=True):
+    """Remove ticks and labels from axes"""
+
     if remove_x:
         ax.set_xticklabels([])
         ax.set_xticks([])

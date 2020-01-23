@@ -1,10 +1,11 @@
+import numpy as np
+import re
 from tarpan.shared.info_path import InfoPath
 
 from tarpan.shared.summary import (
     SummaryParams, sample_summary, save_summary_to_disk)
 
 from tarpan.cmdstanpy.stan import STAN_TECHNICAL_COLUMNS
-import numpy as np
 
 
 def save_summary(fit, param_names=None, info_path=InfoPath(),

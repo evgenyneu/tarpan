@@ -1,3 +1,14 @@
+from dataclasses import dataclass
+import math
+import matplotlib.pyplot as plt
+import seaborn as sns
+import re
+import numpy as np
+from tarpan.shared.info_path import InfoPath, get_info_path
+from tarpan.shared.plot import plot_kde_fallback_hist, remove_ticks_labels
+from tarpan.cmdstanpy.stan import STAN_TECHNICAL_COLUMNS
+
+
 @dataclass
 class TraceplotParams:
     max_traceplot_pages = 4  # Maximum number of traceplot to generate.
@@ -16,7 +27,7 @@ class TraceplotParams:
 
 
 def make_traceplot(fit, param_names=None, info_path=InfoPath(),
-                             traceplot_params=TraceplotParams()):
+                   traceplot_params=TraceplotParams()):
     """
     Make traceplots form the fit.
 
@@ -104,8 +115,9 @@ def make_single_traceplot(i_start, fit,
 
             inner_range = np.percentile(samples_for_kde, [0.5, 99.5])
 
-            samples_for_kde = samples_for_kde[(samples_for_kde > inner_range[0])
-                                          & (samples_for_kde < inner_range[1])]
+            samples_for_kde = samples_for_kde[
+                (samples_for_kde > inner_range[0])
+                & (samples_for_kde < inner_range[1])]
 
             plot_kde_fallback_hist(samples_for_kde, ax=ax,
                                    color=params.color[i_chain])

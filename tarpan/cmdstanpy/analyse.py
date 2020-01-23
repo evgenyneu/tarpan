@@ -2,6 +2,7 @@ from tarpan.shared.info_path import InfoPath, get_info_path
 from tarpan.shared.summary import SummaryParams
 from tarpan.shared.tree_plot import make_tree_plot
 from tarpan.cmdstanpy.summary import save_summary
+from tarpan.cmdstanpy.traceplot import make_traceplot
 
 
 def save_diagnostic(fit, info_path=InfoPath()):
@@ -45,8 +46,8 @@ def save_analysis(fit, param_names=None, info_path=InfoPath(),
 
     make_tree_plot(summary['df'], param_names=param_names, info_path=info_path,
                    summary_params=summary_params)
-    #
-    # make_traceplot(fit, param_names=param_names, info_path=info_path)
+
+    make_traceplot(fit, param_names=param_names, info_path=info_path)
     #
     # save_posterior_plot(
     #     summary['samples'], summary['df'], param_names=param_names,

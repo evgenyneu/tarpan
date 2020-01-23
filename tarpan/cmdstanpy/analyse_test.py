@@ -20,16 +20,27 @@ def test_save_analysis():
     # Check summary files
     # ---------------
 
-    file_path = os.path.join(outdir, "summary.csv")
+    file_path = os.path.join(outdir, "summary.txt")
     assert os.path.isfile(file_path)
 
-    file_path = os.path.join(outdir, "cmdstanpy_utils_test/summary.txt")
+    file_path = os.path.join(outdir, "summary.csv")
     assert os.path.isfile(file_path)
 
     # Tree plot
     # ---------
 
     file_path = os.path.join(outdir, "summary.pdf")
+    assert os.path.isfile(file_path)
+
+    # Trace plots
+    # ----------
+    file_path = os.path.join(outdir, "cmdstanpy_utils_test/traceplot_01.pdf")
+    assert os.path.isfile(file_path)
+
+    file_path = os.path.join(outdir, "cmdstanpy_utils_test/traceplot_02.pdf")
+    assert os.path.isfile(file_path)
+
+    file_path = os.path.join(outdir, "cmdstanpy_utils_test/traceplot_03.pdf")
     assert os.path.isfile(file_path)
 
     # file_path = os.path.join(outdir, "cmdstanpy_utils_test/posterior_01.pdf")
@@ -41,13 +52,3 @@ def test_save_analysis():
     # file_path = os.path.join(outdir, "cmdstanpy_utils_test/posterior_03.pdf")
     # assert os.path.isfile(file_path)
     #
-    #
-    #
-    # file_path = os.path.join(outdir, "cmdstanpy_utils_test/traceplot_01.pdf")
-    # assert os.path.isfile(file_path)
-    #
-    # file_path = os.path.join(outdir, "cmdstanpy_utils_test/traceplot_02.pdf")
-    # assert os.path.isfile(file_path)
-    #
-    # file_path = os.path.join(outdir, "cmdstanpy_utils_test/traceplot_03.pdf")
-    # assert os.path.isfile(file_path)
