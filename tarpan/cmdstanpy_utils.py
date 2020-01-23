@@ -347,7 +347,8 @@ def traceplot(fit, param_names=None, params=TraceplotParams()):
 def analyse(fit, param_names=None, info_path=InfoPath(),
             summary_params=SummaryParams()):
     """
-    Save diagnostic, summary information, trace and posterior.
+    Main function that creates all analysis files:
+        diagnostic, summary, trace and posterior.
 
     Parameters
     -----------
