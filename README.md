@@ -90,7 +90,7 @@ Same as summary.txt but in CSV format.
 
 The plot of the summary:
 
-<img src="docs/examples/analyse/a01_simple/model_info/analyse/summary.png" width="700" alt="Summary plot">
+<img src="docs/examples/analyse/a01_simple/model_info/analyse/summary.png" width="500" alt="Summary plot">
 
 
 
