@@ -9,7 +9,7 @@ Usage
 """
 
 from cmdstanpy import CmdStanModel
-from tarpan.cmdstanpy import analyse
+from tarpan.cmdstanpy.analyse import save_analysis
 
 
 def run_model():
@@ -25,7 +25,7 @@ def run_model():
                        sampling_iters=1000, warmup_iters=1000)
 
     # Creates summaries, traceplots and histograms in `model_info` directory
-    analyse(fit)
+    save_analysis(fit)
 
 
 if __name__ == '__main__':

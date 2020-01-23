@@ -1,10 +1,10 @@
-Processing csv files: /var/folders/4s/0b1x7wr50dbdvx5skpv8j0sm0000gn/T/tmpsofb21kt/eight_schools-202001231030-1-ki3x_oyl.csv, /var/folders/4s/0b1x7wr50dbdvx5skpv8j0sm0000gn/T/tmpsofb21kt/eight_schools-202001231030-2-wpieyywg.csv, /var/folders/4s/0b1x7wr50dbdvx5skpv8j0sm0000gn/T/tmpsofb21kt/eight_schools-202001231030-3-16204o0z.csv, /var/folders/4s/0b1x7wr50dbdvx5skpv8j0sm0000gn/T/tmpsofb21kt/eight_schools-202001231030-4-0zpuqly1.csv
+Processing csv files: /var/folders/4s/0b1x7wr50dbdvx5skpv8j0sm0000gn/T/tmpbcwsbrnf/eight_schools-202001231439-1-a4p1limm.csv, /var/folders/4s/0b1x7wr50dbdvx5skpv8j0sm0000gn/T/tmpbcwsbrnf/eight_schools-202001231439-2-w2_0mtui.csv, /var/folders/4s/0b1x7wr50dbdvx5skpv8j0sm0000gn/T/tmpbcwsbrnf/eight_schools-202001231439-3-72ha1acn.csv, /var/folders/4s/0b1x7wr50dbdvx5skpv8j0sm0000gn/T/tmpbcwsbrnf/eight_schools-202001231439-4-7aeet44b.csv
 
 Checking sampler transitions treedepth.
 Treedepth satisfactory for all transitions.
 
 Checking sampler transitions for divergences.
-4 of 4000 (0.1%) transitions ended with a divergence.
+3 of 4000 (0.075%) transitions ended with a divergence.
 These divergent transitions indicate that HMC is not fully able to explore the posterior distribution.
 Try increasing adapt delta closer to 1.
 If this doesn't remove all divergences, try to reparameterize the model.

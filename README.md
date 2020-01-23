@@ -45,7 +45,7 @@ The purpose of `save_analysis` is to
 #### Example of `save_analysis`
 
 See the [example code](docs/examples/analyse/a01_simple) of using `analyse`. To run the example,
-download into the same directory and run
+download eight_schools.py and eight_schools.stan files into the same directory and run
 
 ```
 python eight_schools.py
