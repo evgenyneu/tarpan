@@ -72,7 +72,7 @@ The summary columns are:
 
 *  **Name, Mean, Std** are the name of the parameter, its mean and standard deviation.
 
-*  **68CI-, 68CI+, 95CI-, 95CI+** are the 68% and 95% HPDIs (highest probability density intervals).
+*  **68CI-, 68CI+, 95CI-, 95CI+** are the 68% and 95% HPDIs (highest probability density intervals). These values are configurable, see below.
 
 * **Mode, +, -** is a mode of distribution with upper and lower uncertainties, which are calculated as distances to 68% HPDI.
 
