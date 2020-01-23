@@ -93,7 +93,7 @@ The plot of the summary:
 <img src="docs/examples/analyse/a01_simple/model_info/analyse/summary.png" width="500" alt="Summary plot">
 
 
-#### 5. Traceplots [traceplot_01.pdf](docs/examples/analyse/a01_simple/model_info/analyse/traceplot_01.pdf) [traceplot_02.pdf](docs/examples/analyse/a01_simple/model_info/analyse/traceplot_02.pdf) [traceplot_03.pdf](docs/examples/analyse/a01_simple/model_info/analyse/traceplot_03.pdf)
+#### 5. Traceplots: [traceplot_01.pdf](docs/examples/analyse/a01_simple/model_info/analyse/traceplot_01.pdf), [traceplot_02.pdf](docs/examples/analyse/a01_simple/model_info/analyse/traceplot_02.pdf), [traceplot_03.pdf](docs/examples/analyse/a01_simple/model_info/analyse/traceplot_03.pdf)
 
 The traceplots of the samples for all parameters, the colors show samples from different chains. The first plot for "lp__" is the most important one, this is the traceplot of the log probability values. I look at it to make sure the lines of different colors are well-mixed and are mostly concentrated at some value of the parameter, which means that the sampling converged.
 
