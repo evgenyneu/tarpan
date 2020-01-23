@@ -1,1 +1,1 @@
-This module contains helper functions for unit tests.
+This module contains helper functions used in unit tests.

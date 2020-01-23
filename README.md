@@ -78,7 +78,11 @@ A table showing summaries of distributions for all parameters. The table's forma
 saves summaries ([text](docs/examples/analyse/model_info/eight_schools/summary.txt), [pdf](docs/examples/analyse/model_info/eight_schools/summary.pdf), and [csv](docs/examples/analyse/model_info/eight_schools/summary.csv)), [traceplots](docs/examples/analyse/model_info/eight_schools/traceplot_01.pdf), [histograms](docs/examples/analyse/model_info/eight_schools/posterior_01.pdf), [diagnostic](docs/examples/analyse/model_info/eight_schools/diagnostic.txt) information to a [model_info](docs/examples/analyse/model_info) directory.
 
 
+## Run unit tests
 
+```
+pytest
+```
 
 
 ## 🐴🐴🐴
