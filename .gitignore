@@ -128,9 +128,13 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# Generates analysis directory
+tarpan/**/model_info
+
+# Temporary data directory for unit tests
+temp_data
 
 # Stan files in examples
-
 eight_schools
 eight_schools.hpp
 eight_schools.o

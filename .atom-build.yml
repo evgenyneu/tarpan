@@ -1,0 +1,6 @@
+cmd: "PYTHONPATH=. /opt/miniconda3/bin/python -u '{FILE_ACTIVE}'"
+name: "Run Python"
+
+targets:
+    pytest:
+        cmd: "pytest -s '{FILE_ACTIVE}'"
