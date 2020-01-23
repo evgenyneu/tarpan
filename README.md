@@ -88,7 +88,7 @@ Same as summary.txt but in CSV format.
 
 #### 4. Summary tree plot [summary.pdf](docs/examples/analyse/a01_simple/model_info/analyse/summary.pdf)
 
-The plot of the summary:
+The plot of the summary. The error bars correspond to the 68% and 95% HPDIs:
 
 <img src="docs/examples/analyse/a01_simple/model_info/analyse/summary.png" width="500" alt="Summary plot">
 
