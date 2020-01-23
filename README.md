@@ -78,7 +78,7 @@ The summary columns are:
 
 * **N_Eff** is Stan's number of effective samples, the higher the better.
 
-* **R_hat** is a Stan's parameter representing the quality of the sampling. This value needs to be smaller than 1.01. After generating a model I usually immediately look at this R_hat column to see if the sampling was good.
+* **R_hat** is a Stan's parameter representing the quality of the sampling. This value needs to be smaller than 1.00. After generating a model I usually immediately look at this R_hat column to see if the sampling was good.
 
 
 #### 3. [summary.csv](docs/examples/analyse/a01_simple/model_info/analyse/summary.csv)
