@@ -1,17 +1,13 @@
+"""Make histograms of posterior parameter distributions"""
+
+from dataclasses import dataclass
 import numpy as np
-from tabulate import tabulate
-import arviz as az
 import matplotlib.pyplot as plt
-import pandas as pd
-from scipy.stats import gaussian_kde
 import math
 import seaborn as sns
 import re
-import inspect
-import os
-from dataclasses import dataclass
-from itertools import cycle
-
+from tarpan.shared.info_path import InfoPath, get_info_path
+from tarpan.shared.summary import SummaryParams
 
 
 @dataclass
@@ -25,7 +21,6 @@ class PosteriorPlotParams:
     # Sorted from largerst smallest HPDI values
     kde_colors = ['#FF9922', '#6666FF', '#44FF55']
     kde_line_styles = ['dotted', 'solid', '-.']
-
 
 
 def save_posterior_plot(samples, summary, param_names=None,

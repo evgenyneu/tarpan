@@ -34,21 +34,24 @@ def test_save_analysis():
 
     # Trace plots
     # ----------
-    file_path = os.path.join(outdir, "cmdstanpy_utils_test/traceplot_01.pdf")
+
+    file_path = os.path.join(outdir, "traceplot_01.pdf")
     assert os.path.isfile(file_path)
 
-    file_path = os.path.join(outdir, "cmdstanpy_utils_test/traceplot_02.pdf")
+    file_path = os.path.join(outdir, "traceplot_02.pdf")
     assert os.path.isfile(file_path)
 
-    file_path = os.path.join(outdir, "cmdstanpy_utils_test/traceplot_03.pdf")
+    file_path = os.path.join(outdir, "traceplot_03.pdf")
     assert os.path.isfile(file_path)
 
-    # file_path = os.path.join(outdir, "cmdstanpy_utils_test/posterior_01.pdf")
-    # assert os.path.isfile(file_path)
-    #
-    # file_path = os.path.join(outdir, "cmdstanpy_utils_test/posterior_02.pdf")
-    # assert os.path.isfile(file_path)
-    #
-    # file_path = os.path.join(outdir, "cmdstanpy_utils_test/posterior_03.pdf")
-    # assert os.path.isfile(file_path)
-    #
+    # Histograms of posterior distributions
+    # ----------
+
+    file_path = os.path.join(outdir, "posterior_01.pdf")
+    assert os.path.isfile(file_path)
+
+    file_path = os.path.join(outdir, "posterior_02.pdf")
+    assert os.path.isfile(file_path)
+
+    file_path = os.path.join(outdir, "posterior_03.pdf")
+    assert os.path.isfile(file_path)
