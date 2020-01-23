@@ -76,9 +76,9 @@ The summary columns are:
 
 * **Mode, +, -** is a mode of distribution with upper and lower uncertainties, which are calculated as distances to 68% HPDI.
 
-* **N_Eff** Stan's number of effective samples, the higher the better.
+* **N_Eff** is Stan's number of effective samples, the higher the better.
 
-* **R_hat** a Stan's parameter representing the quality of the sampling. We need this to be near 1.
+* **R_hat** is a Stan's parameter representing the quality of the sampling. We need this to be near 1.
 
 
 
