@@ -39,8 +39,6 @@ fit = model.sample(data=your_data)
 save_analysis(fit)  # <-- Creates analysis files in `model_info` directory
 ```
 
-The purpose of `save_analysis` is to
-
 
 #### Example of `save_analysis`
 
