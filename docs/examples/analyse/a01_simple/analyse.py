@@ -4,7 +4,7 @@ Example of using `analyze` function.
 Usage
 -----
 
-    python eight_schools.py
+    python analyse.py
 
 """
 

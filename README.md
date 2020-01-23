@@ -83,6 +83,17 @@ The summary columns are:
 * **R_hat** is a Stan's parameter representing the quality of the sampling. We need this to be near 1.
 
 
+#### 3. [summary.csv](docs/examples/analyse/a01_simple/model_info/eight_schools/summary.csv)
+
+Same as summary.txt but in CSV format.
+
+
+#### 4. Summary tree plot [summary.pdf](docs/examples/analyse/a01_simple/model_info/eight_schools/summary.pdf)
+
+The plot of the summary:
+
+<img src="docs/examples/analyse/a01_simple/model_info/eight_schools/summary.png" width="700" alt="Summary plot">
+
 
 
 * [summary.pdf](docs/examples/analyse/model_info/eight_schools/summary.pdf): Summary of parameter distributions.
