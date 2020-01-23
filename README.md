@@ -1,8 +1,6 @@
 # Tools for cmdstanpy
 
-This is a collection of functions for analysing output of [cmdstanpy](https://github.com/stan-dev/cmdstanpy) library, written in Python.
-
-Tarpan's includes functions for making:
+This is a collection of functions for analysing output of [cmdstanpy](https://github.com/stan-dev/cmdstanpy) library, written in Python. The library includes function for making
 
 * traceplots of samples,
 
