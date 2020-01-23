@@ -16,7 +16,7 @@ This is a collection of functions for analysing output of [cmdstanpy](https://gi
 
 ## Setup
 
-First, [install cmdstanpy library](https://cmdstanpy.readthedocs.io/en/latest/index.html), and then do:
+First, install [cmdstanpy library](https://cmdstanpy.readthedocs.io/en/latest/index.html), and then do:
 
 ```
 pip install tarpan
