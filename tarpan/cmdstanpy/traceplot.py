@@ -1,3 +1,5 @@
+"""Make traceplots from Stan's output samples"""
+
 from dataclasses import dataclass
 import math
 import matplotlib.pyplot as plt

@@ -1,4 +1,4 @@
-"""Code related to Stan"""
+"""Code related to cmdstan"""
 
 """Non-parameter columns returned by Stan"""
 STAN_TECHNICAL_COLUMNS = [

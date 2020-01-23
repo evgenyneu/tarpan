@@ -1,4 +1,4 @@
-# Functions for dealing with plots
+"""Functions for dealing with plots"""
 
 import numpy as np
 import seaborn as sns

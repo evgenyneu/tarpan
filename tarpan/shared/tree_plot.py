@@ -1,4 +1,4 @@
-"""Makes a tree plot"""
+"""Makes a tree plot showing summary of distributions of parameters"""
 
 from dataclasses import dataclass
 from tarpan.shared.info_path import InfoPath, get_info_path

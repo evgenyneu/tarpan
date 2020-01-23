@@ -1,3 +1,5 @@
+"""Contains main function that does all analysis"""
+
 from tarpan.shared.info_path import InfoPath, get_info_path
 from tarpan.shared.summary import SummaryParams
 from tarpan.shared.tree_plot import make_tree_plot

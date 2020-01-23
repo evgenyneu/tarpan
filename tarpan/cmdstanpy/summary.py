@@ -1,3 +1,5 @@
+"""Makes statistical summary of parameter destibutions: means, std etc."""
+
 import numpy as np
 import re
 from tarpan.shared.info_path import InfoPath
