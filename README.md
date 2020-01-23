@@ -24,24 +24,25 @@ pip install tarpan
 
 ## Usage
 
-### `analyse`
+### `save_analysis`
 
-The main method of the library is the `analyse` function:
+This is the main function of the library that makes full analysis of
+Stan's output samples saves results in
+[model_info](docs/examples/analyse/a01_simple/model_info) directory.
 
 ```Python
-from tarpan.cmdstanpy import analyse
+from tarpan.cmdstanpy.analyse import save_analysis
 
 model = CmdStanModel(stan_file="your_model.stan")
 fit = model.sample(data=your_data)
 
-analyse(fit)  # <-- Creates analysis files in `model_info` directory
+save_analysis(fit)  # <-- Creates analysis files in `model_info` directory
 ```
 
-The purpose of `analyse` is to make full analysis of the sampling output
-with a single call and save results in [model_info](docs/examples/analyse/a01_simple/model_info) directory.
+The purpose of `save_analysis` is to
 
 
-#### Example of `analyse`
+#### Example of `save_analysis`
 
 See the [example code](docs/examples/analyse/a01_simple) of using `analyse`. To run the example,
 download into the same directory and run
