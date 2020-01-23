@@ -1,6 +1,6 @@
 # A Python library for analysing cmdstanpy output
 
-This is a collection of functions for analysing output of [cmdstanpy](https://github.com/stan-dev/cmdstanpy) library. The purpose of this library is to do a quick data analysis by calling a single function that makes:
+This is a collection of function for analysing output of [cmdstanpy](https://github.com/stan-dev/cmdstanpy) library. The main idea is to do a quick data analysis by calling a single function that makes:
 
 * traceplots of samples,
 
