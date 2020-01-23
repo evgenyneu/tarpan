@@ -40,7 +40,7 @@ save_analysis(fit)  # <-- Creates analysis files in `model_info` directory
 ```
 
 
-#### Example of `save_analysis`
+### Example of `save_analysis`
 
 See the [example code](docs/examples/analyse/a01_simple) of using `analyse`. To run the example,
 download analyse.py and eight_schools.stan files into the same directory and run
