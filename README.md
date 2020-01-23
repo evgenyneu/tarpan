@@ -100,10 +100,12 @@ The traceplots of the samples for all parameters, the colors show samples from d
 <img src="docs/examples/analyse/a01_simple/model_info/analyse/tracepot_01.jpg" width="700" alt="Traceplot">
 
 
-* [summary.pdf](docs/examples/analyse/model_info/eight_schools/summary.pdf): Summary of parameter distributions.
+#### 6. Histograms: [posterior_01.pdf](docs/examples/analyse/a01_simple/model_info/analyse/posterior_01.pdf), [posterior_02.pdf](docs/examples/analyse/a01_simple/model_info/analyse/posterior_02.pdf), [posterior_03.pdf](docs/examples/analyse/a01_simple/model_info/analyse/posterior_03.pdf)
 
-  uses the `fit` output of CmdStanModel's `sample` function and
-saves summaries ([text](docs/examples/analyse/model_info/eight_schools/summary.txt), [pdf](docs/examples/analyse/model_info/eight_schools/summary.pdf), and [csv](docs/examples/analyse/model_info/eight_schools/summary.csv)), [traceplots](docs/examples/analyse/model_info/eight_schools/traceplot_01.pdf), [histograms](docs/examples/analyse/model_info/eight_schools/posterior_01.pdf), [diagnostic](docs/examples/analyse/model_info/eight_schools/diagnostic.txt) information to a [model_info](docs/examples/analyse/model_info) directory.
+These are histograms that show distributions of values for all parameters:
+
+<img src="docs/examples/analyse/a01_simple/model_info/analyse/posterior_01.png" alt="Histograms of posterior distributions">
+
 
 
 ## Run unit tests
