@@ -1,4 +1,4 @@
-Processing csv files: /var/folders/4s/0b1x7wr50dbdvx5skpv8j0sm0000gn/T/tmpbcwsbrnf/eight_schools-202001231439-1-a4p1limm.csv, /var/folders/4s/0b1x7wr50dbdvx5skpv8j0sm0000gn/T/tmpbcwsbrnf/eight_schools-202001231439-2-w2_0mtui.csv, /var/folders/4s/0b1x7wr50dbdvx5skpv8j0sm0000gn/T/tmpbcwsbrnf/eight_schools-202001231439-3-72ha1acn.csv, /var/folders/4s/0b1x7wr50dbdvx5skpv8j0sm0000gn/T/tmpbcwsbrnf/eight_schools-202001231439-4-7aeet44b.csv
+Processing csv files: /var/folders/4s/0b1x7wr50dbdvx5skpv8j0sm0000gn/T/tmpcadbrz9j/eight_schools-202001231443-1-upblkdav.csv, /var/folders/4s/0b1x7wr50dbdvx5skpv8j0sm0000gn/T/tmpcadbrz9j/eight_schools-202001231443-2-h5u7zgau.csv, /var/folders/4s/0b1x7wr50dbdvx5skpv8j0sm0000gn/T/tmpcadbrz9j/eight_schools-202001231443-3-vqtdvtpu.csv, /var/folders/4s/0b1x7wr50dbdvx5skpv8j0sm0000gn/T/tmpcadbrz9j/eight_schools-202001231443-4-tsfl7dma.csv
 
 Checking sampler transitions treedepth.
 Treedepth satisfactory for all transitions.
