@@ -36,7 +36,7 @@ from tarpan.cmdstanpy.analyse import save_analysis
 model = CmdStanModel(stan_file="your_model.stan")
 fit = model.sample(data=your_data)
 
-save_analysis(fit)  # <-- Creates analysis files in `model_info` directory
+save_analysis(fit)  # <-- Creates plots and summaries in `model_info` directory
 ```
 
 
