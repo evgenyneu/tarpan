@@ -26,8 +26,8 @@ pip install tarpan
 
 ### `save_analysis`
 
-This is the main function of the library that makes full analysis of
-Stan's output samples saves results in
+This is the main function of the library that analyses
+Stan's output samples and saves results in
 [model_info](docs/examples/analyse/a01_simple/model_info/analyse) directory.
 
 ```Python
