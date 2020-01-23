@@ -1,4 +1,7 @@
-stan_technical_columns = [
+"""Code related to Stan"""
+
+"""Non-parameter columns returned by Stan"""
+STAN_TECHNICAL_COLUMNS = [
     'lp__',
     'accept_stat__',
     'stepsize__',

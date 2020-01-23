@@ -1,3 +1,12 @@
+from tarpan.shared.info_path import InfoPath
+
+from tarpan.shared.summary import (
+    SummaryParams, sample_summary, save_summary_to_disk)
+
+from tarpan.cmdstanpy.stan import STAN_TECHNICAL_COLUMNS
+import numpy as np
+
+
 def save_summary(fit, param_names=None, info_path=InfoPath(),
                  summary_params=SummaryParams()):
     """
@@ -59,7 +68,7 @@ def make_summary(fit, param_names, summary_params=SummaryParams()):
 
     # Exclude Stan's diagnistic columns
     param_filtered = [
-        a for a in fit.column_names if a not in stan_technical_columns
+        a for a in fit.column_names if a not in STAN_TECHNICAL_COLUMNS
     ]
 
     if param_names is not None:

@@ -147,7 +147,7 @@ def traceplot(fit, param_names=None, params=TraceplotParams()):
 
     # Exclude Stan's diagnostic columns
     param_filtered = [
-        a for a in fit.column_names if a not in stan_technical_columns]
+        a for a in fit.column_names if a not in STAN_TECHNICAL_COLUMNS]
 
     if param_names is not None:
         # If param_names contains 'a', we will also plot

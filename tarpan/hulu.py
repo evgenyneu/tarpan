@@ -1,2 +1,0 @@
-def dothis():
-    print('hello')

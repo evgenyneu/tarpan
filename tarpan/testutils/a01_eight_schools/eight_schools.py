@@ -10,7 +10,8 @@ def run_model(data_dir, path_to_fit):
     Runs Stan model and saves fit to disk
     """
 
-    model = CmdStanModel(stan_file="data/a01_eight_schools/eight_schools.stan")
+    model_path = "tarpan/testutils/a01_eight_schools/eight_schools.stan"
+    model = CmdStanModel(stan_file=model_path)
 
     data = {
         "J": 8,
