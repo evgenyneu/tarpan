@@ -54,12 +54,12 @@ python eight_schools.py
 The function generates the following files in [model_info/eight_schools](docs/examples/analyse/a01_simple/model_info/eight_schools) directory:
 
 
-#### 1. [diagnostic.txt](docs/examples/analyse/a01_simple/model_info/eight_schools/diagnostic.txt)
+#### 1. Model's diagnostic info [diagnostic.txt](docs/examples/analyse/a01_simple/model_info/eight_schools/diagnostic.txt)
 
 Stan's diagnostic output. Usually, this is the first thing I look at, to see if there were any problems with sampling.
 
 
-#### 2. [summary.txt](docs/examples/analyse/a01_simple/model_info/eight_schools/summary.txt)
+#### 2. Text summary [summary.txt](docs/examples/analyse/a01_simple/model_info/eight_schools/summary.txt)
 
 A table showing summaries of distributions for all parameters. The table's format is such that the text can be pasted in Github's Markdown file, like this:
 
@@ -69,6 +69,16 @@ A table showing summaries of distributions for all parameters. The table's forma
 | tau     |   6.58 |  5.64 |   2.16 | 5.72 | 2.16 |    0.00 |    7.88 |    0.00 |   17.44 |    1394 |    1.00 |
 | eta.1   |   0.40 |  0.94 |   0.46 | 0.89 | 0.94 |   -0.49 |    1.35 |   -1.46 |    2.32 |    3811 |    1.00 |
 | eta.2   |  -0.01 |  0.88 |  -0.05 | 0.84 | 0.86 |   -0.91 |    0.79 |   -1.82 |    1.76 |    4484 |    1.00 |
+
+The summary columns are:
+
+*  **68CI-, 68CI+, 95CI-, 95CI+** are the 68% and 95% HPDIs (highest probability density intervals).
+
+* **Mode, +, -** is a mode of distribution with upper and lower uncertainties, which are calculated as distances to 68% HPDI.
+
+* **N_Eff** Stan's number of effective samples, the higher the better.
+
+* **R_hat** a Stan's parameter representing the quality of the sampling. We need this to be near 1.
 
 
 
