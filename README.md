@@ -45,21 +45,21 @@ The purpose of `save_analysis` is to
 #### Example of `save_analysis`
 
 See the [example code](docs/examples/analyse/a01_simple) of using `analyse`. To run the example,
-download eight_schools.py and eight_schools.stan files into the same directory and run
+download analyse.py and eight_schools.stan files into the same directory and run
 
 ```
-python eight_schools.py
+python analyse.py
 ```
 
-The function generates the following files in [model_info/eight_schools](docs/examples/analyse/a01_simple/model_info/eight_schools) directory:
+The function generates the following files in [model_info/analyse](docs/examples/analyse/a01_simple/model_info/analyse) directory:
 
 
-#### 1. Model's diagnostic info [diagnostic.txt](docs/examples/analyse/a01_simple/model_info/eight_schools/diagnostic.txt)
+#### 1. Model's diagnostic info [diagnostic.txt](docs/examples/analyse/a01_simple/model_info/analyse/diagnostic.txt)
 
 Stan's diagnostic output. Usually, this is the first thing I look at, to see if there were any problems with sampling.
 
 
-#### 2. Text summary [summary.txt](docs/examples/analyse/a01_simple/model_info/eight_schools/summary.txt)
+#### 2. Text summary [summary.txt](docs/examples/analyse/a01_simple/model_info/analyse/summary.txt)
 
 A table showing summaries of distributions for all parameters. The table's format is such that the text can be pasted in Github's Markdown file, like this:
 
@@ -83,16 +83,16 @@ The summary columns are:
 * **R_hat** is a Stan's parameter representing the quality of the sampling. We need this to be near 1.
 
 
-#### 3. [summary.csv](docs/examples/analyse/a01_simple/model_info/eight_schools/summary.csv)
+#### 3. [summary.csv](docs/examples/analyse/a01_simple/model_info/analyse/summary.csv)
 
 Same as summary.txt but in CSV format.
 
 
-#### 4. Summary tree plot [summary.pdf](docs/examples/analyse/a01_simple/model_info/eight_schools/summary.pdf)
+#### 4. Summary tree plot [summary.pdf](docs/examples/analyse/a01_simple/model_info/analyse/summary.pdf)
 
 The plot of the summary:
 
-<img src="docs/examples/analyse/a01_simple/model_info/eight_schools/summary.png" width="700" alt="Summary plot">
+<img src="docs/examples/analyse/a01_simple/model_info/analyse/summary.png" width="700" alt="Summary plot">
 
 
 
