@@ -1,13 +1,12 @@
 """Makes statistical summary of parameter destibutions: means, std etc."""
 
 import numpy as np
-import re
 from tarpan.shared.info_path import InfoPath
 
 from tarpan.shared.summary import (
     SummaryParams, sample_summary, save_summary_to_disk)
 
-from tarpan.cmdstanpy.stan import STAN_TECHNICAL_COLUMNS
+from tarpan.shared.param_names import filter_param_names
 
 
 def save_summary(fit, param_names=None, info_path=InfoPath(),
@@ -66,25 +65,7 @@ def make_summary(fit, param_names, summary_params=SummaryParams()):
         Names of parameters to be included in the summar. Include all if None.
     """
 
-    # Make the list of columns for the summary
-    # ---------------
-
-    # Exclude Stan's diagnistic columns
-    param_filtered = [
-        a for a in fit.column_names if a not in STAN_TECHNICAL_COLUMNS
-    ]
-
-    if param_names is not None:
-        # If param_names contains 'a', we will also plot
-        # parameters named 'a.1', 'a.2' etc.
-        param_filtered = [
-            a for a in param_filtered
-            if a in param_names
-            or (re.sub(r'\.[0-9]+\Z', '', a) in param_names)
-        ]
-
-    param_names = param_filtered
-
+    param_names = filter_param_names(fit.column_names, param_names)
     samples = fit.get_drawset(params=param_names)
 
     # Get R_hat values from the summary

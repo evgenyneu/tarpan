@@ -4,11 +4,10 @@ from dataclasses import dataclass
 import math
 import matplotlib.pyplot as plt
 import seaborn as sns
-import re
 import numpy as np
 from tarpan.shared.info_path import InfoPath, get_info_path
 from tarpan.shared.plot import plot_kde_fallback_hist, remove_ticks_labels
-from tarpan.cmdstanpy.stan import STAN_TECHNICAL_COLUMNS
+from tarpan.shared.param_names import filter_param_names
 
 
 @dataclass
@@ -157,23 +156,8 @@ def traceplot(fit, param_names=None, params=TraceplotParams()):
     sns.set(style="ticks")
 
     # Make the list of columns to be shown in the plots
-    # ---------------
-
-    # Exclude Stan's diagnostic columns
-    param_filtered = [
-        a for a in fit.column_names if a not in STAN_TECHNICAL_COLUMNS]
-
-    if param_names is not None:
-        # If param_names contains 'a', we will also plot
-        # parameters named 'a.1', 'a.2' etc.
-        param_filtered = [
-            a for a in param_filtered
-            if a in param_names
-            or (re.sub(r'\.[0-9]+\Z', '', a) in param_names)
-        ]
-
-    param_filtered.insert(0, 'lp__')  # Always show traceplot of probability
-    param_names = param_filtered
+    param_names = filter_param_names(fit.column_names, param_names)
+    param_names.insert(0, 'lp__')  # Always show traceplot of probability
 
     # Total number of plots
     n_plots = math.ceil(len(param_names) / params.num_traceplot_rows)

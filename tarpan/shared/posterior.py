@@ -8,6 +8,7 @@ import seaborn as sns
 import re
 from tarpan.shared.info_path import InfoPath, get_info_path
 from tarpan.shared.summary import SummaryParams
+from tarpan.shared.param_names import filter_param_names
 
 
 @dataclass
@@ -169,18 +170,7 @@ def plot_posterior(samples, summary, param_names=None,
 
         Names of the parameters for plotting. If None, all will be plotted.
     """
-    param_filtered = samples.columns
-
-    if param_names is not None:
-        # If param_names contains 'a', we will also plot
-        # parameters named 'a.1', 'a.2' etc.
-        param_filtered = [
-            a for a in param_filtered
-            if a in param_names
-            or (re.sub(r'\.[0-9]+\Z', '', a) in param_names)
-        ]
-
-    param_names = param_filtered
+    param_names = filter_param_names(samples.columns, param_names)
 
     # Total number of plots
     n_plots = math.ceil(math.ceil(len(param_names) / params.ncols) /
