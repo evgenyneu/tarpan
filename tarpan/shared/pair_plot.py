@@ -3,6 +3,8 @@
 from dataclasses import dataclass
 import seaborn as sns
 from tarpan.shared.param_names import filter_param_names
+from tarpan.shared.info_path import InfoPath, get_info_path
+import matplotlib.pyplot as plt
 
 
 @dataclass
@@ -20,10 +22,41 @@ class PairPlotParams:
     diag_kind: str = 'kde'
 
 
-def make_pair_plot(samples, param_names=None,
+def save_pair_plot(samples, param_names=None,
+                   info_path=InfoPath(),
                    pair_plot_params=PairPlotParams()):
     """
     Make histograms for the parameters from posterior destribution.
+
+    Parameters
+    -----------
+
+    samples : Panda's DataFrame
+
+        Each column contains samples from posterior distribution.
+
+    param_names : list of str
+
+        Names of the parameters for plotting. If None, all will be plotted.
+    """
+
+    info_path = InfoPath(**info_path.__dict__)
+
+    fig = make_pair_plot(
+        samples, param_names=param_names,
+        pair_plot_params=pair_plot_params)
+
+    info_path.base_name = info_path.base_name or "pair_plot"
+    info_path.extension = info_path.extension or 'pdf'
+    plot_path = get_info_path(info_path)
+    fig.savefig(plot_path, dpi=info_path.dpi)
+    plt.close(fig)
+
+
+def make_pair_plot(samples, param_names=None,
+                   pair_plot_params=PairPlotParams()):
+    """
+    Make a pair plot for the parameters from posterior destribution.
 
     Parameters
     -----------
