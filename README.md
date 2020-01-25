@@ -43,15 +43,13 @@ See the [example code](docs/examples/analyse/a01_simple) of using `save_analysis
 ### Make tree plot: `save_tree_plot`
 
 Function `save_tree_plot` creates a [tree plot](docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.pdf) in
-model_info directory.
+model_info directory. See example code [here](docs/examples/save_tree_plot/a01_single_fit).
 
 ```Python
 from tarpan.cmdstanpy.tree_plot import save_tree_plot
 model = CmdStanModel(stan_file="your_model.stan")
 save_tree_plot([fit], param_names=['mu', 'sigma'])
 ```
-
-See example code [here](docs/examples/save_tree_plot/a01_single_fit).
 
 <img src="docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.png" width="500" alt="Tree plot">
 
