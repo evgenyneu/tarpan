@@ -13,7 +13,7 @@ class PairPlotParams:
     title: str = None  # Plot's title
     color: str = "#00a6ff"
     marker_size: float = 30
-    max_params: int = 5  # Maximum number of parameter to show in the plot
+    max_params: int = 4  # Maximum number of parameter to show in the plot
     max_samples: int = 503  # Maximum number of samples to show in pair plot
 
     """Type of diahonal plots: 'auto’, ‘hist’, ‘kde’, None"""

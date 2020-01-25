@@ -1,14 +1,15 @@
 """Makes a tree plot showing summary of distributions of parameters"""
 
 from tarpan.shared.info_path import InfoPath
-from tarpan.shared.tree_plot import TreePlotParams, summary_from_dict
+from tarpan.shared.tree_plot import (
+    TreePlotParams, summary_from_dict, make_comparative_tree_plot)
 
 from tarpan.shared.summary import (
-    SummaryParams, sample_summary, make_comparative_tree_plot)
+    SummaryParams, sample_summary)
 
 
 def save_comparative_tree_plot(fits,
-                               values_no_error_bars=[],
+                               extra_values=[],
                                param_names=None,
                                info_path=InfoPath(),
                                summary_params=SummaryParams(),
@@ -16,7 +17,7 @@ def save_comparative_tree_plot(fits,
     """
     Save a tree plot that compares parameter summaries form
     different distributions. One can also supply additional markers
-    to be compared with using `values_no_error_bars` parameter.
+    to be compared with using `extra_values` parameter.
 
     Parameters
     ----------
@@ -25,7 +26,7 @@ def save_comparative_tree_plot(fits,
 
         Contains the samples from cmdstanpy.
 
-    values_no_error_bars : list of dict
+    extra_values : list of dict
         Additional markers to be shown on tree plot, without error bars:
 
         [
@@ -50,9 +51,9 @@ def save_comparative_tree_plot(fits,
     for fit in fits:
         samples = fit.get_drawset(params=param_names)
         summary, _ = sample_summary(samples, params=summary_params)
-        summaries.append(summaries)
+        summaries.append(summary)
 
-    for values in values_no_error_bars:
+    for values in extra_values:
         summaries.append(summary_from_dict(values))
 
     make_comparative_tree_plot(
