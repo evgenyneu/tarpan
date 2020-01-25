@@ -7,16 +7,19 @@ from tarpan.shared.tree_plot import (
 from tarpan.shared.summary import (
     SummaryParams, sample_summary)
 
+from tarpan.shared.param_names import filter_param_names
 
-def save_comparative_tree_plot(fits,
-                               extra_values=[],
-                               param_names=None,
-                               info_path=InfoPath(),
-                               summary_params=SummaryParams(),
-                               tree_params=TreePlotParams()):
+
+def save_tree_plot(fits,
+                   extra_values=[],
+                   param_names=None,
+                   info_path=InfoPath(),
+                   summary_params=SummaryParams(),
+                   tree_params=TreePlotParams()):
     """
-    Save a tree plot that compares parameter summaries form
-    different distributions. One can also supply additional markers
+    Save a tree plot that summarises parameter distributions.
+    Can compare summaries from multiple models, when multiple fits are
+    supplied. One can also supply additional markers
     to be compared with using `extra_values` parameter.
 
     Parameters
@@ -49,6 +52,7 @@ def save_comparative_tree_plot(fits,
     summaries = []
 
     for fit in fits:
+        param_names = filter_param_names(fit.column_names, param_names)
         samples = fit.get_drawset(params=param_names)
         summary, _ = sample_summary(samples, params=summary_params)
         summaries.append(summary)
