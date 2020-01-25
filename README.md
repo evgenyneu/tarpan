@@ -51,6 +51,8 @@ save_tree_plot([fit], param_names=['mu', 'sigma'])
 
 <img src="docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.png" width="500" alt="Tree plot">
 
+The two error bars indicate 68% and 95% HPDIs (highest posterior density intervals).
+
 
 #### Comparing multiple models on a tree plot
 
