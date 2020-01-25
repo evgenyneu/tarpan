@@ -45,13 +45,25 @@ model_info directory. See example code [here](docs/examples/save_tree_plot/a01_s
 
 ```Python
 from tarpan.cmdstanpy.tree_plot import save_tree_plot
-model = CmdStanModel(stan_file="your_model.stan")
+fit = CmdStanModel(stan_file="your_model.stan")
 save_tree_plot([fit], param_names=['mu', 'sigma'])
 ```
 
 <img src="docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.png" width="500" alt="Tree plot">
 
 
+#### Comparing multiple models on a tree plot
+
+Supply multiple fits in order to compares parameters from multiple models. See example code [here](docs/examples/save_tree_plot/a02_compare_fits).
+
+```Python
+from tarpan.cmdstanpy.tree_plot import save_tree_plot
+fit1 = CmdStanModel(stan_file="your_model1.stan")
+fit2 = CmdStanModel(stan_file="your_model2.stan")
+save_tree_plot([fit1, fit2], param_names=['mu', 'sigma'])
+```
+
+<img src="docs/examples/save_tree_plot/a02_compare_fits/model_info/tree_plot_compare/summary.png" width="500" alt="Tree plot with multiple models">
 
 
 ## Run unit tests

@@ -1,11 +1,5 @@
 """
-Example of using `analyze` function.
-
-Usage
------
-
-    python analyse.py
-
+Create a tree plot
 """
 
 from cmdstanpy import CmdStanModel
