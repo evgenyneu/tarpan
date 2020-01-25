@@ -56,7 +56,7 @@ The two error bars indicate 68% and 95% HPDIs (highest posterior density interva
 
 #### Comparing multiple models on a tree plot
 
-Supply multiple fits in order to compares parameters from multiple models. See example code [here](docs/examples/save_tree_plot/a02_compare_fits).
+Supply multiple fits in order to compare parameters from multiple models. See example code [here](docs/examples/save_tree_plot/a02_compare_fits).
 
 ```Python
 from tarpan.cmdstanpy.tree_plot import save_tree_plot
