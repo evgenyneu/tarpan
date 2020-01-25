@@ -65,13 +65,13 @@ from tarpan.shared.tree_plot import TreePlotParams
 fit1 = CmdStanModel(stan_file="your_model1.stan")
 fit2 = CmdStanModel(stan_file="your_model2.stan")
 
-data = [{ "mu": 2.2, "sigma": 1.3 }]  # Add extra markers (optional)
+data = [{ "mu": 2.2, "tau": 1.3 }]  # Add extra markers (optional)
 
 # Supply legend labels (optional)
 tree_params = TreePlotParams()
 tree_params.labels = ["Model 1", "Model 2", "Exact"]
 
-save_tree_plot([fit1, fit2], extra_values=data, param_names=['mu', 'sigma'],
+save_tree_plot([fit1, fit2], extra_values=data, param_names=['mu', 'tau'],
                tree_params=tree_params)
 ```
 
