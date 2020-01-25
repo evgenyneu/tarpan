@@ -28,7 +28,7 @@ pip install tarpan
 
 This is the main function of the library that saves summaries
 and trace/pair/tree plots in
-[model_info](docs/examples/analyse/a01_simple/model_info/analyse) directory.
+[model_info](docs/examples/analyse/a01_simple/model_info/analyse) directory. See the [example code](docs/examples/analyse/a01_simple) of using `save_analysis` function and [description of ites output](docs/save_analysis/output).
 
 ```Python
 from tarpan.cmdstanpy.analyse import save_analysis
@@ -36,8 +36,6 @@ model = CmdStanModel(stan_file="your_model.stan")
 fit = model.sample(data=your_data)
 save_analysis(fit, param_names=['mu', 'sigma'])
 ```
-
-See the [example code](docs/examples/analyse/a01_simple) of using `save_analysis` function.
 
 
 ### Make tree plot: `save_tree_plot`
