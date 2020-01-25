@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass
 import seaborn as sns
+import matplotlib.pyplot as plt
 from tarpan.shared.param_names import filter_param_names
 from tarpan.shared.info_path import InfoPath, get_info_path
 import math
@@ -92,6 +93,6 @@ def make_pair_plot(samples, param_names=None,
                     color=pair_plot_params.color)
 
     g = g.map_lower(sns.kdeplot, color=pair_plot_params.color)
-    g = g.map_diag(sns.kdeplot, color=pair_plot_params.color, shade=True)
+    g = g.map_diag(plt.hist, color=pair_plot_params.color)
 
     return g
