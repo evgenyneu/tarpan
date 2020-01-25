@@ -53,8 +53,7 @@ save_tree_plot([fit], param_names=['mu', 'sigma'])
 
 See example code [here](docs/examples/save_tree_plot/a01_single_fit).
 
-<img src="a2020/a01/a24_reparametrizing_model_question/versions/non_centered_test/plots/predicted_and_true.png" width="500" alt="Tree plot">
-
+<img src="docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.png" width="500" alt="Tree plot">
 
 
 
