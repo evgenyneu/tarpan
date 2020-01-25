@@ -22,7 +22,7 @@ A table showing summaries of distributions for all parameters. The table's forma
 
 *  **Name, Mean, Std** are the name of the parameter, its mean and standard deviation.
 
-*  **68CI-, 68CI+, 95CI-, 95CI+** are the 68% and 95% HPDIs (highest probability density intervals). These values are configurable, see below.
+*  **68CI-, 68CI+, 95CI-, 95CI+** are the 68% and 95% HPDIs (highest probability density intervals). These values are configurable.
 
 * **Mode, +, -** is a mode of distribution with upper and lower uncertainties, which are calculated as distances to 68% HPDI.
 
