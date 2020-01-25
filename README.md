@@ -58,6 +58,8 @@ Supply multiple fits in order to compares parameters from multiple models. See e
 
 ```Python
 from tarpan.cmdstanpy.tree_plot import save_tree_plot
+from tarpan.shared.tree_plot import TreePlotParams
+
 fit1 = CmdStanModel(stan_file="your_model1.stan")
 fit2 = CmdStanModel(stan_file="your_model2.stan")
 
