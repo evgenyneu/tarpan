@@ -6,7 +6,7 @@ This is a collection of function for analysing output of [cmdstanpy](https://git
 
 * text and plots of the summaries of model parameters,
 
-* histograms of posterior distributions of parameters.
+* histograms and pair plots of posterior distributions of parameters.
 
 
 <img src='images/tarpan.jpg' alt='Picture of Tarpan'>
@@ -36,7 +36,8 @@ from tarpan.cmdstanpy.analyse import save_analysis
 model = CmdStanModel(stan_file="your_model.stan")
 fit = model.sample(data=your_data)
 
-save_analysis(fit)  # <-- Creates plots and summaries in `model_info` directory
+# Create plots and summaries in `model_info` directory
+save_analysis(fit, param_names=['mu', 'sigma'])
 ```
 
 
@@ -105,6 +106,13 @@ The traceplots of the samples for all parameters, the colors show samples from d
 These are histograms that show distributions of values for all parameters:
 
 <img src="docs/examples/analyse/a01_simple/model_info/analyse/posterior_01.png" alt="Histograms of posterior distributions">
+
+
+#### 7. Pair plot: [pair_plot.pdf](docs/examples/analyse/a01_simple/model_info/analyse/pair_plot.pdf)
+
+The pair plot of parameter distributions. It help to see if there are correlations between parameters.
+
+<img src="docs/examples/analyse/a01_simple/model_info/analyse/pair_plot.jpg" alt="Pair plot of posterior distributions">
 
 
 

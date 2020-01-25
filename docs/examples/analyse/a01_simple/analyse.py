@@ -21,7 +21,7 @@ def run_model():
         "sigma": [15, 10, 16, 11,  9, 11, 10, 18]
     }
 
-    fit = model.sample(data=data, chains=4, cores=4,
+    fit = model.sample(data=data, chains=4, cores=4, seed=1,
                        sampling_iters=1000, warmup_iters=1000)
 
     # Creates summaries, traceplots and histograms in `model_info` directory

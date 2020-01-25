@@ -4,19 +4,16 @@ from dataclasses import dataclass
 import seaborn as sns
 from tarpan.shared.param_names import filter_param_names
 from tarpan.shared.info_path import InfoPath, get_info_path
-import matplotlib.pyplot as plt
+import math
 
 
 @dataclass
 class PairPlotParams:
     title: str = None  # Plot's title
-    plot_color: str = "#00a6ff"
-    plot_edge_color: str = "#00a6ff"
-    plot_alpha: float = 0.03
-    plot_line_width: float = 1
-    plot_marker_size: float = 30
-    diag_color: str = "#00a6ff"
-    max_params: int = 7  # Maximum number of parameter to show in the plot
+    color: str = "#00a6ff"
+    marker_size: float = 30
+    max_params: int = 5  # Maximum number of parameter to show in the plot
+    max_samples: int = 503  # Maximum number of samples to show in pair plot
 
     """Type of diahonal plots: 'auto’, ‘hist’, ‘kde’, None"""
     diag_kind: str = 'kde'
@@ -42,15 +39,14 @@ def save_pair_plot(samples, param_names=None,
 
     info_path = InfoPath(**info_path.__dict__)
 
-    fig = make_pair_plot(
+    g = make_pair_plot(
         samples, param_names=param_names,
         pair_plot_params=pair_plot_params)
 
     info_path.base_name = info_path.base_name or "pair_plot"
     info_path.extension = info_path.extension or 'pdf'
     plot_path = get_info_path(info_path)
-    fig.savefig(plot_path, dpi=info_path.dpi)
-    plt.close(fig)
+    g.savefig(plot_path, dpi=info_path.dpi)
 
 
 def make_pair_plot(samples, param_names=None,
@@ -71,23 +67,31 @@ def make_pair_plot(samples, param_names=None,
 
     Returns
     -------
-    Matplotlib's figure:
-        Plot's figure
+    Seaborn's PairGrid
     """
 
     param_names = filter_param_names(samples.columns, param_names)
 
-    fig = sns.pairplot(samples,
-                       diag_kind=pair_plot_params.diag_kind,
-                       plot_kws=dict(
-                            s=pair_plot_params.plot_marker_size,
-                            color=pair_plot_params.plot_color,
-                            edgecolor=pair_plot_params.plot_edge_color,
-                            alpha=pair_plot_params.plot_alpha,
-                            linewidth=pair_plot_params.plot_line_width
-                       ),
-                       diag_kws=dict(
-                            color=pair_plot_params.diag_color
-                       ))
+    if len(param_names) > pair_plot_params.max_params:
+        print((
+            f'Showing only first {pair_plot_params.max_params} '
+            f'parameters out of {len(param_names)} in pair plot.'
+            'Consider limiting the parameter with "param_names".'))
 
-    return fig
+        param_names = param_names[:pair_plot_params.max_params]
+
+    samples = samples[param_names]
+
+    # Show no more than `max_samples` markers
+    keep_nth = math.ceil(samples.shape[0] / pair_plot_params.max_samples)
+    samples = samples[::keep_nth]
+
+    g = sns.PairGrid(samples)
+
+    g = g.map_upper(sns.scatterplot, s=pair_plot_params.marker_size,
+                    color=pair_plot_params.color)
+
+    g = g.map_lower(sns.kdeplot, color=pair_plot_params.color)
+    g = g.map_diag(sns.kdeplot, color=pair_plot_params.color, shade=True)
+
+    return g

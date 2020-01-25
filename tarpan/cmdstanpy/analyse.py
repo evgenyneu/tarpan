@@ -4,6 +4,7 @@ from tarpan.shared.info_path import InfoPath, get_info_path
 from tarpan.shared.summary import SummaryParams
 from tarpan.shared.tree_plot import make_tree_plot
 from tarpan.shared.posterior import save_posterior_plot
+from tarpan.shared.pair_plot import save_pair_plot
 from tarpan.cmdstanpy.summary import save_summary
 from tarpan.cmdstanpy.traceplot import make_traceplot
 
@@ -55,3 +56,7 @@ def save_analysis(fit, param_names=None, info_path=InfoPath(),
     save_posterior_plot(
         summary['samples'], summary['df'], param_names=param_names,
         info_path=info_path, summary_params=summary_params)
+
+    save_pair_plot(
+        summary['samples'], param_names=param_names,
+        info_path=info_path)

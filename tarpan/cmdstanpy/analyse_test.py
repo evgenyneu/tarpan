@@ -14,44 +14,31 @@ def test_save_analysis():
 
     save_analysis(fit)
 
-    file_path = os.path.join(outdir, "diagnostic.txt")
-    assert os.path.isfile(file_path)
+    # Diagnostic
+    assert os.path.isfile(os.path.join(outdir, "diagnostic.txt"))
 
     # Check summary files
     # ---------------
 
-    file_path = os.path.join(outdir, "summary.txt")
-    assert os.path.isfile(file_path)
-
-    file_path = os.path.join(outdir, "summary.csv")
-    assert os.path.isfile(file_path)
+    assert os.path.isfile(os.path.join(outdir, "summary.txt"))
+    assert os.path.isfile(os.path.join(outdir, "summary.csv"))
 
     # Tree plot
-    # ---------
-
-    file_path = os.path.join(outdir, "summary.pdf")
-    assert os.path.isfile(file_path)
+    assert os.path.isfile(os.path.join(outdir, "summary.pdf"))
 
     # Trace plots
     # ----------
 
-    file_path = os.path.join(outdir, "traceplot_01.pdf")
-    assert os.path.isfile(file_path)
-
-    file_path = os.path.join(outdir, "traceplot_02.pdf")
-    assert os.path.isfile(file_path)
-
-    file_path = os.path.join(outdir, "traceplot_03.pdf")
-    assert os.path.isfile(file_path)
+    assert os.path.isfile(os.path.join(outdir, "traceplot_01.pdf"))
+    assert os.path.isfile(os.path.join(outdir, "traceplot_02.pdf"))
+    assert os.path.isfile(os.path.join(outdir, "traceplot_03.pdf"))
 
     # Histograms of posterior distributions
     # ----------
 
-    file_path = os.path.join(outdir, "posterior_01.pdf")
-    assert os.path.isfile(file_path)
+    assert os.path.isfile(os.path.join(outdir, "posterior_01.pdf"))
+    assert os.path.isfile(os.path.join(outdir, "posterior_02.pdf"))
+    assert os.path.isfile(os.path.join(outdir, "posterior_03.pdf"))
 
-    file_path = os.path.join(outdir, "posterior_02.pdf")
-    assert os.path.isfile(file_path)
-
-    file_path = os.path.join(outdir, "posterior_03.pdf")
-    assert os.path.isfile(file_path)
+    # Pair plot
+    assert os.path.isfile(os.path.join(outdir, "pair_plot.pdf"))
