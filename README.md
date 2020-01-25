@@ -61,7 +61,7 @@ from tarpan.cmdstanpy.tree_plot import save_tree_plot
 fit1 = CmdStanModel(stan_file="your_model1.stan")
 fit2 = CmdStanModel(stan_file="your_model2.stan")
 
-data = { "mu": 2.2, "tau": 1.3 }  # Add extra markers (optional)
+data = [{ "mu": 2.2, "tau": 1.3 }]  # Add extra markers (optional)
 
 # Supply legend labels (optional)
 tree_params = TreePlotParams()
