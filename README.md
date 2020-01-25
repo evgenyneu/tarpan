@@ -45,7 +45,8 @@ model_info directory. See the [full example code here](docs/examples/save_tree_p
 
 ```Python
 from tarpan.cmdstanpy.tree_plot import save_tree_plot
-fit = CmdStanModel(stan_file="your_model.stan")
+model = CmdStanModel(stan_file="your_model.stan")
+fit = model.sample(data=your_data)
 save_tree_plot([fit], param_names=['mu', 'sigma'])
 ```
 
