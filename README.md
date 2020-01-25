@@ -98,7 +98,7 @@ The plot of the summary. The error bars correspond to the 68% and 95% HPDIs:
 
 The traceplots of the samples for all parameters, the colors show samples from different chains. The first plot for "lp__" is the most important one, this is the traceplot of the log probability values. Usually, I look "lp__" traceplot to make sure the lines of different colors are well-mixed and are mostly concentrated at some value of the parameter, which means that the sampling converged.
 
-<img src="docs/examples/analyse/a01_simple/model_info/analyse/tracepot_01.jpg" width="700" alt="Traceplot">
+<img src="docs/examples/analyse/a01_simple/model_info/analyse/traceplot_01.jpg" width="700" alt="Traceplot">
 
 
 #### 6. Histograms: [posterior_01.pdf](docs/examples/analyse/a01_simple/model_info/analyse/posterior_01.pdf), [posterior_02.pdf](docs/examples/analyse/a01_simple/model_info/analyse/posterior_02.pdf), [posterior_03.pdf](docs/examples/analyse/a01_simple/model_info/analyse/posterior_03.pdf)
