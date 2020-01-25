@@ -1,4 +1,4 @@
-### `save_analysis' sample code
+### `save_analysis` sample code
 
 To run the example, download analyse.py and eight_schools.stan files into the same directory and run
 
