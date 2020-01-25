@@ -69,11 +69,10 @@ fit1 = model1.sample(data=your_data)
 model2 = CmdStanModel(stan_file="your_model2.stan")
 fit2 = model2.sample(data=your_data)
 
-data = [{ "mu": 2.2, "tau": 1.3 }]  # Add extra markers (optional)
-
 # Supply legend labels (optional)
 tree_params = TreePlotParams()
 tree_params.labels = ["Model 1", "Model 2", "Exact"]
+data = [{ "mu": 2.2, "tau": 1.3 }]  # Add extra markers (optional)
 
 save_tree_plot([fit1, fit2], extra_values=data, param_names=['mu', 'tau'],
                tree_params=tree_params)
