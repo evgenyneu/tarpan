@@ -1,6 +1,6 @@
 # Output of `save_analysis` function
 
-The function create the following files in [model_info](docs/examples/analyse/a01_simple/model_info/analyse) dirrectory.
+The function create the following files in [model_info](/docs/examples/analyse/a01_simple/model_info/analyse) dirrectory.
 
 ## 1. Model's diagnostic info [diagnostic.txt](docs/examples/analyse/a01_simple/model_info/analyse/diagnostic.txt)
 
