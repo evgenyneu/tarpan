@@ -87,8 +87,7 @@ The text summary format is such that the text can be pasted into Github/Gitlab/B
 ## Tree plot: `save_tree_plot`
 
 This function shows exactly the same information as `save_summary`, but in
-the form a plot. This plot is useful to see and compare distributions of parameters.
-The markers are the modes of the distributions, and the two error bars
+the form a plot. The markers are the modes of the distributions, and the two error bars
 indicate 68% and 95% HPDIs (highest posterior density intervals).
 
 ```Python
