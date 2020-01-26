@@ -17,12 +17,10 @@ def run_model():
     fit = model.sample(data=data, chains=4, cores=4, seed=1,
                        sampling_iters=1000, warmup_iters=1000)
 
-    # Specify custom HPDI values
-    summary_params = SummaryParams()
-    summary_params.hpdis = [0.05, 0.99]
+    # Make summary with custom HPDI values
 
     save_summary(fit, param_names=['mu', 'tau', 'eta.1'],
-                 summary_params=summary_params)
+                 summary_params=SummaryParams(hpdis=[0.05, 0.99]))
 
 
 if __name__ == '__main__':
