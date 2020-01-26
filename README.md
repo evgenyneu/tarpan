@@ -48,8 +48,7 @@ save_analysis(fit, param_names=['mu', 'sigma'])
 The plot shows the values of parameters samples.
 Different colors correspond to samples form different chains. Ideally,
 the lines of different colors on the left plots are well mixed, and the
-right plot is fairly uniform. It is usually enough just to look at the trace plot of
-the log-probabilty samples (lp__).
+right plot is fairly uniform. It is usually enough just to look at the trace plot of the log-probabilty samples `lp__`.
 
 
 ```Python
