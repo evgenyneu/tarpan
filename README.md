@@ -53,7 +53,7 @@ fit = model.sample(data=your_data)
 save_tree_plot([fit], param_names=['mu', 'sigma'])
 ```
 
-[Full example code](docs/examples/save_tree_plot/a01_single_fit)
+* [Full example code](docs/examples/save_tree_plot/a01_single_fit)
 
 <img src="docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.png" width="500" alt="Tree plot">
 
@@ -62,7 +62,7 @@ The two error bars indicate 68% and 95% HPDIs (highest posterior density interva
 
 #### Comparing multiple models on a tree plot
 
-Supply multiple fits in order to compare parameters from multiple models. See example code [here](docs/examples/save_tree_plot/a02_compare_fits).
+Supply multiple fits in order to compare parameters from multiple models.
 
 ```Python
 from tarpan.cmdstanpy.tree_plot import save_tree_plot
@@ -83,6 +83,8 @@ save_tree_plot([fit1, fit2], extra_values=data, param_names=['mu', 'tau'],
                tree_params=tree_params)
 ```
 
+* [Full example code](docs/examples/save_tree_plot/a02_compare_fits)
+
 <img src="docs/examples/save_tree_plot/a02_compare_fits/model_info/tree_plot_compare/summary.png" width="500" alt="Tree plot with multiple models">
 
 
@@ -99,7 +101,7 @@ fit = model.sample(data=your_data)
 save_pair_plot(fit, param_names=['mu', 'tau', 'eta.1'])
 ```
 
-[Full example code](docs/examples/save_pair_plot/a01_pair_plot)
+* [Full example code](docs/examples/save_pair_plot/a01_pair_plot)
 
 <img src="docs/examples/save_pair_plot/a01_pair_plot/model_info/pair_plot/pair_plot.jpg" width="500" alt="Pair plot">
 
