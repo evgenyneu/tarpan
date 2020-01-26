@@ -23,4 +23,4 @@ save_tree_plot([fit],
                ))
 ```
 
-See [more examples here](/docs/examples/save_tree_plot/a03_custom_location).
+See [more examples here](/docs/examples/save_tree_plot/a03_custom_location/custom_location.py).
