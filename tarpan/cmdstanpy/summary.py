@@ -29,8 +29,22 @@ def save_summary(fit, param_names=None, info_path=InfoPath(),
 
         Path information for creating summaries.
 
+    Returns
+    -------
+    dict:
+        df:
+            Panda's data frame containing the summary
+        table: str
+            Summary table in text format.
+        samples: Panda's data frame
+            Combined samples from all chains
+        path_txt: str
+            Path to the text summary
+        path_csv: str
+            Path to summary in CSV format
     """
 
+    info_path.set_codefile()
     info_path = InfoPath(**info_path.__dict__)
 
     df_summary, summary, samples = make_summary(
