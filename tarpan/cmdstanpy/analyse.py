@@ -42,6 +42,7 @@ def save_analysis(fit, param_names=None, info_path=InfoPath(),
         Names of parameters to plot.
     """
 
+    info_path.set_codefile()
     save_diagnostic(fit, info_path=info_path)
 
     summary = save_summary(
