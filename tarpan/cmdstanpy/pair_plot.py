@@ -12,7 +12,7 @@ def save_pair_plot(fit,
                    pair_plot_params=PairPlotParams()):
     """
     Save a pair plot of distributions of parameters. It helps
-    to see correlations between parameters and spotr funnel
+    to see correlations between parameters and spot funnel
     shaped distributions that can result in sampling problems.
 
     Parameters
