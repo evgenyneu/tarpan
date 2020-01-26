@@ -27,7 +27,7 @@ class TraceplotParams:
                      '#33007750', '#BBAA2250', '#55FFBB50']
 
 
-def make_traceplot(fit, param_names=None, info_path=InfoPath(),
+def save_traceplot(fit, param_names=None, info_path=InfoPath(),
                    traceplot_params=TraceplotParams()):
     """
     Make traceplots form the fit.
