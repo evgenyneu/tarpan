@@ -195,6 +195,13 @@ save_histogram(fit, param_names=['mu', 'tau', 'eta.1', 'theta.1'])
 <img src="docs/examples/save_histogram/a01_save_histogram/model_info/histogram/histogram_01.jpg" width="900" alt="Histogram">
 
 
+## Common questions
+
+* [How to change the widths of HPD intervals?](docs/hpdi.md)
+
+* [How to change location and file names of generated files?](docs/file_names.md)
+
+
 
 ## Run unit tests
 
