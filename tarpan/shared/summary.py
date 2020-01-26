@@ -1,19 +1,20 @@
 """Create summary of parameter distributions: mean, std, mode etc."""
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from tarpan.shared.info_path import InfoPath, get_info_path
 import arviz as az
 import numpy as np
 import pandas as pd
 from tabulate import tabulate
 from scipy.stats import gaussian_kde
+from typing import List
 
 
 @dataclass
 class SummaryParams:
     # List of probabilities for HPDIs (highest posterior density intervals)
     # to be shown in summary
-    hpdis = [0.6827, 0.9545]
+    hpdis: List = field(default_factory=lambda: [0.6827, 0.9545])
 
     def hpdi_percent(self):
         """

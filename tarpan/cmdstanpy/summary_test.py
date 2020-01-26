@@ -27,11 +27,8 @@ def test_save_summary_specify_hpdi():
     if os.path.isdir(outdir):
         shutil.rmtree(outdir)
 
-    summary_params = SummaryParams()
-    summary_params.hpdis = [0.05, 0.99]
-
     save_summary(fit, param_names=["mu", "tau", 'eta.1'],
-                 summary_params=summary_params)
+                 summary_params=SummaryParams(hpdis=[0.05, 0.99]))
 
     assert os.path.isfile(os.path.join(outdir, "summary.txt"))
     assert os.path.isfile(os.path.join(outdir, "summary.csv"))
