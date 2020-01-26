@@ -63,6 +63,9 @@ save_summary(fit, param_names=['mu', 'tau', 'eta.1'])
 
 * [Full example code](docs/examples/save_summary/a01_save_summary)
 
+The text summary format is such that the text can be pasted in
+Github/Gitlab/Bitbucket's Markdown file, like this:
+
 | Name   |   Mean |   Std |   Mode |    + |    - |   68CI- |   68CI+ |   95CI- |   95CI+ |   N_Eff |   R_hat |
 |:-------|-------:|------:|-------:|-----:|-----:|--------:|--------:|--------:|--------:|--------:|--------:|
 | mu     |   8.05 |  5.12 |   7.53 | 4.63 | 4.59 |    2.93 |   12.16 |   -1.84 |   18.74 |    1540 |    1.00 |
