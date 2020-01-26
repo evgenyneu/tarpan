@@ -29,6 +29,7 @@ pip install tarpan
 This is the main function of the library that saves summaries
 and trace/pair/tree plots in
 [model_info](docs/examples/analyse/a01_simple/model_info/analyse) directory.
+The function is useful when you want to generate everything at once.
 
 ```Python
 from tarpan.cmdstanpy.analyse import save_analysis
@@ -44,7 +45,7 @@ save_analysis(fit, param_names=['mu', 'sigma'])
 
 ### Tree plot: `save_tree_plot`
 
-Function `save_tree_plot` creates a [tree plot](docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.pdf).
+The plot is useful to see and compare distributions of parameters. The markers are the modes of the distributions, and the two error bars indicate 68% and 95% HPDIs (highest posterior density intervals).
 
 ```Python
 from tarpan.cmdstanpy.tree_plot import save_tree_plot
@@ -56,8 +57,6 @@ save_tree_plot([fit], param_names=['mu', 'sigma'])
 * [Full example code](docs/examples/save_tree_plot/a01_single_fit)
 
 <img src="docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.png" width="500" alt="Tree plot">
-
-The two error bars indicate 68% and 95% HPDIs (highest posterior density intervals).
 
 
 ### Comparing multiple models on a tree plot
@@ -91,7 +90,7 @@ save_tree_plot([fit1, fit2], extra_values=data, param_names=['mu', 'tau'],
 
 ### Pair plot: `save_pair_plot`
 
-Function `save_pair_plot` creates a [pair plot](docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.pdf). It helps to see correlations between parameters and spot funnel
+The plot helps to see correlations between parameters and spot funnel
 shaped distributions that can result in sampling problems.
 
 ```Python
