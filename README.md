@@ -22,14 +22,15 @@ First, install [cmdstanpy library](https://cmdstanpy.readthedocs.io/en/latest/in
 pip install tarpan
 ```
 
-## Usage
 
-### Complete analysis: `save_analysis`
+
+## Complete analysis: `save_analysis`
 
 This is the main function of the library that saves summaries
 and trace/pair/tree plots in
 [model_info](docs/examples/analyse/a01_simple/model_info/analyse) directory.
-The function is useful when you want to generate everything at once.
+The function is useful when you want to generate all types of summaries
+and plots at once.
 
 ```Python
 from tarpan.cmdstanpy.analyse import save_analysis
@@ -42,53 +43,53 @@ save_analysis(fit, param_names=['mu', 'sigma'])
 
 * [Description of output files](docs/save_analysis/output)
 
-
-### Summary: `save_summary`
-
-<!-- The plot shows the values of parameters samples.
-Different colors correspond to samples form different chains. Ideally,
-the lines of different colors on the left plots are well mixed, and the
-right plot is fairly uniform. It is usually enough just to look at the trace plot of the log-probabilty samples `lp__`.
-
-
-```Python
-from tarpan.cmdstanpy.traceplot import save_traceplot
-
-model = CmdStanModel(stan_file="your_model.stan")
-fit = model.sample(data=your_data)
-save_traceplot(fit, param_names=['mu', 'tau', 'eta.1'])
-```
-
-* [Full example code](docs/examples/save_traceplot/a01_save_traceplot)
-
-<img src="docs/examples/save_traceplot/a01_save_traceplot/model_info/traceplot/traceplot_01.jpg" width="500" alt="Traceplot"> -->
+If you don't need everything, you can call individual
+functions described below to make just one type of plot or a summary.
 
 
 
-### Trace plot: `save_traceplot`
+## Summary: `save_summary`
 
-The plot shows the values of parameters samples.
-Different colors correspond to samples form different chains. Ideally,
-the lines of different colors on the left plots are well mixed, and the
-right plot is fairly uniform. It is usually enough just to look at the trace plot of the log-probabilty samples `lp__`.
+Creates a summary of parameter distributions and saves it in text and CSV files.
 
 
 ```Python
-from tarpan.cmdstanpy.traceplot import save_traceplot
+from tarpan.cmdstanpy.summary import save_summary
 
 model = CmdStanModel(stan_file="your_model.stan")
 fit = model.sample(data=your_data)
-save_traceplot(fit, param_names=['mu', 'tau', 'eta.1'])
+save_summary(fit, param_names=['mu', 'tau', 'eta.1'])
 ```
 
-* [Full example code](docs/examples/save_traceplot/a01_save_traceplot)
+* [Full example code](docs/examples/save_summary/a01_save_summary)
 
-<img src="docs/examples/save_traceplot/a01_save_traceplot/model_info/traceplot/traceplot_01.jpg" width="500" alt="Traceplot">
+| Name   |   Mean |   Std |   Mode |    + |    - |   68CI- |   68CI+ |   95CI- |   95CI+ |   N_Eff |   R_hat |
+|:-------|-------:|------:|-------:|-----:|-----:|--------:|--------:|--------:|--------:|--------:|--------:|
+| mu     |   8.05 |  5.12 |   7.53 | 4.63 | 4.59 |    2.93 |   12.16 |   -1.84 |   18.74 |    1540 |    1.00 |
+| tau    |   6.41 |  5.72 |   2.36 | 5.41 | 2.35 |    0.00 |    7.76 |    0.00 |   17.07 |    1175 |    1.00 |
+| eta.1  |   0.39 |  0.92 |   0.60 | 0.71 | 1.13 |   -0.53 |    1.31 |   -1.48 |    2.19 |    3505 |    1.00 |
 
 
-### Tree plot: `save_tree_plot`
+### Summary columns
 
-The plot is useful to see and compare distributions of parameters. The markers are the modes of the distributions, and the two error bars indicate 68% and 95% HPDIs (highest posterior density intervals).
+*  **Name, Mean, Std** are the name of the parameter, its mean and standard deviation.
+
+*  **68CI-, 68CI+, 95CI-, 95CI+** are the 68% and 95% HPDIs (highest probability density intervals). These values are configurable.
+
+* **Mode, +, -** is a mode of distribution with upper and lower uncertainties, which are calculated as distances to 68% HPDI.
+
+* **N_Eff** is Stan's number of effective samples, the higher the better.
+
+* **R_hat** is a Stan's parameter representing the quality of the sampling. This value needs to be smaller than 1.00. After generating a model I usually immediately look at this R_hat column to see if the sampling was good.
+
+
+
+## Tree plot: `save_tree_plot`
+
+This function shows exactly the same information as `save_summary`, but in
+the form a plot. This plot is useful to see and compare distributions of parameters.
+The markers are the modes of the distributions, and the two error bars
+indicate 68% and 95% HPDIs (highest posterior density intervals).
 
 ```Python
 from tarpan.cmdstanpy.tree_plot import save_tree_plot
@@ -131,7 +132,29 @@ save_tree_plot([fit1, fit2], extra_values=data, param_names=['mu', 'tau'],
 
 
 
-### Pair plot: `save_pair_plot`
+## Trace plot: `save_traceplot`
+
+The plot shows the values of parameters samples.
+Different colors correspond to samples form different chains. Ideally,
+the lines of different colors on the left plots are well mixed, and the
+right plot is fairly uniform. It is usually enough just to look at the trace plot of the log-probabilty samples `lp__`.
+
+
+```Python
+from tarpan.cmdstanpy.traceplot import save_traceplot
+
+model = CmdStanModel(stan_file="your_model.stan")
+fit = model.sample(data=your_data)
+save_traceplot(fit, param_names=['mu', 'tau', 'eta.1'])
+```
+
+* [Full example code](docs/examples/save_traceplot/a01_save_traceplot)
+
+<img src="docs/examples/save_traceplot/a01_save_traceplot/model_info/traceplot/traceplot_01.jpg" width="500" alt="Traceplot">
+
+
+
+## Pair plot: `save_pair_plot`
 
 The plot helps to see correlations between parameters and spot funnel
 shaped distributions that can result in sampling problems.
