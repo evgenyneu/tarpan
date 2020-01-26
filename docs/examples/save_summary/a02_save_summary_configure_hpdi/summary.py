@@ -18,7 +18,6 @@ def run_model():
                        sampling_iters=1000, warmup_iters=1000)
 
     # Make summary with custom HPDI values
-
     save_summary(fit, param_names=['mu', 'tau', 'eta.1'],
                  summary_params=SummaryParams(hpdis=[0.05, 0.99]))
 
