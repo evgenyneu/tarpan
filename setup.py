@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="tarpan",
-    version="0.2.0",
+    version="0.2.1",
     author="Evgenii Neumerzhitckii",
     author_email="sausageskin@gmail.com",
     description="A collection of tools for analysing cmdspanpy output, written in Python",
