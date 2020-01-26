@@ -55,7 +55,7 @@ def run_model():
     save_tree_plot([fit],
                    info_path=InfoPath(dir_name='my_files'))
 
-    # Change the root path to tarpan in your user directory
+    # Change the root path to "tarpan" in your user's home directory
     #   ~/tarpan/model_info/custom_location/summary.pdf
     save_tree_plot([fit],
                    info_path=InfoPath(path='~/tarpan'))
