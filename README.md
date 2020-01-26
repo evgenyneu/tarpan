@@ -99,7 +99,7 @@ save_tree_plot([fit], param_names=['mu', 'sigma'])
 
 * [Full example code](docs/examples/save_tree_plot/a01_single_fit)
 
-<img src="docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.png" width="500" alt="Tree plot">
+<img src="docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.png" width="600" alt="Tree plot">
 
 
 ### Comparing multiple models on a tree plot
@@ -127,7 +127,7 @@ save_tree_plot([fit1, fit2], extra_values=data, param_names=['mu', 'tau'],
 
 * [Full example code](docs/examples/save_tree_plot/a02_compare_fits)
 
-<img src="docs/examples/save_tree_plot/a02_compare_fits/model_info/tree_plot_compare/summary.png" width="500" alt="Tree plot with multiple models">
+<img src="docs/examples/save_tree_plot/a02_compare_fits/model_info/tree_plot_compare/summary.png" width="600" alt="Tree plot with multiple models">
 
 
 
@@ -149,7 +149,7 @@ save_traceplot(fit, param_names=['mu', 'tau', 'eta.1'])
 
 * [Full example code](docs/examples/save_traceplot/a01_save_traceplot)
 
-<img src="docs/examples/save_traceplot/a01_save_traceplot/model_info/traceplot/traceplot_01.jpg" width="500" alt="Traceplot">
+<img src="docs/examples/save_traceplot/a01_save_traceplot/model_info/traceplot/traceplot_01.jpg" width="600" alt="Traceplot">
 
 
 
@@ -167,7 +167,7 @@ save_pair_plot(fit, param_names=['mu', 'tau', 'eta.1'])
 
 * [Full example code](docs/examples/save_pair_plot/a01_pair_plot)
 
-<img src="docs/examples/save_pair_plot/a01_pair_plot/model_info/pair_plot/pair_plot.jpg" width="500" alt="Pair plot">
+<img src="docs/examples/save_pair_plot/a01_pair_plot/model_info/pair_plot/pair_plot.jpg" width="600" alt="Pair plot">
 
 
 
@@ -184,7 +184,7 @@ save_histogram(fit, param_names=['mu', 'tau', 'eta.1', 'theta.1'])
 
 * [Full example code](docs/examples/save_histogram/a01_save_histogram)
 
-<img src="docs/examples/save_histogram/a01_save_histogram/model_info/histogram/histogram_01.jpg" width="500" alt="Histogram">
+<img src="docs/examples/save_histogram/a01_save_histogram/model_info/histogram/histogram_01.jpg" width="600" alt="Histogram">
 
 
 
