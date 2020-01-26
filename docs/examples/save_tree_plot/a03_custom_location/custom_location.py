@@ -45,7 +45,7 @@ def run_model():
     save_tree_plot([fit],
                    info_path=InfoPath(sub_dir_name="custom"))
 
-    # Do not create sub-directory name:
+    # Do not create sub-directory:
     #   model_into/summary.pdf
     save_tree_plot([fit],
                    info_path=InfoPath(sub_dir_name=InfoPath.DO_NOT_CREATE))
