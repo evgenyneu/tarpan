@@ -29,6 +29,7 @@ def save_pair_plot(fit,
 
     """
 
+    info_path.set_codefile()
     param_names = filter_param_names(fit.column_names, param_names)
     samples = fit.get_drawset(params=param_names)
 
