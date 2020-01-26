@@ -40,6 +40,7 @@ and plots at once.
 
 ```Python
 from tarpan.cmdstanpy.analyse import save_analysis
+
 model = CmdStanModel(stan_file="your_model.stan")
 fit = model.sample(data=your_data)
 save_analysis(fit, param_names=['mu', 'sigma'])
@@ -98,6 +99,7 @@ indicate 68% and 95% HPDIs (highest posterior density intervals).
 
 ```Python
 from tarpan.cmdstanpy.tree_plot import save_tree_plot
+
 model = CmdStanModel(stan_file="your_model.stan")
 fit = model.sample(data=your_data)
 save_tree_plot([fit], param_names=['mu', 'sigma'])
