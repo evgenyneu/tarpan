@@ -1,6 +1,6 @@
 # A Python library for analysing cmdstanpy output
 
-This is a collection of function for analysing output of [cmdstanpy](https://github.com/stan-dev/cmdstanpy) library. The main idea is to do a quick data analysis by calling a single function that makes:
+This is a collection of functions for analysing output of [cmdstanpy](https://github.com/stan-dev/cmdstanpy) library. The main idea is to do a quick data analysis by calling a single function that makes:
 
 * traceplots of samples,
 
@@ -28,7 +28,7 @@ pip install tarpan
 
 This is the main function of the library that saves summaries
 and trace/pair/tree plots in
-[model_info](docs/examples/analyse/a01_simple/model_info/analyse) directory. See the [example code](docs/examples/analyse/a01_simple) of using `save_analysis` function and [description of its output files](docs/save_analysis/output).
+[model_info](docs/examples/analyse/a01_simple/model_info/analyse) directory. See the [full example code](docs/examples/analyse/a01_simple) and [description of its output files](docs/save_analysis/output).
 
 ```Python
 from tarpan.cmdstanpy.analyse import save_analysis
@@ -41,11 +41,12 @@ save_analysis(fit, param_names=['mu', 'sigma'])
 ### Make tree plot: `save_tree_plot`
 
 Function `save_tree_plot` creates a [tree plot](docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.pdf) in
-model_info directory. See example code [here](docs/examples/save_tree_plot/a01_single_fit).
+model_info directory. See the [full example code here](docs/examples/save_tree_plot/a01_single_fit).
 
 ```Python
 from tarpan.cmdstanpy.tree_plot import save_tree_plot
-fit = CmdStanModel(stan_file="your_model.stan")
+model = CmdStanModel(stan_file="your_model.stan")
+fit = model.sample(data=your_data)
 save_tree_plot([fit], param_names=['mu', 'sigma'])
 ```
 
@@ -56,22 +57,24 @@ The two error bars indicate 68% and 95% HPDIs (highest posterior density interva
 
 #### Comparing multiple models on a tree plot
 
-Supply multiple fits in order to compares parameters from multiple models. See example code [here](docs/examples/save_tree_plot/a02_compare_fits).
+Supply multiple fits in order to compare parameters from multiple models. See example code [here](docs/examples/save_tree_plot/a02_compare_fits).
 
 ```Python
 from tarpan.cmdstanpy.tree_plot import save_tree_plot
 from tarpan.shared.tree_plot import TreePlotParams
 
-fit1 = CmdStanModel(stan_file="your_model1.stan")
-fit2 = CmdStanModel(stan_file="your_model2.stan")
-
-data = [{ "mu": 2.2, "tau": 1.3 }]  # Add extra markers (optional)
+# Sample from two models
+model1 = CmdStanModel(stan_file="your_model1.stan")
+fit1 = model1.sample(data=your_data)
+model2 = CmdStanModel(stan_file="your_model2.stan")
+fit2 = model2.sample(data=your_data)
 
 # Supply legend labels (optional)
 tree_params = TreePlotParams()
 tree_params.labels = ["Model 1", "Model 2", "Exact"]
+data = [{ "mu": 2.2, "tau": 1.3 }]  # Add extra markers (optional)
 
-save_tree_plot([fit1, fit2], extra_values=data, param_names=['mu', 'sigma'],
+save_tree_plot([fit1, fit2], extra_values=data, param_names=['mu', 'tau'],
                tree_params=tree_params)
 ```
 
