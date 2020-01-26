@@ -16,10 +16,11 @@ This is a collection of functions for analysing output of [cmdstanpy](https://gi
 
 ## Setup
 
-First, install [cmdstanpy library](https://cmdstanpy.readthedocs.io/en/latest/index.html), and then do:
+To install tarpan and [cmdstanpy library](https://cmdstanpy.readthedocs.io/en/latest/index.html) do:
 
 ```
 pip install tarpan
+install_cmdstan
 ```
 
 
