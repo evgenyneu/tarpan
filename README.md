@@ -149,7 +149,7 @@ save_traceplot(fit, param_names=['mu', 'tau', 'eta.1'])
 
 * [Full example code](docs/examples/save_traceplot/a01_save_traceplot)
 
-<img src="docs/examples/save_traceplot/a01_save_traceplot/model_info/traceplot/traceplot_01.jpg" alt="Traceplot">
+<img src="docs/examples/save_traceplot/a01_save_traceplot/model_info/traceplot/traceplot_01.jpg" width="900" alt="Traceplot">
 
 
 
@@ -184,7 +184,7 @@ save_histogram(fit, param_names=['mu', 'tau', 'eta.1', 'theta.1'])
 
 * [Full example code](docs/examples/save_histogram/a01_save_histogram)
 
-<img src="docs/examples/save_histogram/a01_save_histogram/model_info/histogram/histogram_01.jpg" alt="Histogram">
+<img src="docs/examples/save_histogram/a01_save_histogram/model_info/histogram/histogram_01.jpg" width="900" alt="Histogram">
 
 
 
