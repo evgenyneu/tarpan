@@ -43,6 +43,28 @@ save_analysis(fit, param_names=['mu', 'sigma'])
 * [Description of output files](docs/save_analysis/output)
 
 
+### Trace plot: `save_traceplot`
+
+The plot shows the values of parameters samples.
+Different colors correspond to samples form different chains. Ideally,
+the lines of different colors on the left plots are well mixed, and the
+right plot is fairly uniform. It is usually enough to look at the trace plot of
+the log-probabilty samples (lp___).
+
+
+```Python
+from tarpan.cmdstanpy.traceplot import save_traceplot
+
+model = CmdStanModel(stan_file="your_model.stan")
+fit = model.sample(data=your_data)
+save_traceplot(fit, param_names=['mu', 'tau', 'eta.1'])
+```
+
+* [Full example code](docs/examples/save_traceplot/a01_save_traceplot)
+
+<img src="docs/examples/save_traceplot/a01_save_traceplot/model_info/traceplot/traceplot_01.jpg" width="500" alt="Traceplot">
+
+
 ### Tree plot: `save_tree_plot`
 
 The plot is useful to see and compare distributions of parameters. The markers are the modes of the distributions, and the two error bars indicate 68% and 95% HPDIs (highest posterior density intervals).
@@ -103,7 +125,6 @@ save_pair_plot(fit, param_names=['mu', 'tau', 'eta.1'])
 * [Full example code](docs/examples/save_pair_plot/a01_pair_plot)
 
 <img src="docs/examples/save_pair_plot/a01_pair_plot/model_info/pair_plot/pair_plot.jpg" width="500" alt="Pair plot">
-
 
 
 
