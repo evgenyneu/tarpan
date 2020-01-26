@@ -11,7 +11,7 @@ def test_save_traceplot():
     if os.path.isdir(outdir):
         shutil.rmtree(outdir)
 
-    save_traceplot(fit, info_path=path)
+    save_traceplot(fit)
 
     assert os.path.isfile(os.path.join(outdir, "traceplot_01.pdf"))
     assert os.path.isfile(os.path.join(outdir, "traceplot_02.pdf"))

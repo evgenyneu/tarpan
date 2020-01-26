@@ -6,7 +6,7 @@ from tarpan.cmdstanpy.histogram import save_histogram
 
 def test_save_traceplot():
     fit = get_fit()
-    outdir = "tarpan/cmdstanpy/model_info/traceplot_test"
+    outdir = "tarpan/cmdstanpy/model_info/histogram_test"
 
     if os.path.isdir(outdir):
         shutil.rmtree(outdir)
