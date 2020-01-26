@@ -1,7 +1,3 @@
-"""
-Create a tree plot
-"""
-
 from cmdstanpy import CmdStanModel
 from tarpan.cmdstanpy.pair_plot import save_pair_plot
 

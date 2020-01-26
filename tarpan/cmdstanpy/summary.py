@@ -48,7 +48,7 @@ def save_summary(fit, param_names=None, info_path=InfoPath(),
     info_path = InfoPath(**info_path.__dict__)
 
     df_summary, summary, samples = make_summary(
-        fit, param_names=param_names)
+        fit, param_names=param_names, summary_params=summary_params)
 
     output = save_summary_to_disk(df_summary, summary, info_path=info_path)
 

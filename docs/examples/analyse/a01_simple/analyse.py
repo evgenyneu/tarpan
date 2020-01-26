@@ -1,13 +1,3 @@
-"""
-Example of using `analyze` function.
-
-Usage
------
-
-    python analyse.py
-
-"""
-
 from cmdstanpy import CmdStanModel
 from tarpan.cmdstanpy.analyse import save_analysis
 
