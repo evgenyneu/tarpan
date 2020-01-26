@@ -19,6 +19,17 @@ def run_model():
     fit = model.sample(data=data, chains=4, cores=4, seed=1,
                        sampling_iters=1000, warmup_iters=1000)
 
+    # Change all path components all at once:
+    #   analysis/model1/normal.png
+    save_tree_plot([fit],
+                   info_path=InfoPath(
+                        path='~/tarpan',
+                        dir_name="analysis",
+                        sub_dir_name="model1",
+                        base_name="normal",
+                        extension="png"
+                   ))
+
     # Change the file name:
     #   model_into/custom_location/my_summary.pdf
     save_tree_plot([fit],
