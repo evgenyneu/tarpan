@@ -23,7 +23,7 @@ pip install tarpan
 ```
 
 
-Finally, install cmdstan by running:
+Finally, install [cmdstan](https://github.com/stan-dev/cmdstan) by running:
 
 ```
 install_cmdstan
