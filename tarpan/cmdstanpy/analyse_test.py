@@ -36,9 +36,9 @@ def test_save_analysis():
     # Histograms of posterior distributions
     # ----------
 
-    assert os.path.isfile(os.path.join(outdir, "posterior_01.pdf"))
-    assert os.path.isfile(os.path.join(outdir, "posterior_02.pdf"))
-    assert os.path.isfile(os.path.join(outdir, "posterior_03.pdf"))
+    assert os.path.isfile(os.path.join(outdir, "histogram_01.pdf"))
+    assert os.path.isfile(os.path.join(outdir, "histogram_02.pdf"))
+    assert os.path.isfile(os.path.join(outdir, "histogram_03.pdf"))
 
     # Pair plot
     assert os.path.isfile(os.path.join(outdir, "pair_plot.pdf"))

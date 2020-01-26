@@ -11,7 +11,7 @@ from tarpan.shared.param_names import filter_param_names
 
 
 @dataclass
-class PosteriorPlotParams:
+class HistogramParams:
     title: str = None  # Plot's title
     max_plot_pages: int = 4  # Maximum number of plots to generate.
     num_plot_rows: int = 4  # Number of rows (subplots) in a plot.
@@ -23,9 +23,9 @@ class PosteriorPlotParams:
     kde_line_styles = ['dotted', 'solid', '-.']
 
 
-def save_posterior_plot(samples, summary, param_names=None,
+def save_histogram(samples, summary, param_names=None,
                         info_path=InfoPath(),
-                        posterior_plot_params=PosteriorPlotParams(),
+                        histogram_params=HistogramParams(),
                         summary_params=SummaryParams()):
     """
     Make histograms for the parameters from posterior destribution.
@@ -48,12 +48,12 @@ def save_posterior_plot(samples, summary, param_names=None,
 
     info_path = InfoPath(**info_path.__dict__)
 
-    figures_and_axes = plot_posterior(
+    figures_and_axes = make_histograms(
         samples, summary, param_names=param_names,
-        params=posterior_plot_params,
+        params=histogram_params,
         summary_params=summary_params)
 
-    base_name = info_path.base_name or "posterior"
+    base_name = info_path.base_name or "histogram"
     info_path.extension = info_path.extension or 'pdf'
 
     for i, figure_and_axis in enumerate(figures_and_axes):
@@ -64,9 +64,13 @@ def save_posterior_plot(samples, summary, param_names=None,
         plt.close(fig)
 
 
-def make_single_posterior_plot(i_start, samples, summary, param_names,
-                               params: PosteriorPlotParams,
-                               summary_params=SummaryParams()):
+def make_histogram_one_page(i_start, samples, summary, param_names,
+                            params: HistogramParams,
+                            summary_params=SummaryParams()):
+    """
+    Make a single file with histograms for the parameters
+    from posterior destribution.
+    """
 
     nrows = math.ceil((len(param_names) - i_start) / params.ncols)
 
@@ -148,11 +152,12 @@ def make_single_posterior_plot(i_start, samples, summary, param_names,
     return (fig, ax)
 
 
-def plot_posterior(samples, summary, param_names=None,
-                   params=PosteriorPlotParams(),
-                   summary_params=SummaryParams()):
+def make_histograms(samples, summary, param_names=None,
+                    params=HistogramParams(),
+                    summary_params=SummaryParams()):
     """
-    Make histograms for the parameters from posterior destribution.
+    Make multiple files with
+    histograms for the parameters from posterior destribution.
 
     Parameters
     -----------
@@ -178,7 +183,7 @@ def plot_posterior(samples, summary, param_names=None,
     if n_plots > params.max_plot_pages:
         print((
             f'Showing only first {params.max_plot_pages} '
-            f'pages out of {n_plots} of posterior plots.'
+            f'pages out of {n_plots} of histogram.'
             'Consider specifying "param_names".'))
 
         n_plots = params.max_plot_pages
@@ -190,7 +195,7 @@ def plot_posterior(samples, summary, param_names=None,
 
     # Make multiple traceplots
     for i_plot in range(n_plots):
-        fig, ax = make_single_posterior_plot(
+        fig, ax = make_histogram_one_page(
             i_start=i_plot * params.num_plot_rows * params.ncols,
             samples=samples,
             summary=summary,
