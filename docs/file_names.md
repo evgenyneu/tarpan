@@ -10,7 +10,7 @@ Why does Tarpan do this? This is "convention over configuration" approach: Tarpa
 In order to change the location of a summary/plot file, supply `info_path`
 parameter to any of Tarpan's function. For example, here is how to
 create a tree plot at  `~/tarpan/analysis/model1/normal.png` location in
-your user's home directory.
+your user's home directory:
 
 ```Python
 from tarpan.shared.summary import SummaryParams
