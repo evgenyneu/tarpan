@@ -5,7 +5,7 @@ import math
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
-from tarpan.shared.info_path import InfoPath, get_info_path
+from tarpan.shared.info_path import InfoPath, get_info_path, set_codefile
 from tarpan.shared.plot import plot_kde_fallback_hist, remove_ticks_labels
 from tarpan.shared.param_names import filter_param_names
 
@@ -30,7 +30,7 @@ class TraceplotParams:
 def save_traceplot(fit, param_names=None, info_path=InfoPath(),
                    traceplot_params=TraceplotParams()):
     """
-    Make traceplots form the fit.
+    Saves traceplots form the fit.
 
     Parameters
     ----------
@@ -44,6 +44,7 @@ def save_traceplot(fit, param_names=None, info_path=InfoPath(),
         Names of parameters to plot.
     """
 
+    set_codefile(info_path)
     info_path = InfoPath(**info_path.__dict__)
 
     figures_and_axes = traceplot(
