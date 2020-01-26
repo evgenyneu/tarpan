@@ -13,7 +13,7 @@ create a tree plot at  `~/tarpan/analysis/model1/normal.png` location in
 your user's home directory:
 
 ```Python
-from tarpan.shared.summary import SummaryParams
+from tarpan.shared.info_path import InfoPath
 
 save_tree_plot([fit],
                info_path=InfoPath(
