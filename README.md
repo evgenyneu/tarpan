@@ -39,7 +39,7 @@ save_analysis(fit, param_names=['mu', 'sigma'])
 
 * [Full example code](docs/examples/analyse/a01_simple)
 
-* [Description of its output files](docs/save_analysis/output)
+* [Description of output files](docs/save_analysis/output)
 
 
 ### Tree plot: `save_tree_plot`
