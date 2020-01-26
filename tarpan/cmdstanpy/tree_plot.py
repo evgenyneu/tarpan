@@ -49,6 +49,7 @@ def save_tree_plot(fits,
 
     """
 
+    info_path.set_codefile()
     summaries = []
 
     for fit in fits:
