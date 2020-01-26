@@ -1,4 +1,4 @@
-# How to change the widths of HPD intervals.
+# How to change the widths of HPD intervals?
 
 By default, Tarpan uses 68.27% and 95.45% HPDIs (highest posterior density intervals).
 If you want to change these values, you can supply `summary_params` parameter to
