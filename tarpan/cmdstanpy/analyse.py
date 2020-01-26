@@ -39,7 +39,7 @@ def save_analysis(fit, param_names=None, info_path=InfoPath(),
 
     param_names : list of str
 
-        Names of parameters to plot.
+        Names of parameters to plot. Plot all parameters if None.
     """
 
     info_path.set_codefile()

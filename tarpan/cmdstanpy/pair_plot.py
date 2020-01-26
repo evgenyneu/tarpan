@@ -22,7 +22,7 @@ def save_pair_plot(fit,
         Samples from cmdstanpy.
 
     param_names : list of str
-        Names of parameters to be included in the summar. Include all if None.
+        Names of parameters. Include all if None.
 
     info_path : InfoPath
         Path information for creating summaries.

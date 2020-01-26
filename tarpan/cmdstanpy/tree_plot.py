@@ -41,7 +41,7 @@ def save_tree_plot(fits,
 
     param_names : list of str
 
-        Names of parameters to be included in the summar. Include all if None.
+        Names of parameters. Include all if None.
 
     info_path : InfoPath
 
