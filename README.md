@@ -24,7 +24,7 @@ pip install tarpan
 
 ## Usage
 
-### Do complete analysis: `save_analysis`
+### Complete analysis: `save_analysis`
 
 This is the main function of the library that saves summaries
 and trace/pair/tree plots in
@@ -38,7 +38,7 @@ save_analysis(fit, param_names=['mu', 'sigma'])
 ```
 
 
-### Make tree plot: `save_tree_plot`
+### Tree plot: `save_tree_plot`
 
 Function `save_tree_plot` creates a [tree plot](docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.pdf) in
 model_info directory. See the [full example code here](docs/examples/save_tree_plot/a01_single_fit).
@@ -79,6 +79,25 @@ save_tree_plot([fit1, fit2], extra_values=data, param_names=['mu', 'tau'],
 ```
 
 <img src="docs/examples/save_tree_plot/a02_compare_fits/model_info/tree_plot_compare/summary.png" width="500" alt="Tree plot with multiple models">
+
+
+
+### Pair plot: `save_pair_plot`
+
+<!-- Function `save_pair_plot` creates a [tree plot](docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.pdf) in
+model_info directory. See the [full example code here](docs/examples/save_tree_plot/a01_single_fit).
+
+```Python
+from tarpan.cmdstanpy.tree_plot import save_tree_plot
+model = CmdStanModel(stan_file="your_model.stan")
+fit = model.sample(data=your_data)
+save_tree_plot([fit], param_names=['mu', 'sigma'])
+```
+
+<img src="docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.png" width="500" alt="Tree plot">
+
+The two error bars indicate 68% and 95% HPDIs (highest posterior density intervals). -->
+
 
 
 ## Run unit tests
