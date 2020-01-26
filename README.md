@@ -91,7 +91,7 @@ save_tree_plot([fit1, fit2], extra_values=data, param_names=['mu', 'tau'],
 
 ### Pair plot: `save_pair_plot`
 
-Function `save_pair_plot` creates a [tree plot](docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.pdf). It helps to see correlations between parameters and spot funnel
+Function `save_pair_plot` creates a [pair plot](docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.pdf). It helps to see correlations between parameters and spot funnel
 shaped distributions that can result in sampling problems.
 
 ```Python
