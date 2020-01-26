@@ -13,6 +13,19 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/evgenyneu/tarpan",
     packages=setuptools.find_packages(),
+    install_requires=[
+        'cmdstanpy',
+        'scipy',
+        'tabulate',
+        'pandas',
+        'numpy',
+        'arviz',
+        'matplotlib',
+        'seaborn'
+    ],
+    tests_require=[
+        'pytest'
+    ],
     license='Public Domain',
     classifiers=[
         "Programming Language :: Python :: 3",
