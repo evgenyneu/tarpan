@@ -28,7 +28,7 @@ pip install tarpan
 
 This is the main function of the library that saves summaries
 and trace/pair/tree plots in
-[model_info](docs/examples/analyse/a01_simple/model_info/analyse) directory. See the [full example code](docs/examples/analyse/a01_simple) and [description of its output files](docs/save_analysis/output).
+[model_info](docs/examples/analyse/a01_simple/model_info/analyse) directory.
 
 ```Python
 from tarpan.cmdstanpy.analyse import save_analysis
@@ -37,11 +37,14 @@ fit = model.sample(data=your_data)
 save_analysis(fit, param_names=['mu', 'sigma'])
 ```
 
+* [Full example code](docs/examples/analyse/a01_simple)
+
+* [Description of its output files](docs/save_analysis/output)
+
 
 ### Tree plot: `save_tree_plot`
 
-Function `save_tree_plot` creates a [tree plot](docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.pdf) in
-model_info directory. See the [full example code here](docs/examples/save_tree_plot/a01_single_fit).
+Function `save_tree_plot` creates a [tree plot](docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.pdf).
 
 ```Python
 from tarpan.cmdstanpy.tree_plot import save_tree_plot
@@ -49,6 +52,8 @@ model = CmdStanModel(stan_file="your_model.stan")
 fit = model.sample(data=your_data)
 save_tree_plot([fit], param_names=['mu', 'sigma'])
 ```
+
+[Full example code](docs/examples/save_tree_plot/a01_single_fit)
 
 <img src="docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.png" width="500" alt="Tree plot">
 
@@ -84,15 +89,14 @@ save_tree_plot([fit1, fit2], extra_values=data, param_names=['mu', 'tau'],
 
 ### Pair plot: `save_pair_plot`
 
-Function `save_pair_plot` creates a [tree plot](docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.pdf) in
-model_info directory. It helps to see correlations between parameters and spot funnel
+Function `save_pair_plot` creates a [tree plot](docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.pdf). It helps to see correlations between parameters and spot funnel
 shaped distributions that can result in sampling problems.
 
 ```Python
-from tarpan.cmdstanpy.tree_plot import save_tree_plot
+from tarpan.cmdstanpy.pair_plot import save_pair_plot
 model = CmdStanModel(stan_file="your_model.stan")
 fit = model.sample(data=your_data)
-save_tree_plot([fit], param_names=['mu', 'sigma'])
+save_pair_plot(fit, param_names=['mu', 'tau', 'eta.1'])
 ```
 
 [Full example code](docs/examples/save_pair_plot/a01_pair_plot)
