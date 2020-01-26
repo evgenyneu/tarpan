@@ -17,6 +17,9 @@ class HistogramParams:
     num_plot_rows: int = 4  # Number of rows (subplots) in a plot.
     ncols: int = 2  # Number of columns in the plot.
 
+    hist_color = "#00a6ff"  # Fill color for histogram bars
+    hist_edge_color = "#FFFFFF"  # Edge color for the histogram bars
+
     # Colors and line styles for KDE lines of the error bars (HPDIs)
     # Sorted from largerst smallest HPDI values
     kde_colors = ['#FF9922', '#6666FF', '#44FF55']
@@ -24,9 +27,9 @@ class HistogramParams:
 
 
 def save_histogram(samples, summary, param_names=None,
-                        info_path=InfoPath(),
-                        histogram_params=HistogramParams(),
-                        summary_params=SummaryParams()):
+                   info_path=InfoPath(),
+                   histogram_params=HistogramParams(),
+                   summary_params=SummaryParams()):
     """
     Make histograms for the parameters from posterior destribution.
 
@@ -103,7 +106,13 @@ def make_histogram_one_page(i_start, samples, summary, param_names,
         samples_for_kde = param_samples[(param_samples > inner_range[0])
                                         & (param_samples < inner_range[1])]
 
-        sns.distplot(samples_for_kde, kde=False, norm_hist=True, ax=ax)
+        sns.distplot(samples_for_kde, kde=False, norm_hist=True, ax=ax,
+                     hist_kws={
+                        "color": params.hist_color,
+                        "zorder": 1,
+                        "edgecolor": params.hist_edge_color,
+                        "linewidth": 1,
+                        "alpha": 1})
 
         # Show KDEs for the error bars (HPDIs)
         # -----------
@@ -126,8 +135,9 @@ def make_histogram_one_page(i_start, samples, summary, param_names,
                 # Show shade under KDE for the last error bar
                 sns.kdeplot(samples_for_kde, shade=True,
                             clip=[data[start], data[end]],
-                            color=params.kde_colors[i],
+                            color="#000000",
                             label='_nolegend_', alpha=0.2,
+                            zorder=10,
                             ax=ax, legend=None,
                             linewidth=2)
 
