@@ -1,5 +1,5 @@
 """
-Specify custom location for the summary file
+Specify custom location for the tree plot file
 """
 
 from cmdstanpy import CmdStanModel
