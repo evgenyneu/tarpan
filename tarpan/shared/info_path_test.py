@@ -1,5 +1,5 @@
 import os
-from tarpan.shared.info_path import InfoPath, set_codefile, get_info_path
+from tarpan.shared.info_path import InfoPath, get_info_path
 
 
 def test_set_codefile():
@@ -11,7 +11,7 @@ def test_set_codefile():
 
 
 def set_codefile_sun_function(info_path):
-    set_codefile(info_path)
+    info_path.set_codefile()
 
 
 def test_get_info_path():

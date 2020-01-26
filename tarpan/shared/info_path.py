@@ -51,25 +51,24 @@ class InfoPath:
     """
     path: str = None
 
+    def set_codefile(self):
+        """
+        Sets the path to python file that called a Tarpan function.
 
-def set_codefile(info_path):
-    """
-    Sets the path to python file that called a Tarpan function.
+        Returns
+        --------
+        InfoPath
+            The path object with codefile_path set.
+        """
 
-    Returns
-    --------
-    InfoPath
-        The path object with codefile_path set.
-    """
+        if self.codefile_path is not None:
+            # The path is already set
+            return
 
-    if info_path.codefile_path is not None:
-        # The path is already set
-        return
-
-    tree_depth = 2
-    frame = inspect.stack()[tree_depth]
-    module = inspect.getmodule(frame[0])
-    info_path.codefile_path = module.__file__
+        tree_depth = 2
+        frame = inspect.stack()[tree_depth]
+        module = inspect.getmodule(frame[0])
+        self.codefile_path = module.__file__
 
 
 def get_info_path(info_path=InfoPath()):
