@@ -7,7 +7,7 @@ Why does Tarpan do this? This is "convention over configuration" approach: Tarpa
 
 ## How to change location and file names of generated files?
 
-In order to change the location of the summary file, supply `info_path`
+In order to change the location of a summary/plot file, supply `info_path`
 parameter to any of Tarpan's function. For example, here is how to
 create a tree plot at  `~/tarpan/analysis/model1/normal.png` location in
 your user's home directory.
