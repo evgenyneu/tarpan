@@ -60,7 +60,7 @@ save_tree_plot([fit], param_names=['mu', 'sigma'])
 The two error bars indicate 68% and 95% HPDIs (highest posterior density intervals).
 
 
-#### Comparing multiple models on a tree plot
+### Comparing multiple models on a tree plot
 
 Supply multiple fits in order to compare parameters from multiple models.
 
