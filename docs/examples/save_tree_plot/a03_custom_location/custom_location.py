@@ -20,7 +20,7 @@ def run_model():
                        sampling_iters=1000, warmup_iters=1000)
 
     # Change all path components all at once:
-    #   analysis/model1/normal.png
+    #   ~/tarpan/analysis/model1/normal.png
     save_tree_plot([fit],
                    info_path=InfoPath(
                         path='~/tarpan',
