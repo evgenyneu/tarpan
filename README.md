@@ -199,7 +199,7 @@ save_histogram(fit, param_names=['mu', 'tau', 'eta.1', 'theta.1'])
 
 * [How to change the widths of HPD intervals?](docs/hpdi.md)
 
-* [Where are files placed and how to change that?](docs/file_names.md)
+* [Where are plot/summary files placed and how to change that?](docs/file_names.md)
 
 
 
