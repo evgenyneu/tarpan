@@ -12,9 +12,12 @@ import math
 class PairPlotParams:
     title: str = None  # Plot's title
     color: str = "#00a6ff"
+    edgecolor: str = "#00a6ff55"
+    diag_edge_color: str = "#ffffff"  # Edge color for histograms on diagonal
+    alpha: float = 0.15  # Transparency of the marker color
     marker_size: float = 30
     max_params: int = 4  # Maximum number of parameter to show in the plot
-    max_samples: int = 503  # Maximum number of samples to show in pair plot
+    max_samples: int = 717  # Maximum number of samples to show in pair plot
 
     """Type of diahonal plots: 'auto’, ‘hist’, ‘kde’, None"""
     diag_kind: str = 'kde'
@@ -90,9 +93,12 @@ def make_pair_plot(samples, param_names=None,
     g = sns.PairGrid(samples)
 
     g = g.map_upper(sns.scatterplot, s=pair_plot_params.marker_size,
-                    color=pair_plot_params.color)
+                    color=pair_plot_params.color,
+                    edgecolor=pair_plot_params.edgecolor,
+                    alpha=pair_plot_params.alpha)
 
     g = g.map_lower(sns.kdeplot, color=pair_plot_params.color)
-    g = g.map_diag(plt.hist, color=pair_plot_params.color)
+    g = g.map_diag(plt.hist, color=pair_plot_params.color,
+                   edgecolor=pair_plot_params.diag_edge_color)
 
     return g
