@@ -1,5 +1,8 @@
+# Example of setting custom widths of HPD intervals
+
 from cmdstanpy import CmdStanModel
 from tarpan.cmdstanpy.summary import save_summary
+from tarpan.shared.summary import SummaryParams
 
 
 def run_model():
@@ -14,7 +17,12 @@ def run_model():
     fit = model.sample(data=data, chains=4, cores=4, seed=1,
                        sampling_iters=1000, warmup_iters=1000)
 
-    save_summary(fit, param_names=['mu', 'tau', 'eta.1'])
+    # Specify custom HPDI values
+    summary_params = SummaryParams()
+    summary_params.hpdis = [0.05, 0.99]
+
+    save_summary(fit, param_names=['mu', 'tau', 'eta.1'],
+                 summary_params=summary_params)
 
 
 if __name__ == '__main__':

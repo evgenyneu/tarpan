@@ -41,8 +41,6 @@ save_analysis(fit, param_names=['mu', 'sigma'])
 
 * [Full example code](docs/examples/analyse/a01_simple)
 
-* [Description of output files](docs/save_analysis/output)
-
 If you don't need everything, you can call individual
 functions described below to make just one type of plot or a summary.
 
@@ -76,7 +74,7 @@ The text summary format is such that the text can be pasted into Github/Gitlab/B
 
 *  **Name, Mean, Std** are the name of the parameter, its mean and standard deviation.
 
-*  **68CI-, 68CI+, 95CI-, 95CI+** are the 68% and 95% HPDIs (highest probability density intervals). These values are configurable.
+*  **68CI-, 68CI+, 95CI-, 95CI+** are the 68% and 95% HPDIs (highest probability density intervals). These values [are configurable](docs/examples/save_summary/a02_save_summary_configure_hpdi).
 
 * **Mode, +, -** is a mode of distribution with upper and lower uncertainties, which are calculated as distances to 68% HPDI.
 
