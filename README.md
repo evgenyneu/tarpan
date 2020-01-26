@@ -171,6 +171,23 @@ save_pair_plot(fit, param_names=['mu', 'tau', 'eta.1'])
 
 
 
+## Histogram: `save_histogram`
+
+Show histograms of parameter distributions.
+
+```Python
+from tarpan.cmdstanpy.histogram import save_histogram
+model = CmdStanModel(stan_file="your_model.stan")
+fit = model.sample(data=your_data)
+save_histogram(fit, param_names=['mu', 'tau', 'eta.1', 'theta.1'])
+```
+
+* [Full example code](docs/examples/save_histogram/a01_save_histogram)
+
+<img src="docs/examples/save_histogram/a01_save_histogram/model_info/histogram/histogram_01.jpg" width="500" alt="Histogram">
+
+
+
 ## Run unit tests
 
 ```
