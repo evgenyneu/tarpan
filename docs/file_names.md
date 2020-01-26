@@ -9,7 +9,7 @@ For example, suppose you called Tarpan's `save_summary` function from a script f
 
 In order to change the location of the summary file, supply `info_path`
 parameter to any of Tarpan's function. For example, here is how to
-create the tree plot at  `~/tarpan/analysis/model1/normal.png` location in
+create a tree plot at  `~/tarpan/analysis/model1/normal.png` location in
 your user's home directory.
 
 ```Python
