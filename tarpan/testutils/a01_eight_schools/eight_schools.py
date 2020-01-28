@@ -2,7 +2,8 @@
 
 from cmdstanpy import CmdStanModel
 import os
-import pickle
+from tarpan.cmdstanpy.cache import run
+from tarpan.shared.info_path import InfoPath
 
 
 def get_data():
@@ -13,25 +14,17 @@ def get_data():
     }
 
 
-def run_model(data_dir, path_to_fit, data):
+def run_model(data, output_dir):
     """
     Runs Stan model and saves fit to disk
     """
 
-    if not os.path.exists(path_to_fit):
-        model_path = "tarpan/testutils/a01_eight_schools/eight_schools.stan"
-        model = CmdStanModel(stan_file=model_path)
-        os.makedirs(data_dir, exist_ok=True)
+    model_path = "tarpan/testutils/a01_eight_schools/eight_schools.stan"
+    model = CmdStanModel(stan_file=model_path)
 
-        fit = model.sample(data=data, chains=4, cores=4,
-                           sampling_iters=1000, warmup_iters=1000,
-                           output_dir=f'./{data_dir}')
-
-        with open(path_to_fit, 'wb') as file:
-            pickle.dump(fit, file, protocol=pickle.HIGHEST_PROTOCOL)
-
-    with open(path_to_fit, 'rb') as input:
-        return pickle.load(input)
+    return model.sample(data=data, chains=4, cores=4,
+                        sampling_iters=1000, warmup_iters=1000,
+                        output_dir=output_dir)
 
 
 def get_fit():
@@ -39,10 +32,13 @@ def get_fit():
     Returns fit file for unit tests.
     """
 
-    data_dir = "temp_data/a01_eight_schools"
-    path_to_fit = os.path.join(data_dir, "fit.pkl")
-    data = get_data()
-    return run_model(data_dir=data_dir, path_to_fit=path_to_fit, data=data)
+    info_path = InfoPath(
+                    path='temp_data',
+                    dir_name="a01_eight_schools",
+                    sub_dir_name=InfoPath.DO_NOT_CREATE
+                )
+
+    return run(info_path=info_path, func=run_model, data=get_data())
 
 
 def get_fit_larger_uncertainties():
@@ -50,11 +46,16 @@ def get_fit_larger_uncertainties():
     Returns fit file for unit tests, uses data with larger uncertainties.
     """
 
-    data_dir = "temp_data/a01_eight_schools"
-    path_to_fit = os.path.join(data_dir, "get_fit_larger_uncertainties.pkl")
-    data = get_data()
+    info_path = InfoPath(
+                    path='temp_data',
+                    dir_name="a01_eight_schools_large_uncert",
+                    sub_dir_name=InfoPath.DO_NOT_CREATE
+                )
 
-    # Increase uncertainties
+    run(info_path=info_path, func=run_model, data=get_data())
+
+    # Use data with increased uncertainties
+    data = get_data()
     data["sigma"] = [u * 2 for u in data["sigma"]]
 
-    return run_model(data_dir=data_dir, path_to_fit=path_to_fit, data=data)
+    return run(info_path=info_path, func=run_model, data=data)

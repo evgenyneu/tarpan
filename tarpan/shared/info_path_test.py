@@ -1,5 +1,5 @@
 import os
-from tarpan.shared.info_path import InfoPath, get_info_path
+from tarpan.shared.info_path import InfoPath, get_info_path, get_info_dir
 
 
 def test_set_codefile():
@@ -16,11 +16,16 @@ def set_codefile_sun_function(info_path):
 
 def test_get_info_path():
     info_path = InfoPath()
-    set_codefile_sun_function(info_path)
-
     info_path.base_name = 'my_basename'
     info_path.extension = 'test_extension'
     result = get_info_path(info_path)
 
     assert 'tarpan/shared/model_info/info_path_test/my_basename\
 .test_extension' in result
+
+
+def test_get_info_dir():
+    info_path = InfoPath()
+    result = get_info_dir(info_path)
+
+    assert 'tarpan/shared/model_info/info_path_test' in result

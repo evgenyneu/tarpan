@@ -87,6 +87,30 @@ def get_info_path(info_path=InfoPath()):
         Path to an analysis file.
     """
 
+    info_path.set_codefile()
+    full_path = get_info_dir(info_path)
+    filename = f'{info_path.base_name}.{info_path.extension}'
+    return os.path.join(full_path, filename)
+
+
+def get_info_dir(info_path=InfoPath()):
+    """
+    Get full path to the directory where plots and summaries are placed
+
+    Parameters
+    ----------
+    info_path : InfoPath
+        Path information for creating summaries.
+
+
+    Returns
+    --------
+    str
+        Path to an analysis file.
+    """
+
+    info_path.set_codefile()
+
     if info_path.path is None:
         info_path.path = os.path.dirname(info_path.codefile_path)
     else:
@@ -101,5 +125,5 @@ def get_info_path(info_path=InfoPath()):
         full_path = os.path.join(full_path, info_path.sub_dir_name)
 
     os.makedirs(full_path, exist_ok=True)
-    filename = f'{info_path.base_name}.{info_path.extension}'
-    return os.path.join(full_path, filename)
+
+    return full_path

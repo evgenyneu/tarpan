@@ -1,7 +1,7 @@
-from tarpan.testutils.a01_eight_schools.eight_schools import get_fit
-from tarpan.cmdstanpy.analyse import save_analysis
 import shutil
 import os
+from tarpan.testutils.a01_eight_schools.eight_schools import get_fit
+from tarpan.cmdstanpy.analyse import save_analysis
 
 
 def test_save_analysis():
