@@ -144,7 +144,7 @@ save_tree_plot([fit1, fit2], extra_values=data, param_names=['mu', 'tau'],
 The plot shows the values of parameters samples.
 Different colors correspond to samples form different chains. Ideally,
 the lines of different colors on the left plots are well mixed, and the
-right plot is fairly uniform. It is usually enough just to look at the trace plot of the log-probabilty samples `lp__`.
+right plot is fairly uniform.
 
 
 ```Python
