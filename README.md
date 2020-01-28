@@ -204,7 +204,7 @@ This can be done with `run` function:
 ```python
 from tarpan.cmdstanpy.cache import run
 
-# Your function that creates CmdStanModel, runs its `sample` method`
+# Your function that creates CmdStanModel, runs its `sample` method
 # and returns the result.
 #
 # This function must take `output_dir` input parameter and pass it to `sample`.
@@ -223,6 +223,8 @@ def run_stan(output_dir, other_param):
 # Will run `run_stan` once, save model to disk and read it on next calls
 fit = run(func=run_stan, other_param="some data")
 ```
+
+* [Full example code](docs/examples/run/a01_run)
 
 
 ## Common questions

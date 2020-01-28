@@ -133,6 +133,7 @@ tarpan/**/model_info
 
 # Temporary data directory for unit tests
 temp_data
+stan_cache
 
 # Stan files in examples
 eight_schools
