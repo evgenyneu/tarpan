@@ -195,6 +195,36 @@ save_histogram(fit, param_names=['mu', 'tau', 'eta.1', 'theta.1'])
 <img src="docs/examples/save_histogram/a01_save_histogram/model_info/histogram/histogram_01.jpg" width="900" alt="Histogram">
 
 
+## Saving cmdstan fit to disk
+
+It saves a lot of time to sample the model, save the results to disk so
+they can be used on the next run instead of waiting for the sampling again.
+This can be done with `run` function:
+
+```python
+from tarpan.cmdstanpy.cache import run
+
+# Your function that creates CmdStanModel, runs its `sample` method`
+# and returns the result.
+#
+# This function must take `output_dir` input parameter and pass it to `sample`.
+#
+# It may also have any other parameters you wish to pass from `run`.
+def run_stan(output_dir, other_param):
+    model = CmdStanModel(stan_file="my_model.stan")
+
+    fit = model.sample(
+        data=data,
+        output_dir=output_dir  # Pass to make CSVs in correct location
+    )
+
+    return fit  # Return the fit
+
+# Will run `run_stan` once, save model to disk and read it on next calls
+fit = run(func=run_stan, other_param="some data")
+```
+
+
 ## Common questions
 
 * [How to change the widths of HPD intervals?](docs/hpdi.md)
