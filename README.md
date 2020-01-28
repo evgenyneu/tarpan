@@ -195,7 +195,7 @@ save_histogram(fit, param_names=['mu', 'tau', 'eta.1', 'theta.1'])
 <img src="docs/examples/save_histogram/a01_save_histogram/model_info/histogram/histogram_01.jpg" width="900" alt="Histogram">
 
 
-## Saving cmdstan fit to disk
+## Saving cmdstan samples to disk
 
 It saves a lot of time to sample the model and save the results to disk, so
 they can be used on the next run instead of waiting for the sampling again.
