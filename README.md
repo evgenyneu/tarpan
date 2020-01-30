@@ -227,6 +227,20 @@ fit = run(func=run_stan, other_param="some data")
 * [Full example code](docs/examples/run/a01_run)
 
 
+## KDE with uncertainties
+
+The `kde` function helps to plot KDE (kernel density estimate) curve that takes into account uncertainties of observations:
+
+```python
+from tarpan.shared.stats import kde
+import numpy as np
+
+x = np.linspace(0, 1, 100)
+y = kde(x, values, uncert)
+ax2.fill_between(x, y)
+```
+
+
 ## Common questions
 
 * [How to change the widths of HPD intervals?](docs/hpdi.md)
