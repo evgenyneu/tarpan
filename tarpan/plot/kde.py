@@ -24,10 +24,6 @@ class ScatterKdeParams:
 def save_scatter_and_kde(values,
                          uncertainties,
                          info_path=InfoPath(),
-                         ylabel1=None,
-                         ylabel2=None,
-                         xlabel=None,
-                         title=None,
                          scatter_kde_params=ScatterKdeParams()):
     """
     Create a scatter plot and a KDE plot under it.
@@ -79,8 +75,8 @@ def save_scatter_and_kde(values,
     if scatter_kde_params.ylabel2 is not None:
         ax2.set_ylabel(scatter_kde_params.ylabel2)
 
-    if title is not None:
-        fig.suptitle(title)
+    if scatter_kde_params.title is not None:
+        fig.suptitle(scatter_kde_params.title)
 
     info_path.base_name = info_path.base_name or "scatter_kde"
     info_path.extension = info_path.extension or 'pdf'
@@ -92,7 +88,7 @@ def save_scatter_and_kde(values,
     ax2.grid(color=scatter_kde_params.grid_color, linewidth=1,
              alpha=scatter_kde_params.grid_alpha)
 
-    if title is not None:
+    if scatter_kde_params.title is not None:
         fig.tight_layout(rect=[0, 0.03, 1, 0.95])
     else:
         fig.tight_layout()
