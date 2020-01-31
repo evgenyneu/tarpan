@@ -232,13 +232,27 @@ fit = run(func=run_stan, other_param="some data")
 The `save_scatter_and_kde` saves a scatter and corresponding KDE (kernel density estimate) plot. The KDE plot takes into account uncertainties of individual value:
 
 ```python
-from tarpan.plot.kde import gaussian_kde, save_scatter_and_kde
+from tarpan.plot.kde import save_scatter_and_kde
 
-save_scatter_and_kde(values=[1, 1.3, 1.5, 7, 4.9],
-                     uncertainties=[0.1, 0.6, 0.35, 0.41, 0.03])
+values = [
+        -1.22, -1.15, -0.97, -0.68, -0.37, -0.48, -0.73, -0.61, -1.32,
+        -0.62, -1.13, -0.65, -0.90, -1.29, -1.19, -0.54, -0.64, -0.45,
+        -1.21, -0.75, -0.66, -0.71, -0.61, -0.59, -1.07, -0.65, -0.59]
+
+uncertainties = [
+     0.13, 0.14, 0.17, 0.07, 0.11, 0.12, 0.23, 0.05, 0.04,
+     0.30, 0.11, 0.13, 0.16, 0.03, 0.18, 0.20, 0.16, 0.16,
+     0.11, 0.09, 0.20, 0.10, 0.08, 0.04, 0.04, 0.23, 0.19]
+
+save_scatter_and_kde(values=values, uncertainties=uncertainties)
 ```
 
-There is `gaussian_kde` function available that returns the values for a KDE plot:
+<img src="images/scatter_kde.png" width="700" alt="Scatter-KDE plot">
+
+
+### `gaussian_kde` function
+
+The function returns the values for a KDE plot:
 
 ```python
 from tarpan.plot.kde import gaussian_kde
