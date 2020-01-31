@@ -252,7 +252,7 @@ save_scatter_and_kde(values=values, uncertainties=uncertainties)
 
 ### `gaussian_kde` function
 
-The function returns the values for a KDE plot:
+The function returns the values for a KDE plot, taking into account uncertainties of individual values.
 
 ```python
 from tarpan.plot.kde import gaussian_kde
