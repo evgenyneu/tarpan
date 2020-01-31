@@ -227,18 +227,30 @@ fit = run(func=run_stan, other_param="some data")
 * [Full example code](docs/examples/run/a01_run)
 
 
-## KDE with uncertainties
+## Scatter and KDE plot
 
-The `kde` function helps to plot KDE (kernel density estimate) curve that takes into account uncertainties of observations:
+The `save_scatter_and_kde` saves a scatter and corresponding KDE (kernel density estimate) plot. The KDE plot takes into account uncertainties of individual value:
 
 ```python
-from tarpan.shared.stats import kde
+from tarpan.plot.kde import gaussian_kde, save_scatter_and_kde
+
+save_scatter_and_kde(values=[1, 1.3, 1.5, 7, 4.9],
+                     uncertainties=[0.1, 0.6, 0.35, 0.41, 0.03])
+```
+
+There is `gaussian_kde` function available that returns the values for a KDE plot:
+
+```python
+from tarpan.plot.kde import gaussian_kde
 import numpy as np
+import matplotlib.pyplot as plt
 
 x = np.linspace(0, 1, 100)
-y = kde(x, values, uncert)
-ax2.fill_between(x, y)
+y = gaussian_kde(x, values, uncert)
+plt.fill_between(x, y)
 ```
+
+
 
 
 ## Common questions

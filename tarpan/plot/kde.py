@@ -1,7 +1,24 @@
+from dataclasses import dataclass
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 from tarpan.shared.info_path import InfoPath, get_info_path
+
+
+@dataclass
+class ScatterKdeParams:
+    title: str = None  # Plot's title
+    xlabel: str = None
+    ylabel1: str = None
+    ylabel2: str = None
+    marker_color: str = "#00a6ff66"
+    marker_edgecolor: str = "#00a6ffcc"
+    errorbar_color: str = "#00a6ff66"
+    kde_facecolor: str = "#00a6ff66"
+    kde_edgecolor: str = "#00a6ffcc"
+    grid_color: str = "#aaaaaa"
+    grid_alpha: float = 0.2
+    markersize: float = 80
 
 
 def save_scatter_and_kde(values,
@@ -10,7 +27,8 @@ def save_scatter_and_kde(values,
                          ylabel1=None,
                          ylabel2=None,
                          xlabel=None,
-                         title=None):
+                         title=None,
+                         scatter_kde_params=ScatterKdeParams()):
     """
     Create a scatter plot and a KDE plot under it.
     The KDE plot uses uncertainties of each individual observation.
@@ -23,24 +41,42 @@ def save_scatter_and_kde(values,
         Uncertainties coresponding to the numbers
     """
 
+    sns.set(style="ticks")
     info_path.set_codefile()
 
     fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True,
                                    gridspec_kw={'hspace': 0})
 
     ax1.errorbar(values, range(len(values)),
-                 xerr=uncertainties, fmt='o')
+                 xerr=uncertainties, fmt='none',
+                 ecolor=scatter_kde_params.errorbar_color,
+                 zorder=1)
 
-    if ylabel1 is not None:
-        ax1.set_ylabel(ylabel1)
+    ax1.scatter(values, range(len(values)),
+                color=scatter_kde_params.marker_color,
+                edgecolor=scatter_kde_params.marker_edgecolor,
+                s=scatter_kde_params.markersize,
+                zorder=2)
 
-    sns.kdeplot(values, ax=ax2)
+    if scatter_kde_params.ylabel1 is not None:
+        ax1.set_ylabel(scatter_kde_params.ylabel1)
 
-    if xlabel is not None:
-        ax2.set_xlabel(xlabel)
+    margin = abs(min(values) - max(values)) / 5
+    x = np.linspace(min(values) - margin, max(values) + margin, 1000)
+    y = gaussian_kde(x, values, uncertainties)
 
-    if ylabel2 is not None:
-        ax2.set_ylabel(ylabel2)
+    ax2.fill_between(x, y1=y,
+                     edgecolor=None,
+                     facecolor=scatter_kde_params.kde_facecolor,
+                     linewidth=0)
+
+    ax2.plot(x, y, c=scatter_kde_params.kde_edgecolor, linewidth=1)
+
+    if scatter_kde_params.xlabel is not None:
+        ax2.set_xlabel(scatter_kde_params.xlabel)
+
+    if scatter_kde_params.ylabel2 is not None:
+        ax2.set_ylabel(scatter_kde_params.ylabel2)
 
     if title is not None:
         fig.suptitle(title)
@@ -48,6 +84,17 @@ def save_scatter_and_kde(values,
     info_path.base_name = info_path.base_name or "scatter_kde"
     info_path.extension = info_path.extension or 'pdf'
     plot_path = get_info_path(info_path)
+
+    ax1.grid(color=scatter_kde_params.grid_color, linewidth=1,
+             alpha=scatter_kde_params.grid_alpha)
+
+    ax2.grid(color=scatter_kde_params.grid_color, linewidth=1,
+             alpha=scatter_kde_params.grid_alpha)
+
+    if title is not None:
+        fig.tight_layout(rect=[0, 0.03, 1, 0.95])
+    else:
+        fig.tight_layout()
 
     fig.savefig(plot_path, dpi=info_path.dpi)
 
