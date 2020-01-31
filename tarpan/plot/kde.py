@@ -12,10 +12,10 @@ class ScatterKdeParams:
     ylabel1: str = None
     ylabel2: str = None
     marker_color: str = "#00a6ff66"
-    marker_edgecolor: str = "#00a6ffcc"
+    marker_edgecolor: str = "#00a6ff"
     errorbar_color: str = "#00a6ff66"
     kde_facecolor: str = "#00a6ff66"
-    kde_edgecolor: str = "#00a6ffcc"
+    kde_edgecolor: str = "#00a6ff"
     grid_color: str = "#aaaaaa"
     grid_alpha: float = 0.2
     markersize: float = 80
@@ -50,6 +50,7 @@ def save_scatter_and_kde(values,
     ax1.errorbar(values, range(len(values)),
                  xerr=uncertainties, fmt='none',
                  ecolor=scatter_kde_params.errorbar_color,
+                 elinewidth=1,
                  zorder=1)
 
     ax1.scatter(values, range(len(values)),
