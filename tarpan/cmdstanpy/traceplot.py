@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 from tarpan.shared.info_path import InfoPath, get_info_path
-from tarpan.shared.plot import plot_kde_fallback_hist, remove_ticks_labels
+from tarpan.plot.utils import plot_kde_fallback_hist, remove_ticks_labels
 from tarpan.shared.param_names import filter_param_names
 
 
