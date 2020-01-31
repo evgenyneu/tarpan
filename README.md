@@ -229,7 +229,7 @@ fit = run(func=run_stan, other_param="some data")
 
 ## Scatter and KDE plot
 
-The `save_scatter_and_kde` saves a scatter and corresponding KDE (kernel density estimate) plot. The KDE plot takes into account uncertainties of individual value:
+The `save_scatter_and_kde` function saves a scatter and corresponding KDE (kernel density estimate) plot. The KDE plot takes into account uncertainties of individual values:
 
 ```python
 from tarpan.plot.kde import save_scatter_and_kde
