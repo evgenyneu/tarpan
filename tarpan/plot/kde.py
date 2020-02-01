@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 from tarpan.shared.info_path import InfoPath, get_info_path
+from tarpan.plot.utils import remove_ticks_labels
 
 
 @dataclass
@@ -23,6 +24,9 @@ class ScatterKdeParams:
 
 def save_scatter_and_kde(values,
                          uncertainties,
+                         title=None,
+                         xlabel=None,
+                         ylabel=None,
                          info_path=InfoPath(),
                          scatter_kde_params=ScatterKdeParams()):
     """
@@ -36,6 +40,22 @@ def save_scatter_and_kde(values,
     uncertainties: list
         Uncertainties coresponding to the numbers
     """
+
+    if title is not None:
+        scatter_kde_params.title = title
+
+    if xlabel is not None:
+        scatter_kde_params.xlabel = xlabel
+
+    if ylabel is not None:
+        if isinstance(ylabel, list):
+            if len(ylabel) == 2:
+                scatter_kde_params.ylabel1 = ylabel[0]
+                scatter_kde_params.ylabel2 = ylabel[1]
+            elif len(ylabel) == 1:
+                scatter_kde_params.ylabel1 = ylabel[0]
+        else:
+            scatter_kde_params.ylabel1 = ylabel
 
     sns.set(style="ticks")
     info_path.set_codefile()
@@ -88,8 +108,11 @@ def save_scatter_and_kde(values,
     ax2.grid(color=scatter_kde_params.grid_color, linewidth=1,
              alpha=scatter_kde_params.grid_alpha)
 
+    remove_ticks_labels(ax1, remove_x=False, remove_y=True)
+    remove_ticks_labels(ax2, remove_x=False, remove_y=True)
+
     if scatter_kde_params.title is not None:
-        fig.tight_layout(rect=[0, 0.03, 1, 0.95])
+        fig.tight_layout(rect=[0, 0, 1, 0.95])
     else:
         fig.tight_layout()
 

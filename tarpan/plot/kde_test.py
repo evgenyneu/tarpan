@@ -4,7 +4,7 @@ import pytest
 from pytest import approx
 
 from tarpan.plot.kde import (
-    gaussian_kde, save_scatter_and_kde, ScatterKdeParams)
+    gaussian_kde, save_scatter_and_kde)
 
 
 def test_kde_with_uncerts():
@@ -45,13 +45,9 @@ def test_save_scatter_and_kde():
          0.30, 0.11, 0.13, 0.16, 0.03, 0.18, 0.20, 0.16, 0.16,
          0.11, 0.09, 0.20, 0.10, 0.08, 0.04, 0.04, 0.23, 0.19]
 
-    plot_params = ScatterKdeParams(
-        title="Sodium abundances in RGB stars of NGC 288",
-        xlabel="Sodium abundance [Na/H]",
-        ylabel1="Star number",
-        ylabel2="Probability density")
-
     save_scatter_and_kde(values=values, uncertainties=uncertainties,
-                         scatter_kde_params=plot_params)
+                         title="Sodium abundances in RGB stars of NGC 288",
+                         xlabel="Sodium abundance [Na/H]",
+                         ylabel=["Star number", "Probability density"])
 
     assert os.path.isfile(os.path.join(outdir, "scatter_kde.pdf"))

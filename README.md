@@ -232,7 +232,7 @@ fit = run(func=run_stan, other_param="some data")
 The `save_scatter_and_kde` function saves a scatter and corresponding KDE (kernel density estimate) plot. The KDE plot takes into account uncertainties of individual values:
 
 ```python
-from tarpan.plot.kde import save_scatter_and_kde, ScatterKdeParams
+from tarpan.plot.kde import save_scatter_and_kde
 
 values = [
         -1.22, -1.15, -0.97, -0.68, -0.37, -0.48, -0.73, -0.61, -1.32,
@@ -244,14 +244,10 @@ uncertainties = [
      0.30, 0.11, 0.13, 0.16, 0.03, 0.18, 0.20, 0.16, 0.16,
      0.11, 0.09, 0.20, 0.10, 0.08, 0.04, 0.04, 0.23, 0.19]
 
-plot_params = ScatterKdeParams(
-    title="Sodium abundances in RGB stars of NGC 288",
-    xlabel="Sodium abundance [Na/H]",
-    ylabel1="Star number",
-    ylabel2="Probability density")
-
 save_scatter_and_kde(values=values, uncertainties=uncertainties,
-                     scatter_kde_params=plot_params)
+                     title="Sodium abundances in RGB stars of NGC 288",
+                     xlabel="Sodium abundance [Na/H]",
+                     ylabel=["Star number", "Probability density"])
 ```
 
 <img src="images/scatter_kde.png" width="700" alt="Scatter-KDE plot">
