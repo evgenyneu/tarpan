@@ -203,6 +203,18 @@ save_pair_plot(fit, param_names=['mu', 'tau', 'eta.1'])
 <img src="docs/examples/save_pair_plot/a01_pair_plot/model_info/pair_plot/pair_plot.jpg" width="600" alt="Pair plot">
 
 
+### Pair plot without cmdstanpy
+
+Here is how to make a pair plot of values from Pandas' data frame columns:
+
+```Python
+from tarpan.shared.pair_plot import save_pair_plot
+save_pair_plot(df, param_names=['mu', 'sigma'])
+```
+
+* [Full example code](docs/examples/save_pair_plot/a02_no_cmdstanpy)
+
+
 
 ## Histogram: `save_histogram`
 
