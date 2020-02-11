@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import math
 import seaborn as sns
 from tarpan.shared.info_path import InfoPath, get_info_path
-from tarpan.shared.summary import SummaryParams
+from tarpan.shared.summary import SummaryParams, sample_summary
 from tarpan.shared.param_names import filter_param_names
 
 
@@ -24,6 +24,35 @@ class HistogramParams:
     # Sorted from largerst smallest HPDI values
     kde_colors = ['#FF9922', '#6666FF', '#44FF55']
     kde_line_styles = ['dotted', 'solid', '-.']
+
+
+def save_histogram(samples, param_names=None,
+                   info_path=InfoPath(),
+                   histogram_params=HistogramParams(),
+                   summary_params=SummaryParams()):
+    """
+    Make histograms for the parameters from posterior destribution.
+
+    Parameters
+    -----------
+
+    samples : Panda's DataFrame
+
+        Each column contains samples from posterior distribution.
+
+    param_names : list of str
+
+        Names of the parameters for plotting. If None, all will be plotted.
+    """
+
+    info_path.set_codefile()
+    df_summary, table = sample_summary(df=samples)
+
+    save_histogram_from_summary(samples, df_summary,
+                                param_names=param_names,
+                                info_path=info_path,
+                                histogram_params=histogram_params,
+                                summary_params=summary_params)
 
 
 def save_histogram_from_summary(samples, summary, param_names=None,

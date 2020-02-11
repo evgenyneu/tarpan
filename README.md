@@ -208,6 +208,18 @@ save_histogram(fit, param_names=['mu', 'tau', 'eta.1', 'theta.1'])
 <img src="docs/examples/save_histogram/a01_save_histogram/model_info/histogram/histogram_01.jpg" width="900" alt="Histogram">
 
 
+### Histogram without cmdstanpy
+
+Here is how to make histograms of values from Pandas' data frame columns:
+
+```Python
+from tarpan.shared.histogram import save_histogram
+save_histogram(df, param_names=['mu', 'sigma'])
+```
+
+* [Full example code](docs/examples/save_histogram/a02_no_cmdstanpy)
+
+
 ## Saving cmdstan samples to disk
 
 It saves a lot of time to sample the model and save the results to disk, so
