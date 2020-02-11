@@ -15,31 +15,35 @@ class ScatterKdeParams:
     xlabel: str = None
     ylabel1: str = None
     ylabel2: str = None
+    legend_labels = None  # Labels for the plot legend. No legend if None
 
     marker_colors: List = field(
         default_factory=lambda:
-        ["#00a6ff66", '#ffa60066', '#8888FF66', '#BBBB1166'])
+        ["#00a6ff44", '#ff002144', '#8888FF44', '#BBBB1144'])
 
     marker_edgecolors: List = field(
-        default_factory=lambda: ["#00a6ff", '#ffa600', '#8888FF', '#BBBB11'])
+        default_factory=lambda: ["#00a6ff", '#ff0021', '#8888FF', '#BBBB11'])
 
     errorbar_colors: List = field(
         default_factory=lambda:
-        ["#00a6ff66", '#ffa60066', '#8888FF66', '#BBBB1166'])
+        ["#00a6ff66", '#ff002144', '#8888FF44', '#BBBB1144'])
 
     markers: List = field(
         default_factory=lambda: ["^", "o", 'x', '*'])
 
     kde_facecolors: List = field(
         default_factory=lambda:
-        ["#00a6ff66", '#ffa60066', '#8888FF66', '#BBBB1166'])
+        ["#00a6ff44", '#ff002144', '#8888FF44', '#BBBB1144'])
 
     kde_edgecolors: List = field(
-        default_factory=lambda: ["#00a6ff", '#ffa600', '#8888FF', '#BBBB11'])
+        default_factory=lambda: ["#00a6ff", '#ff0021', '#8888FF', '#BBBB11'])
 
     grid_color: str = "#aaaaaa"
     grid_alpha: float = 0.2
     markersize: float = 80
+
+    plot_width: float = 6
+    plot_height: float = 6
 
 
 def save_scatter_and_kde(values,
@@ -48,7 +52,8 @@ def save_scatter_and_kde(values,
                          xlabel=None,
                          ylabel=None,
                          info_path=InfoPath(),
-                         scatter_kde_params=ScatterKdeParams()):
+                         scatter_kde_params=ScatterKdeParams(),
+                         legend_labels=None):
     """
     Create a scatter plot and a KDE plot under it.
     The KDE plot uses uncertainties of each individual observation.
@@ -78,10 +83,15 @@ def save_scatter_and_kde(values,
         else:
             scatter_kde_params.ylabel1 = ylabel
 
+    if legend_labels is not None:
+        scatter_kde_params.legend_labels = legend_labels
+
     sns.set(style="ticks")
     info_path.set_codefile()
 
     fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True,
+                                   figsize=(scatter_kde_params.plot_width,
+                                            scatter_kde_params.plot_height),
                                    gridspec_kw={'hspace': 0})
 
     # Make a scatter plot
@@ -92,7 +102,7 @@ def save_scatter_and_kde(values,
     errorbar_colors = cycle(scatter_kde_params.errorbar_colors)
     markers = cycle(scatter_kde_params.markers)
 
-    for values_list, uncertainties_list in zip(values, uncertainties):
+    for i, (values_list, uncertainties_list) in enumerate(zip(values, uncertainties)):
         marker_color = next(marker_colors)
         marker_edgecolor = next(marker_edgecolors)
         errorbar_color = next(errorbar_colors)
@@ -104,15 +114,24 @@ def save_scatter_and_kde(values,
                      elinewidth=1,
                      zorder=1)
 
+        value_label = '_nolegend_'
+
+        if scatter_kde_params.legend_labels is not None:
+            value_label = scatter_kde_params.legend_labels[i]
+
         ax1.scatter(values_list, range(len(values_list)),
                     marker=marker,
                     color=marker_color,
                     edgecolor=marker_edgecolor,
                     s=scatter_kde_params.markersize,
-                    zorder=2)
+                    zorder=2,
+                    label=value_label)
 
     if scatter_kde_params.ylabel1 is not None:
         ax1.set_ylabel(scatter_kde_params.ylabel1)
+
+    if scatter_kde_params.legend_labels is not None:
+        ax1.legend()
 
     # Make a density plot
     # -----------------
