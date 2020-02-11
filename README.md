@@ -112,7 +112,7 @@ save_tree_plot([fit], param_names=['mu', 'sigma'])
 
 ### Tree plot without cmdstanpy
 
-One can make a tree plot by supplying a Panda's data frame. This will plot summaries of values for the frame's columns:
+One can make a tree plot by supplying a Panda's data frame that shows summaries of values for the frame's columns:
 
 ```Python
 from tarpan.shared.tree_plot import save_tree_plot
