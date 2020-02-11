@@ -26,10 +26,10 @@ class HistogramParams:
     kde_line_styles = ['dotted', 'solid', '-.']
 
 
-def save_histogram(samples, summary, param_names=None,
-                   info_path=InfoPath(),
-                   histogram_params=HistogramParams(),
-                   summary_params=SummaryParams()):
+def save_histogram_from_summary(samples, summary, param_names=None,
+                                info_path=InfoPath(),
+                                histogram_params=HistogramParams(),
+                                summary_params=SummaryParams()):
     """
     Make histograms for the parameters from posterior destribution.
 

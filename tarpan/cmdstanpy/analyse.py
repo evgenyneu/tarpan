@@ -3,7 +3,7 @@
 from tarpan.shared.info_path import InfoPath, get_info_path
 from tarpan.shared.summary import SummaryParams
 from tarpan.shared.tree_plot import make_tree_plot
-from tarpan.shared.histogram import save_histogram
+from tarpan.shared.histogram import save_histogram_from_summary
 from tarpan.shared.pair_plot import save_pair_plot
 from tarpan.cmdstanpy.summary import save_summary
 from tarpan.cmdstanpy.traceplot import save_traceplot
@@ -54,7 +54,7 @@ def save_analysis(fit, param_names=None, info_path=InfoPath(),
 
     save_traceplot(fit, param_names=param_names, info_path=info_path)
 
-    save_histogram(
+    save_histogram_from_summary(
         summary['samples'], summary['df'], param_names=param_names,
         info_path=info_path, summary_params=summary_params)
 
