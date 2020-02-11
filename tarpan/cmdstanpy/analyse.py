@@ -26,9 +26,7 @@ def save_diagnostic(fit, info_path=InfoPath()):
 def save_analysis(fit, param_names=None, info_path=InfoPath(),
                   summary_params=SummaryParams()):
     """
-    This is the most useful function of Tarpan library.
-
-    It creates all analysis files: diagnostic, summary, trace and posterior.
+    Create all analysis files at once: diagnostic, summary, trace and posterior.
 
     Parameters
     -----------
