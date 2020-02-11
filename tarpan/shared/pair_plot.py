@@ -42,6 +42,7 @@ def save_pair_plot(samples, param_names=None,
     """
 
     info_path = InfoPath(**info_path.__dict__)
+    info_path.set_codefile()
 
     g = make_pair_plot(
         samples, param_names=param_names,
