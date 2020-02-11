@@ -52,6 +52,18 @@ If you don't need everything, you can call individual
 functions described below to make just one type of plot or a summary.
 
 
+### Analysis without cmdstanpy
+
+Here is how to analyse values from Pandas' data frame columns:
+
+```Python
+from tarpan.shared.analyse import save_analysis
+save_analysis(df, param_names=['mu', 'sigma'])
+```
+
+* [Full example code](docs/examples/analyse/a02_no_cmdstanpy)
+
+
 
 ## Summary: `save_summary`
 
