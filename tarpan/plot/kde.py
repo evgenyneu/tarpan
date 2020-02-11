@@ -1,9 +1,12 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import List
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+from itertools import cycle
 from tarpan.shared.info_path import InfoPath, get_info_path
 from tarpan.plot.utils import remove_ticks_labels
+
 
 
 @dataclass
@@ -12,11 +15,28 @@ class ScatterKdeParams:
     xlabel: str = None
     ylabel1: str = None
     ylabel2: str = None
-    marker_color: str = "#00a6ff66"
-    marker_edgecolor: str = "#00a6ff"
-    errorbar_color: str = "#00a6ff66"
-    kde_facecolor: str = "#00a6ff66"
-    kde_edgecolor: str = "#00a6ff"
+
+    marker_colors: List = field(
+        default_factory=lambda:
+        ["#00a6ff66", '#ffa60066', '#8888FF66', '#BBBB1166'])
+
+    marker_edgecolors: List = field(
+        default_factory=lambda: ["#00a6ff", '#ffa600', '#8888FF', '#BBBB11'])
+
+    errorbar_colors: List = field(
+        default_factory=lambda:
+        ["#00a6ff66", '#ffa60066', '#8888FF66', '#BBBB1166'])
+
+    markers: List = field(
+        default_factory=lambda: ["^", "o", 'x', '*'])
+
+    kde_facecolors: List = field(
+        default_factory=lambda:
+        ["#00a6ff66", '#ffa60066', '#8888FF66', '#BBBB1166'])
+
+    kde_edgecolors: List = field(
+        default_factory=lambda: ["#00a6ff", '#ffa600', '#8888FF', '#BBBB11'])
+
     grid_color: str = "#aaaaaa"
     grid_alpha: float = 0.2
     markersize: float = 80
@@ -64,35 +84,58 @@ def save_scatter_and_kde(values,
     fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True,
                                    gridspec_kw={'hspace': 0})
 
+    # Make a scatter plot
+    # ---------------
+
+    marker_colors = cycle(scatter_kde_params.marker_colors)
+    marker_edgecolors = cycle(scatter_kde_params.marker_edgecolors)
+    errorbar_colors = cycle(scatter_kde_params.errorbar_colors)
+    markers = cycle(scatter_kde_params.markers)
+
     for values_list, uncertainties_list in zip(values, uncertainties):
+        marker_color = next(marker_colors)
+        marker_edgecolor = next(marker_edgecolors)
+        errorbar_color = next(errorbar_colors)
+        marker = next(markers)
+
         ax1.errorbar(values_list, range(len(values_list)),
                      xerr=uncertainties_list, fmt='none',
-                     ecolor=scatter_kde_params.errorbar_color,
+                     ecolor=errorbar_color,
                      elinewidth=1,
                      zorder=1)
 
         ax1.scatter(values_list, range(len(values_list)),
-                    color=scatter_kde_params.marker_color,
-                    edgecolor=scatter_kde_params.marker_edgecolor,
+                    marker=marker,
+                    color=marker_color,
+                    edgecolor=marker_edgecolor,
                     s=scatter_kde_params.markersize,
                     zorder=2)
 
     if scatter_kde_params.ylabel1 is not None:
         ax1.set_ylabel(scatter_kde_params.ylabel1)
 
+    # Make a density plot
+    # -----------------
+
     xlims = ax1.get_xlim()
     pad = abs(xlims[0] - xlims[1]) / 10
     x = np.linspace(xlims[0] - pad, xlims[1] + pad, 1000)
 
+    kde_facecolors = cycle(scatter_kde_params.kde_facecolors)
+    kde_edgecolors = cycle(scatter_kde_params.kde_edgecolors)
+
     for values_list, uncertainties_list in zip(values, uncertainties):
+        kde_facecolor = next(kde_facecolors)
+        kde_edgecolor = next(kde_edgecolors)
+
         y = gaussian_kde(x, values_list, uncertainties_list)
 
         ax2.fill_between(x, y1=y,
                          edgecolor=None,
-                         facecolor=scatter_kde_params.kde_facecolor,
+                         facecolor=kde_facecolor,
                          linewidth=0)
 
-        ax2.plot(x, y, c=scatter_kde_params.kde_edgecolor, linewidth=1)
+        ax2.plot(x, y, c=kde_edgecolor, linewidth=1)
 
     if scatter_kde_params.xlabel is not None:
         ax2.set_xlabel(scatter_kde_params.xlabel)
