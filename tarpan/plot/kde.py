@@ -35,10 +35,11 @@ def save_scatter_and_kde(values,
 
     Parameters
     ----------
-    values: list
-        List of values to plot
-    uncertainties: list
-        Uncertainties coresponding to the numbers
+    values: list of lists
+        List of values to plot. Supply more than one list to
+        see distributions shown with different colors and markers.
+    uncertainties: list of lists
+        Uncertainties coresponding to the `values`.
     """
 
     if title is not None:
@@ -63,31 +64,35 @@ def save_scatter_and_kde(values,
     fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True,
                                    gridspec_kw={'hspace': 0})
 
-    ax1.errorbar(values, range(len(values)),
-                 xerr=uncertainties, fmt='none',
-                 ecolor=scatter_kde_params.errorbar_color,
-                 elinewidth=1,
-                 zorder=1)
+    for values_list, uncertainties_list in zip(values, uncertainties):
+        ax1.errorbar(values_list, range(len(values_list)),
+                     xerr=uncertainties_list, fmt='none',
+                     ecolor=scatter_kde_params.errorbar_color,
+                     elinewidth=1,
+                     zorder=1)
 
-    ax1.scatter(values, range(len(values)),
-                color=scatter_kde_params.marker_color,
-                edgecolor=scatter_kde_params.marker_edgecolor,
-                s=scatter_kde_params.markersize,
-                zorder=2)
+        ax1.scatter(values_list, range(len(values_list)),
+                    color=scatter_kde_params.marker_color,
+                    edgecolor=scatter_kde_params.marker_edgecolor,
+                    s=scatter_kde_params.markersize,
+                    zorder=2)
 
     if scatter_kde_params.ylabel1 is not None:
         ax1.set_ylabel(scatter_kde_params.ylabel1)
 
-    margin = abs(min(values) - max(values)) / 5
-    x = np.linspace(min(values) - margin, max(values) + margin, 1000)
-    y = gaussian_kde(x, values, uncertainties)
+    xlims = ax1.get_xlim()
+    pad = abs(xlims[0] - xlims[1]) / 10
+    x = np.linspace(xlims[0] - pad, xlims[1] + pad, 1000)
 
-    ax2.fill_between(x, y1=y,
-                     edgecolor=None,
-                     facecolor=scatter_kde_params.kde_facecolor,
-                     linewidth=0)
+    for values_list, uncertainties_list in zip(values, uncertainties):
+        y = gaussian_kde(x, values_list, uncertainties_list)
 
-    ax2.plot(x, y, c=scatter_kde_params.kde_edgecolor, linewidth=1)
+        ax2.fill_between(x, y1=y,
+                         edgecolor=None,
+                         facecolor=scatter_kde_params.kde_facecolor,
+                         linewidth=0)
+
+        ax2.plot(x, y, c=scatter_kde_params.kde_edgecolor, linewidth=1)
 
     if scatter_kde_params.xlabel is not None:
         ax2.set_xlabel(scatter_kde_params.xlabel)
