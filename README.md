@@ -110,6 +110,19 @@ save_tree_plot([fit], param_names=['mu', 'sigma'])
 <img src="docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.png" width="600" alt="Tree plot">
 
 
+### Tree plot without cmdstanpy
+
+One can make a tree plot by supplying a Panda's data frame. This will plot summaries of values for the frame's columns:
+
+```Python
+from tarpan.shared.tree_plot import save_tree_plot
+save_tree_plot([df], param_names=['mu', 'sigma'])
+```
+
+* [Full example code](docs/examples/save_tree_plot/a04_no_cmdstanpy)
+
+
+
 ### Comparing multiple models on a tree plot
 
 Supply multiple fits in order to compare parameters from multiple models.

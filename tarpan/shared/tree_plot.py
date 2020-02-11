@@ -8,7 +8,8 @@ import pandas as pd
 import math
 from itertools import cycle
 import re
-from tarpan.shared.summary import SummaryParams
+from tarpan.shared.summary import SummaryParams, sample_summary
+from tarpan.shared.param_names import filter_param_names
 
 
 @dataclass
@@ -88,6 +89,65 @@ def summary_from_dict(data):
     """
 
     return pd.DataFrame.from_dict(data, orient="index", columns=["Mode"])
+
+
+def save_tree_plot(models,
+                   extra_values=[],
+                   param_names=None,
+                   info_path=InfoPath(),
+                   summary_params=SummaryParams(),
+                   tree_params=TreePlotParams()):
+    """
+    Save a tree plot that summarises parameter distributions.
+    Can compare summaries from multiple models, when multiple samples are
+    supplied. One can also supply additional markers
+    to be compared with using `extra_values` parameter.
+
+    Parameters
+    ----------
+
+    models : list Panda's data frames
+
+        List of data frames for each model, containg sample values for
+        multiple parameters (one parameter is one data frame column).
+        Supply multiple data frames to see their distribution summaries
+        compared on the tree plot.
+
+    extra_values : list of dict
+        Additional markers to be shown on tree plot, without error bars:
+
+        [
+            {
+                "mu": 2.3,
+                "sigma": 3.3
+            }
+        ]
+
+    param_names : list of str
+
+        Names of parameters. Include all if None.
+
+    info_path : InfoPath
+
+        Path information for creating summaries.
+
+    """
+
+    info_path.set_codefile()
+    summaries = []
+
+    for samples in models:
+        column_names = list(samples)
+        param_names = filter_param_names(column_names, param_names)
+        summary, _ = sample_summary(samples, params=summary_params)
+        summaries.append(summary)
+
+    for values in extra_values:
+        summaries.append(summary_from_dict(values))
+
+    make_comparative_tree_plot(
+        summaries, info_path=info_path,
+        tree_params=tree_params)
 
 
 def make_comparative_tree_plot(
