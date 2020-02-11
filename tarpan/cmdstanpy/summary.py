@@ -23,7 +23,7 @@ def save_summary(fit, param_names=None, info_path=InfoPath(),
 
     param_names : list of str
 
-        Names of parameters to be included in the summar. Include all if None.
+        Names of parameters to be included in the summary. Include all if None.
 
     info_path : InfoPath
 

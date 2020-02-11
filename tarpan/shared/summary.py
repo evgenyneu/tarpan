@@ -1,13 +1,14 @@
 """Create summary of parameter distributions: mean, std, mode etc."""
 
 from dataclasses import dataclass, field
-from tarpan.shared.info_path import InfoPath, get_info_path
 import arviz as az
 import numpy as np
 import pandas as pd
 from tabulate import tabulate
 from scipy.stats import gaussian_kde
 from typing import List
+from tarpan.shared.info_path import InfoPath, get_info_path
+from tarpan.shared.param_names import filter_param_names
 
 
 @dataclass
@@ -29,7 +30,7 @@ class SummaryParams:
         ]
 
 
-def save_summary(samples, info_path=InfoPath(),
+def save_summary(samples, param_names=None, info_path=InfoPath(),
                  summary_params=SummaryParams()):
     """
     Generates and saves statistical summary of the samples using mean, std, mode, hpdi.
@@ -41,11 +42,19 @@ def save_summary(samples, info_path=InfoPath(),
 
         Each column contains samples for a parameter.
 
+    param_names : list of str
+
+        Names of parameters to be included in the summary. Include all if None.
+
     info_path : InfoPath
 
         Path information for creating summaries.
     """
 
+    info_path.set_codefile()
+    column_names = list(samples)
+    param_names = filter_param_names(column_names, param_names)
+    samples = samples[param_names]  # Filter by column names
     df_summary, table = sample_summary(samples, params=summary_params)
     return save_summary_to_disk(df_summary, table, info_path)
 

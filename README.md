@@ -90,6 +90,18 @@ The text summary format is such that the text can be pasted into Github/Gitlab/B
 * **R_hat** is a Stan's parameter representing the quality of the sampling. This value needs to be smaller than 1.00. After generating a model I usually immediately look at this R_hat column to see if the sampling was good.
 
 
+### Summary without cmdstanpy
+
+Here is how to make summary of values from Pandas' data frame columns:
+
+```Python
+from tarpan.shared.summary import save_summary
+save_summary(df, param_names=['mu', 'sigma'])
+```
+
+* [Full example code](docs/examples/save_summary/a03_no_cmdstanpy)
+
+
 
 ## Tree plot: `save_tree_plot`
 
