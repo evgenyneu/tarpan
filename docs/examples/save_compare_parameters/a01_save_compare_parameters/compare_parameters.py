@@ -27,7 +27,7 @@ def run_model():
 
     save_compare_parameters([fit1, fit2],
                             labels=['Original', 'Larger uncertainties'],
-                            type=CompareParametersType.GITLAB_LATEX,
+                            type=CompareParametersType.TEXT,  # or GITLAB_LATEX
                             param_names=['mu', 'tau'])
 
 

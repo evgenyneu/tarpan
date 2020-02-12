@@ -260,10 +260,10 @@ save_histogram(df, param_names=['mu', 'sigma'])
 
 Use `save_compare_parameters` function to compare parameters in one table like this:
 
-|                      |                       mu |                      tau |
-|---------------------:|-------------------------:|-------------------------:|
-|             Original | $`7.53^{+4.63}_{-4.59}`$ | $`2.36^{+5.41}_{-2.35}`$ |
-| Larger uncertainties | $`8.87^{+9.05}_{-9.50}`$ | $`3.64^{+8.14}_{-3.61}`$ |
+|                      |                  mu |                 tau |
+|---------------------:|--------------------:|--------------------:|
+|             Original | 7.53 (+4.63, -4.59) | 2.36 (+5.41, -2.35) |
+| Larger uncertainties | 8.87 (+9.05, -9.50) | 3.64 (+8.14, -3.61) |
 
 ```Python
 from tarpan.cmdstanpy.compare_parameters import save_compare_parameters
