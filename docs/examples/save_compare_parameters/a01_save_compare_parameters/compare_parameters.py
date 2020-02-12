@@ -1,7 +1,3 @@
-"""
-Create a tree plot that compares parameters from multiple models.
-"""
-
 from cmdstanpy import CmdStanModel
 from tarpan.cmdstanpy.compare_parameters import save_compare_parameters
 from tarpan.shared.compare_parameters import CompareParametersType
