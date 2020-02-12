@@ -109,11 +109,18 @@ def make_histogram_one_page(i_start, samples, summary, param_names,
     if nrows > params.num_plot_rows:
         nrows = params.num_plot_rows
 
+    ncols = params.ncols
     fig_height = 4 * nrows
+    fig_width = 12
+
+    # Special case: if there is just one parameter show a plot with one column
+    if len(param_names) == 1:
+        ncols = 1
+        fig_width /= 2
 
     fig, ax = plt.subplots(
         nrows=nrows,
-        ncols=params.ncols, figsize=(12, fig_height),
+        ncols=ncols, figsize=(fig_width, fig_height),
         squeeze=False)
 
     axes = ax.flatten()
@@ -186,7 +193,7 @@ def make_histogram_one_page(i_start, samples, summary, param_names,
     fig.legend(handles, labels, loc='upper center', mode='expand',
                ncol=len(labels))
 
-    fig.tight_layout(rect=[0, 0.03, 1, 0.95])
+    fig.tight_layout(rect=[0, 0, 1, 0.95])
 
     return (fig, ax)
 
