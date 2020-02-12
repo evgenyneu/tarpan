@@ -256,6 +256,25 @@ save_histogram(df, param_names=['mu', 'sigma'])
 * [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/save_histogram/a02_no_cmdstanpy)
 
 
+## Comparing parameters of multiple models
+
+Use `save_compare_parameters` function to compare parameters in one table like this:
+
+|                      |                       mu |                      tau |
+|---------------------:|-------------------------:|-------------------------:|
+|             Original | $`7.53^{+4.63}_{-4.59}`$ | $`2.36^{+5.41}_{-2.35}`$ |
+| Larger uncertainties | $`8.87^{+9.05}_{-9.50}`$ | $`3.64^{+8.14}_{-3.61}`$ |
+
+```Python
+from tarpan.cmdstanpy.compare_parameters import save_compare_parameters
+
+save_compare_parameters([fit1, fit2], labels=['Model 1', 'Model 2'],
+                        param_names=["mu", "theta"])
+```
+
+* [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/save_compare_parameters/a01_save_compare_parameters)
+
+
 ## Saving cmdstan samples to disk
 
 It saves a lot of time to sample the model and save the results to disk, so
