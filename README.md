@@ -177,7 +177,7 @@ save_tree_plot([fit1, fit2], extra_values=data, param_names=['mu', 'tau'],
 
 ## Comparing parameters of multiple models
 
-Use `save_compare_parameters` function to compare parameters in one table like this:
+Use `save_compare_parameters` function to compare parameters between different models:
 
 |                      |                  mu |                 tau |
 |---------------------:|--------------------:|--------------------:|
