@@ -9,7 +9,7 @@ This is a collection of functions for analysing output of [cmdstanpy](https://gi
 * histograms and pair plots of posterior distributions of parameters.
 
 
-<img src='images/tarpan.jpg' alt='Picture of Tarpan'>
+<img src='https://github.com/evgenyneu/tarpan/raw/master/images/tarpan.jpg' alt='Picture of Tarpan'>
 
 *The only known illustration of a tarpan made from life, depicting a five month old colt (Borisov, 1841). Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Tarpan.png).*
 
@@ -131,7 +131,7 @@ save_tree_plot([fit], param_names=['mu', 'sigma'])
 
 * [Full example code](docs/examples/save_tree_plot/a01_single_fit)
 
-<img src="docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.png" width="600" alt="Tree plot">
+<img src="https://github.com/evgenyneu/tarpan/raw/master/docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.png" width="600" alt="Tree plot">
 
 
 ### Tree plot without cmdstanpy
@@ -172,7 +172,7 @@ save_tree_plot([fit1, fit2], extra_values=data, param_names=['mu', 'tau'],
 
 * [Full example code](docs/examples/save_tree_plot/a02_compare_fits)
 
-<img src="docs/examples/save_tree_plot/a02_compare_fits/model_info/tree_plot_compare/summary.png" width="600" alt="Tree plot with multiple models">
+<img src="https://github.com/evgenyneu/tarpan/raw/master/docs/examples/save_tree_plot/a02_compare_fits/model_info/tree_plot_compare/summary.png" width="600" alt="Tree plot with multiple models">
 
 
 
@@ -194,7 +194,7 @@ save_traceplot(fit, param_names=['mu', 'tau', 'eta.1'])
 
 * [Full example code](docs/examples/save_traceplot/a01_save_traceplot)
 
-<img src="docs/examples/save_traceplot/a01_save_traceplot/model_info/traceplot/traceplot_01.jpg" width="900" alt="Traceplot">
+<img src="https://github.com/evgenyneu/tarpan/raw/master/docs/examples/save_traceplot/a01_save_traceplot/model_info/traceplot/traceplot_01.jpg" width="900" alt="Traceplot">
 
 
 
@@ -212,7 +212,7 @@ save_pair_plot(fit, param_names=['mu', 'tau', 'eta.1'])
 
 * [Full example code](docs/examples/save_pair_plot/a01_pair_plot)
 
-<img src="docs/examples/save_pair_plot/a01_pair_plot/model_info/pair_plot/pair_plot.jpg" width="600" alt="Pair plot">
+<img src="https://github.com/evgenyneu/tarpan/raw/master/docs/examples/save_pair_plot/a01_pair_plot/model_info/pair_plot/pair_plot.jpg" width="600" alt="Pair plot">
 
 
 ### Pair plot without cmdstanpy
@@ -241,7 +241,7 @@ save_histogram(fit, param_names=['mu', 'tau', 'eta.1', 'theta.1'])
 
 * [Full example code](docs/examples/save_histogram/a01_save_histogram)
 
-<img src="docs/examples/save_histogram/a01_save_histogram/model_info/histogram/histogram_01.jpg" width="900" alt="Histogram">
+<img src="https://github.com/evgenyneu/tarpan/raw/master/docs/examples/save_histogram/a01_save_histogram/model_info/histogram/histogram_01.jpg" width="900" alt="Histogram">
 
 
 ### Histogram without cmdstanpy
@@ -321,7 +321,7 @@ save_scatter_and_kde(values=[values1, values2],
                      legend_labels=["AGB", "RGB"])
 ```
 
-<img src="images/scatter_kde.png" width="700" alt="Scatter-KDE plot">
+<img src="https://github.com/evgenyneu/tarpan/raw/master/images/scatter_kde.png" width="700" alt="Scatter-KDE plot">
 
 
 ### `gaussian_kde` function
