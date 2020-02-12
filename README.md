@@ -181,8 +181,8 @@ Use `save_compare_parameters` function to compare parameters in one table like t
 
 |                      |                  mu |                 tau |
 |---------------------:|--------------------:|--------------------:|
-|             Original | 7.53 (+4.63, -4.59) | 2.36 (+5.41, -2.35) |
-| Larger uncertainties | 8.87 (+9.05, -9.50) | 3.64 (+8.14, -3.61) |
+|              Model 1 | 7.53 (+4.63, -4.59) | 2.36 (+5.41, -2.35) |
+|              Model 2 | 8.87 (+9.05, -9.50) | 3.64 (+8.14, -3.61) |
 
 This table is a numerical version of the data shown by `save_tree_plot`. The values here are modes of the distributions and uncertainties are distances to 68% HPD intervals.
 
