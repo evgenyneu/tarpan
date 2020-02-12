@@ -34,7 +34,7 @@ install_cmdstan
 
 This is the main function of the library that saves summaries
 and trace/pair/tree plots in
-[model_info](docs/examples/analyse/a01_simple/model_info/analyse) directory.
+[model_info](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/analyse/a01_simple/model_info/analyse) directory.
 The function is useful when you want to generate all types of summaries
 and plots at once.
 
@@ -46,7 +46,7 @@ fit = model.sample(data=your_data)
 save_analysis(fit, param_names=['mu', 'sigma'])
 ```
 
-* [Full example code](docs/examples/analyse/a01_simple)
+* [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/analyse/a01_simple)
 
 If you don't need everything, you can call individual
 functions described below to make just one type of plot or a summary.
@@ -61,7 +61,7 @@ from tarpan.shared.analyse import save_analysis
 save_analysis(df, param_names=['mu', 'sigma'])
 ```
 
-* [Full example code](docs/examples/analyse/a02_no_cmdstanpy)
+* [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/analyse/a02_no_cmdstanpy)
 
 
 
@@ -78,7 +78,7 @@ fit = model.sample(data=your_data)
 save_summary(fit, param_names=['mu', 'tau', 'eta.1'])
 ```
 
-* [Full example code](docs/examples/save_summary/a01_save_summary)
+* [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/save_summary/a01_save_summary)
 
 The text summary format is such that the text can be pasted into Github/Gitlab/Bitbucket's Markdown file, like this:
 
@@ -93,7 +93,7 @@ The text summary format is such that the text can be pasted into Github/Gitlab/B
 
 *  **Name, Mean, Std** are the name of the parameter, its mean and standard deviation.
 
-*  **68CI-, 68CI+, 95CI-, 95CI+** are the 68% and 95% HPDIs (highest probability density intervals). These values [are configurable](docs/hpdi.md).
+*  **68CI-, 68CI+, 95CI-, 95CI+** are the 68% and 95% HPDIs (highest probability density intervals). These values [are configurable](https://github.com/evgenyneu/tarpan/blob/master/docs/hpdi.md).
 
 * **Mode, +, -** is a mode of distribution with upper and lower uncertainties, which are calculated as distances to 68% HPDI.
 
@@ -111,7 +111,7 @@ from tarpan.shared.summary import save_summary
 save_summary(df, param_names=['mu', 'sigma'])
 ```
 
-* [Full example code](docs/examples/save_summary/a03_no_cmdstanpy)
+* [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/save_summary/a03_no_cmdstanpy)
 
 
 
@@ -129,7 +129,7 @@ fit = model.sample(data=your_data)
 save_tree_plot([fit], param_names=['mu', 'sigma'])
 ```
 
-* [Full example code](docs/examples/save_tree_plot/a01_single_fit)
+* [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/save_tree_plot/a01_single_fit)
 
 <img src="https://github.com/evgenyneu/tarpan/raw/master/docs/examples/save_tree_plot/a01_single_fit/model_info/tree_plot/summary.png" width="600" alt="Tree plot">
 
@@ -143,7 +143,7 @@ from tarpan.shared.tree_plot import save_tree_plot
 save_tree_plot([df], param_names=['mu', 'sigma'])
 ```
 
-* [Full example code](docs/examples/save_tree_plot/a04_no_cmdstanpy)
+* [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/save_tree_plot/a04_no_cmdstanpy)
 
 
 
@@ -170,7 +170,7 @@ save_tree_plot([fit1, fit2], extra_values=data, param_names=['mu', 'tau'],
                tree_params=tree_params)
 ```
 
-* [Full example code](docs/examples/save_tree_plot/a02_compare_fits)
+* [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/save_tree_plot/a02_compare_fits)
 
 <img src="https://github.com/evgenyneu/tarpan/raw/master/docs/examples/save_tree_plot/a02_compare_fits/model_info/tree_plot_compare/summary.png" width="600" alt="Tree plot with multiple models">
 
@@ -192,7 +192,7 @@ fit = model.sample(data=your_data)
 save_traceplot(fit, param_names=['mu', 'tau', 'eta.1'])
 ```
 
-* [Full example code](docs/examples/save_traceplot/a01_save_traceplot)
+* [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/save_traceplot/a01_save_traceplot)
 
 <img src="https://github.com/evgenyneu/tarpan/raw/master/docs/examples/save_traceplot/a01_save_traceplot/model_info/traceplot/traceplot_01.jpg" width="900" alt="Traceplot">
 
@@ -210,7 +210,7 @@ fit = model.sample(data=your_data)
 save_pair_plot(fit, param_names=['mu', 'tau', 'eta.1'])
 ```
 
-* [Full example code](docs/examples/save_pair_plot/a01_pair_plot)
+* [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/save_pair_plot/a01_pair_plot)
 
 <img src="https://github.com/evgenyneu/tarpan/raw/master/docs/examples/save_pair_plot/a01_pair_plot/model_info/pair_plot/pair_plot.jpg" width="600" alt="Pair plot">
 
@@ -224,7 +224,7 @@ from tarpan.shared.pair_plot import save_pair_plot
 save_pair_plot(df, param_names=['mu', 'sigma'])
 ```
 
-* [Full example code](docs/examples/save_pair_plot/a02_no_cmdstanpy)
+* [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/save_pair_plot/a02_no_cmdstanpy)
 
 
 
@@ -239,7 +239,7 @@ fit = model.sample(data=your_data)
 save_histogram(fit, param_names=['mu', 'tau', 'eta.1', 'theta.1'])
 ```
 
-* [Full example code](docs/examples/save_histogram/a01_save_histogram)
+* [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/save_histogram/a01_save_histogram)
 
 <img src="https://github.com/evgenyneu/tarpan/raw/master/docs/examples/save_histogram/a01_save_histogram/model_info/histogram/histogram_01.jpg" width="900" alt="Histogram">
 
@@ -253,7 +253,7 @@ from tarpan.shared.histogram import save_histogram
 save_histogram(df, param_names=['mu', 'sigma'])
 ```
 
-* [Full example code](docs/examples/save_histogram/a02_no_cmdstanpy)
+* [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/save_histogram/a02_no_cmdstanpy)
 
 
 ## Saving cmdstan samples to disk
@@ -285,7 +285,7 @@ def run_stan(output_dir, other_param):
 fit = run(func=run_stan, other_param="some data")
 ```
 
-* [Full example code](docs/examples/run/a01_run)
+* [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/run/a01_run)
 
 
 ## Scatter and KDE plot
@@ -343,9 +343,9 @@ plt.fill_between(x, y)
 
 ## Common questions
 
-* [How to change the widths of HPD intervals?](docs/hpdi.md)
+* [How to change the widths of HPD intervals?](https://github.com/evgenyneu/tarpan/blob/master/docs/hpdi.md)
 
-* [Where are plot/summary files placed and how to change that?](docs/file_names.md)
+* [Where are plot/summary files placed and how to change that?](https://github.com/evgenyneu/tarpan/blob/master/docs/file_names.md)
 
 
 
@@ -358,7 +358,7 @@ pytest
 
 ## The unlicense
 
-This work is in [public domain](LICENSE).
+This work is in [public domain](https://github.com/evgenyneu/tarpan/blob/master/LICENSE).
 
 
 ## 🐴🐴🐴
