@@ -175,6 +175,41 @@ save_tree_plot([fit1, fit2], extra_values=data, param_names=['mu', 'tau'],
 <img src="https://github.com/evgenyneu/tarpan/raw/master/docs/examples/save_tree_plot/a02_compare_fits/model_info/tree_plot_compare/summary.png" width="600" alt="Tree plot with multiple models">
 
 
+## Comparing parameters of multiple models
+
+Use `save_compare_parameters` function to compare parameters in one table like this:
+
+|                      |                  mu |                 tau |
+|---------------------:|--------------------:|--------------------:|
+|             Original | 7.53 (+4.63, -4.59) | 2.36 (+5.41, -2.35) |
+| Larger uncertainties | 8.87 (+9.05, -9.50) | 3.64 (+8.14, -3.61) |
+
+This table is a numerical version of the data shown by `save_tree_plot`. The values here are modes of the distributions and uncertainties are distances to 68% HPD intervals.
+
+```Python
+from tarpan.cmdstanpy.compare_parameters import save_compare_parameters
+
+save_compare_parameters([fit1, fit2], labels=['Model 1', 'Model 2'],
+                        param_names=["mu", "theta"])
+```
+
+* [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/save_compare_parameters/a01_save_compare_parameters)
+
+
+### Use `save_compare_parameters` without cmdstanpy
+
+Here is how to compare parameters using Pandas data frames df1 and df2:
+
+```Python
+from tarpan.shared.compare_parameters import save_compare_parameters
+
+save_compare_parameters([df1, df2], labels=['Model 1', 'Model 2'],
+                        param_names=["mu", "theta"])
+```
+
+* [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/save_compare_parameters/a02_no_cmdstanpy)
+
+
 
 ## Trace plot: `save_traceplot`
 
@@ -255,40 +290,6 @@ save_histogram(df, param_names=['mu', 'sigma'])
 
 * [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/save_histogram/a02_no_cmdstanpy)
 
-
-## Comparing parameters of multiple models
-
-Use `save_compare_parameters` function to compare parameters in one table like this:
-
-|                      |                  mu |                 tau |
-|---------------------:|--------------------:|--------------------:|
-|             Original | 7.53 (+4.63, -4.59) | 2.36 (+5.41, -2.35) |
-| Larger uncertainties | 8.87 (+9.05, -9.50) | 3.64 (+8.14, -3.61) |
-
-The values here are modes of the distributions and uncertainties are distances to 68% HPD intervals.
-
-```Python
-from tarpan.cmdstanpy.compare_parameters import save_compare_parameters
-
-save_compare_parameters([fit1, fit2], labels=['Model 1', 'Model 2'],
-                        param_names=["mu", "theta"])
-```
-
-* [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/save_compare_parameters/a01_save_compare_parameters)
-
-
-### Use `save_compare_parameters` without cmdstanpy
-
-Here is how to compare parameters using Pandas data frames df1 and df2:
-
-```Python
-from tarpan.shared.compare_parameters import save_compare_parameters
-
-save_compare_parameters([df1, df2], labels=['Model 1', 'Model 2'],
-                        param_names=["mu", "theta"])
-```
-
-* [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/save_compare_parameters/a02_no_cmdstanpy)
 
 
 ## Saving cmdstan samples to disk
