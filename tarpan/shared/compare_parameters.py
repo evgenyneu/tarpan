@@ -106,7 +106,8 @@ def compare_parameters(
 
         df.loc[label] = values
 
-    table = tabulate(df, headers=param_names, tablefmt="pipe")
+    table = tabulate(df, headers=param_names, tablefmt="pipe",
+                     stralign="right")
 
     return df, table
 
