@@ -56,6 +56,7 @@ def save_scatter_and_kde(values,
                          legend_labels=None):
     """
     Create a scatter plot and a KDE plot under it.
+    The plot is saved to a file.
     The KDE plot uses uncertainties of each individual observation.
 
     Parameters
@@ -65,6 +66,53 @@ def save_scatter_and_kde(values,
         see distributions shown with different colors and markers.
     uncertainties: list of lists
         Uncertainties coresponding to the `values`.
+
+    Returns
+    --------
+    fig : Matplotlib's figure object
+    axes : list of Matplotlib's axes
+    """
+
+    fig, axes = scatter_and_kde(values=values,
+                                uncertainties=uncertainties,
+                                title=title,
+                                xlabel=xlabel,
+                                ylabel=ylabel,
+                                scatter_kde_params=scatter_kde_params,
+                                legend_labels=legend_labels)
+
+    info_path.set_codefile()
+    info_path.base_name = info_path.base_name or "scatter_kde"
+    info_path.extension = info_path.extension or 'pdf'
+    plot_path = get_info_path(info_path)
+    fig.savefig(plot_path, dpi=info_path.dpi)
+
+    return fig, axes
+
+
+def scatter_and_kde(values,
+                    uncertainties,
+                    title=None,
+                    xlabel=None,
+                    ylabel=None,
+                    scatter_kde_params=ScatterKdeParams(),
+                    legend_labels=None):
+    """
+    Create a scatter plot and a KDE plot under it.
+    The KDE plot uses uncertainties of each individual observation.
+
+    Parameters
+    ----------
+    values: list of lists
+        List of values to plot. Supply more than one list to
+        see distributions shown with different colors and markers.
+    uncertainties: list of lists
+        Uncertainties coresponding to the `values`.
+
+    Returns
+    --------
+    fig : Matplotlib's figure object
+    axes : list of Matplotlib's axes
     """
 
     if title is not None:
@@ -87,7 +135,6 @@ def save_scatter_and_kde(values,
         scatter_kde_params.legend_labels = legend_labels
 
     sns.set(style="ticks")
-    info_path.set_codefile()
 
     fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True,
                                    figsize=(scatter_kde_params.plot_width,
@@ -165,10 +212,6 @@ def save_scatter_and_kde(values,
     if scatter_kde_params.title is not None:
         fig.suptitle(scatter_kde_params.title)
 
-    info_path.base_name = info_path.base_name or "scatter_kde"
-    info_path.extension = info_path.extension or 'pdf'
-    plot_path = get_info_path(info_path)
-
     ax1.grid(color=scatter_kde_params.grid_color, linewidth=1,
              alpha=scatter_kde_params.grid_alpha)
 
@@ -183,7 +226,7 @@ def save_scatter_and_kde(values,
     else:
         fig.tight_layout()
 
-    fig.savefig(plot_path, dpi=info_path.dpi)
+    return fig, [ax1, ax2]
 
 
 def gaussian_kde(eval_points, values, uncertainties):
