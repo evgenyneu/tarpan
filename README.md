@@ -375,6 +375,39 @@ plt.fill_between(x, y)
 ```
 
 
+## Make posterior-scatter-kde plot
+
+The `save_posterior_scatter_and_kde` function makes a scatter-KDE plots
+of the data, same as `save_scatter_and_kde`. In addition, it plots
+the posterior distributions.
+
+
+```python
+from tarpan.plot.posterior import save_posterior_scatter_and_kde
+
+# Plot one sample from posterior distribution
+def model_pdf(x, row):
+    mu = row['mu.1']
+    sigma = row['sigma']
+
+    return stats.norm.pdf(x, mu, sigma)
+
+
+fig, axes = save_posterior_scatter_and_kde(
+    fits=[fit1, fit2],  # Two models returned by model.sample function
+    pdf=model_pdf,  # Function that plot posterior distribution
+    values=[data1["y"], data2["y"]],
+    uncertainties=[data1["uncertainties"], data2["uncertainties"]],
+    title="Sodium abundances in RGB stars of NGC 288",
+    xlabel="Sodium abundance [Na/H]",
+    ylabel=["Star number", "Probability density"],
+    legend_labels=["AGB", "RGB"])
+```
+
+<img src="https://github.com/evgenyneu/tarpan/raw/master/images/posterior_scatter_pde.png" width="700" alt="Posterior-scatter-KDE plot">
+
+* [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/posterior/save_posterior_scatter_and_kde/a01_plot)
+
 
 
 ## Common questions
