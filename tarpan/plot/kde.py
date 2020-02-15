@@ -8,7 +8,6 @@ from tarpan.shared.info_path import InfoPath, get_info_path
 from tarpan.plot.utils import remove_ticks_labels
 
 
-
 @dataclass
 class ScatterKdeParams:
     title: str = None  # Plot's title
@@ -37,6 +36,9 @@ class ScatterKdeParams:
 
     kde_edgecolors: List = field(
         default_factory=lambda: ["#00a6ff", '#ff0021', '#8888FF', '#BBBB11'])
+
+    kde_show_shade: bool = True  # Show shade under KDE plot
+    kde_line_width: float = 1    # Line width of the KDE curve
 
     grid_color: str = "#aaaaaa"
     grid_alpha: float = 0.2
@@ -196,12 +198,15 @@ def scatter_and_kde(values,
 
         y = gaussian_kde(x, values_list, uncertainties_list)
 
-        ax2.fill_between(x, y1=y,
-                         edgecolor=None,
-                         facecolor=kde_facecolor,
-                         linewidth=0)
+        if scatter_kde_params.kde_show_shade:
+            ax2.fill_between(x, y1=y,
+                             edgecolor=None,
+                             facecolor=kde_facecolor,
+                             linewidth=0)
 
-        ax2.plot(x, y, c=kde_edgecolor, linewidth=1)
+        ax2.plot(x, y, c=kde_edgecolor,
+                 linewidth=scatter_kde_params.kde_line_width,
+                 zorder=5)
 
     if scatter_kde_params.xlabel is not None:
         ax2.set_xlabel(scatter_kde_params.xlabel)

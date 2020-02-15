@@ -135,7 +135,10 @@ tarpan/**/model_info
 temp_data
 stan_cache
 
-# Stan files in examples
+# Files generate by Stan
 eight_schools
 eight_schools.hpp
 eight_schools.o
+
+**/stan_model/*
+!**/stan_model/*.stan
