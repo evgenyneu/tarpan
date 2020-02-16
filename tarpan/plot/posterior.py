@@ -13,7 +13,7 @@ class PosteriorKdeParams:
 
     kde_edgecolors: List = field(
         default_factory=lambda:
-            ["#00a6ff30", '#ff002115', '#8888FF30', '#BBBB1130'])
+            ["#0060ff15", '#ff002115', '#8888FF30', '#BBBB1130'])
 
     data_kde_show_shade: bool = False  # Show shade under data KDE plot
     data_kde_line_width: float = 2  # Line width of data KDE

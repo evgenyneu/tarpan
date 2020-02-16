@@ -18,24 +18,24 @@ class ScatterKdeParams:
 
     marker_colors: List = field(
         default_factory=lambda:
-        ["#00a6ff44", '#ff002144', '#8888FF44', '#BBBB1144'])
+        ["#0060ff44", '#ff002144', '#8888FF44', '#BBBB1144'])
 
     marker_edgecolors: List = field(
-        default_factory=lambda: ["#00a6ff", '#ff0021', '#8888FF', '#BBBB11'])
+        default_factory=lambda: ["#0060ff", '#ff0021', '#8888FF', '#BBBB11'])
 
     errorbar_colors: List = field(
         default_factory=lambda:
-        ["#00a6ff66", '#ff002144', '#8888FF44', '#BBBB1144'])
+        ["#0060ff66", '#ff002144', '#8888FF44', '#BBBB1144'])
 
     markers: List = field(
         default_factory=lambda: ["^", "o", 'x', '*'])
 
     kde_facecolors: List = field(
         default_factory=lambda:
-        ["#00a6ff44", '#ff002144', '#8888FF44', '#BBBB1144'])
+        ["#0060ff44", '#ff002144', '#8888FF44', '#BBBB1144'])
 
     kde_edgecolors: List = field(
-        default_factory=lambda: ["#00a6ff", '#ff0021', '#8888FF', '#BBBB11'])
+        default_factory=lambda: ["#0060ff", '#ff0021', '#8888FF', '#BBBB11'])
 
     kde_show_shade: bool = True  # Show shade under KDE plot
     kde_line_width: float = 1    # Line width of the KDE curve
