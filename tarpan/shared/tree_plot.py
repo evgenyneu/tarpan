@@ -22,15 +22,17 @@ class TreePlotParams:
     error_bar_cap_size: float = None
     markersize: float = 50
     ylim: float = None
-    markers = ['x', 'o', 'v', 'D', 'X', '1', '<', '*', '>', '|', 'd']
+    markers = ['^', 'o', 'x', 'D', 'X', 'v', '<', '*', '>', '|', 'd']
     marker_line_width: float = 1
 
-    marker_colors = ['#FF9922', '#009933', '#8888FF',
+    marker_colors = ["#bcd5fd", '#febcc4', '#FF9922',
+                     '#009933', '#8888FF',
                      '#BBBB11', '#3399AA', '#33BB11',
                      '#330077', '#BBAA22', '#00AA77',
                      '#EE8844']
 
-    marker_edge_colors = ['#994400', '#003300', '#111177',
+    marker_edge_colors = ["#0060ff", '#ff0021', '#994400',
+                          '#003300', '#111177',
                           '#888800', '#003355', '#008800',
                           '#000022', '#776600', '#006622',
                           '#662200']
@@ -192,7 +194,7 @@ def tree_plot(groups, params: TreePlotParams = TreePlotParams()):
     sns.set(style="ticks")
 
     if params.error_bar_cap_size is None:
-        error_bar_cap_size = len(groups) / 100
+        error_bar_cap_size = len(groups) / 50
 
     fig, ax = plt.subplots()
     total_markers = 0
@@ -247,7 +249,7 @@ def tree_plot(groups, params: TreePlotParams = TreePlotParams()):
                 color = next(error_bar_colors)
 
                 if i_error_bar == n_error_bars - 1:
-                    color = marker_color
+                    color = marker_edge_color
 
                 ax.plot(error_bar, [y_coord, y_coord], zorder=i_error_bar + 1,
                         color=color)
