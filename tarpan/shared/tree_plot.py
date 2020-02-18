@@ -22,7 +22,7 @@ class TreePlotParams:
     error_bar_cap_size: float = None
     markersize: float = 50
     ylim: float = None
-    markers = ['^', 'o', 'x', 'D', 'X', 'v', '<', '*', '>', '|', 'd']
+    markers = ['^', 'o', 'X', 'D', 'X', 'v', '<', '*', '>', '|', 'd']
     marker_line_width: float = 1
 
     marker_colors = ["#bcd5fd", '#febcc4', '#FF9922',
@@ -258,13 +258,13 @@ def tree_plot(groups, params: TreePlotParams = TreePlotParams()):
                 ax.plot([error_bar[0], error_bar[0]],
                         [y_coord - error_bar_cap_size/2,
                          y_coord + error_bar_cap_size/2],
-                        zorder=i_error_bar + 1,
+                        zorder=i_error_bar + 6,
                         color=color)
 
                 ax.plot([error_bar[1], error_bar[1]],
                         [y_coord - error_bar_cap_size/2,
                          y_coord + error_bar_cap_size/2],
-                        zorder=i_error_bar + 1,
+                        zorder=i_error_bar + 6,
                         color=color)
 
     group_names = [group['name'] for group in groups]
