@@ -198,6 +198,7 @@ def tree_plot(groups, params: TreePlotParams = TreePlotParams()):
 
     fig, ax = plt.subplots()
     total_markers = 0
+    labels_added = []  # Used to avoid duplicate legend labels
 
     for i_group, group in enumerate(groups):
         elements_in_group = len(group['values'])
@@ -227,8 +228,12 @@ def tree_plot(groups, params: TreePlotParams = TreePlotParams()):
 
             value_label = '_nolegend_'
 
-            if params.labels is not None and i_group == 0:
-                value_label = params.labels[i_value]
+            if params.labels is not None:
+                current_label = params.labels[i_value]
+
+                if current_label not in labels_added:
+                    value_label = current_label
+                    labels_added.append(current_label)
 
             marker = next(markers)
             marker_color = next(marker_colors)
