@@ -149,11 +149,15 @@ def compare_parameters(
 
     for data, label in zip(extra_values, extra_labels):
         column_names = list(data.keys())
+        values = []
 
-        values = [
-            format_value(data[name], type)
-            for name in param_names_filtered
-        ]
+        for name in param_names_filtered:
+            text_value = ''
+
+            if name in data:
+                text_value = format_value(data[name], type)
+
+            values.append(text_value)
 
         df.loc[label] = values
 
