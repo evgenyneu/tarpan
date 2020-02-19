@@ -124,16 +124,20 @@ def compare_parameters(
     param_names = filter_param_names(column_names, param_names)
 
     df = pd.DataFrame(index=labels, columns=param_names)
+    param_names_filtered = None
 
     for samples, label in zip(models, labels):
         column_names = list(samples)
-        param_names = filter_param_names(column_names, param_names)
-        samples = samples[param_names]
+
+        if param_names_filtered is None:
+            param_names_filtered = filter_param_names(column_names, param_names)
+
+        samples = samples[param_names_filtered]
         df_summary, _ = sample_summary(samples, params=summary_params)
 
         values = [
             format_parameter(df_summary.loc[name], type)
-            for name in param_names
+            for name in param_names_filtered
         ]
 
         df.loc[label] = values
@@ -145,16 +149,15 @@ def compare_parameters(
 
     for data, label in zip(extra_values, extra_labels):
         column_names = list(data.keys())
-        param_names = filter_param_names(column_names, param_names)
 
         values = [
             format_value(data[name], type)
-            for name in param_names
+            for name in param_names_filtered
         ]
 
         df.loc[label] = values
 
-    table = tabulate(df, headers=param_names, tablefmt="pipe",
+    table = tabulate(df, headers=param_names_filtered, tablefmt="pipe",
                      stralign="right")
 
     return df, table
