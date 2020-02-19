@@ -164,7 +164,7 @@ fit2 = model2.sample(data=your_data)
 # Supply legend labels (optional)
 tree_params = TreePlotParams()
 tree_params.labels = ["Model 1", "Model 2", "Exact"]
-data = [{ "mu": 2.2, "tau": 1.3 }]  # Add extra markers (optional)
+data = [{"mu": 2.2, "tau": 1.3}]  # Add extra markers (optional)
 
 save_tree_plot([fit1, fit2], extra_values=data, param_names=['mu', 'tau'],
                tree_params=tree_params)
@@ -188,8 +188,10 @@ This table is a numerical version of the plot created by `save_tree_plot`. The v
 
 ```Python
 from tarpan.cmdstanpy.compare_parameters import save_compare_parameters
+extra = [{"mu": 2.2, "theta": 1.3}]  # Add extra values (optional)
 
-save_compare_parameters([fit1, fit2], labels=['Model 1', 'Model 2'],
+save_compare_parameters([fit1, fit2], labels=['Model 1', 'Model 2', 'Extra'],
+                        extra_values=extra,
                         param_names=["mu", "theta"])
 ```
 
@@ -202,8 +204,10 @@ Here is how to compare parameters using Pandas data frames df1 and df2:
 
 ```Python
 from tarpan.shared.compare_parameters import save_compare_parameters
+extra = [{"mu": 2.2, "theta": 1.3}]  # Add extra values (optional)
 
-save_compare_parameters([df1, df2], labels=['Model 1', 'Model 2'],
+save_compare_parameters([df1, df2], labels=['Model 1', 'Model 2', 'Extra'],
+                        extra_values=extra,
                         param_names=["mu", "theta"])
 ```
 

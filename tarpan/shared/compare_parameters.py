@@ -21,6 +21,27 @@ class CompareParametersType(Enum):
     GITLAB_LATEX = 2
 
 
+def format_value(value, type: CompareParametersType):
+    """
+    Converts value to text
+
+    Parameters
+    ----------
+
+    value: float
+        A value to be converte to text.
+
+    type:
+        Style of prepresenting a number in text
+    """
+
+    if type == CompareParametersType.TEXT:
+        return f"{value:.2f}"
+    else:
+        value_txt = f"{value:.2f}"
+        return f"$`{value_txt}`$"
+
+
 def format_parameter(data, type: CompareParametersType):
     """
     Converts a parameter value to text
@@ -48,6 +69,7 @@ def format_parameter(data, type: CompareParametersType):
 def compare_parameters(
         models,
         labels,
+        extra_values=[],
         type: CompareParametersType = CompareParametersType.TEXT,
         param_names=None,
         summary_params=SummaryParams()):
@@ -64,6 +86,16 @@ def compare_parameters(
 
     labels : list of str
         Names of the models in `models` list.
+
+    extra_values : list of dict
+        Additional values to be shown in the table:
+
+        [
+            {
+                "mu": 2.3,
+                "sigma": 3.3
+            }
+        ]
 
     type : CompareParametersType
         Format of values in the text table.
@@ -83,7 +115,7 @@ def compare_parameters(
         raise ValueError('Models list is empty')
         return
 
-    if len(models) != len(labels):
+    if (len(models) + len(extra_values)) != len(labels):
         raise ValueError('Models list length is different from labels')
         return
 
@@ -106,6 +138,22 @@ def compare_parameters(
 
         df.loc[label] = values
 
+    # Add extra values
+    # ---------------
+
+    extra_labels = labels[len(models):]
+
+    for data, label in zip(extra_values, extra_labels):
+        column_names = list(data.keys())
+        param_names = filter_param_names(column_names, param_names)
+
+        values = [
+            format_value(data[name], type)
+            for name in param_names
+        ]
+
+        df.loc[label] = values
+
     table = tabulate(df, headers=param_names, tablefmt="pipe",
                      stralign="right")
 
@@ -115,6 +163,7 @@ def compare_parameters(
 def save_compare_parameters(
         models,
         labels,
+        extra_values=[],
         type: CompareParametersType = CompareParametersType.TEXT,
         param_names=None,
         info_path=InfoPath(),
@@ -133,6 +182,16 @@ def save_compare_parameters(
     labels : list of str
         Names of the models in `models` list.
 
+    extra_values : list of dict
+        Additional values to be shown in the table:
+
+        [
+            {
+                "mu": 2.3,
+                "sigma": 3.3
+            }
+        ]
+
     type : CompareParametersType
         Format of values in the text table.
 
@@ -147,6 +206,7 @@ def save_compare_parameters(
 
     df, table = compare_parameters(models=models,
                                    labels=labels,
+                                   extra_values=extra_values,
                                    type=type,
                                    param_names=param_names,
                                    summary_params=summary_params)

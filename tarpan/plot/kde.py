@@ -21,7 +21,7 @@ class ScatterKdeParams:
         ["#0060ff44", '#ff002144', '#8888FF44', '#BBBB1144'])
 
     marker_edgecolors: List = field(
-        default_factory=lambda: ["#0060ff", '#ff0021', '#8888FF', '#BBBB11'])
+        default_factory=lambda: ['#0060ff', '#ff0021', '#8888FF', '#BBBB11'])
 
     errorbar_colors: List = field(
         default_factory=lambda:
@@ -55,7 +55,8 @@ def save_scatter_and_kde(values,
                          ylabel=None,
                          info_path=InfoPath(),
                          scatter_kde_params=ScatterKdeParams(),
-                         legend_labels=None):
+                         legend_labels=None,
+                         plot_fn=None):
     """
     Create a scatter plot and a KDE plot under it.
     The plot is saved to a file.
@@ -68,6 +69,18 @@ def save_scatter_and_kde(values,
         see distributions shown with different colors and markers.
     uncertainties: list of lists
         Uncertainties coresponding to the `values`.
+    plot_fn: [function(fig, axes, params), params]
+        function:
+            A function that can be used to add extra information to the
+            plot before it is saved.
+
+            Parameters
+            ----------
+
+            fig: Matplotlib's figure object
+            axes: list of Matplotlib's axes objects
+            params: custom parameters that are passed to the function
+        params: custom parameters that will be passed to the function
 
     Returns
     --------
@@ -82,6 +95,9 @@ def save_scatter_and_kde(values,
                                 ylabel=ylabel,
                                 scatter_kde_params=scatter_kde_params,
                                 legend_labels=legend_labels)
+
+    if plot_fn is not None:
+        plot_fn[0](fig, axes, params=plot_fn[1])
 
     info_path.set_codefile()
     info_path.base_name = info_path.base_name or "scatter_kde"

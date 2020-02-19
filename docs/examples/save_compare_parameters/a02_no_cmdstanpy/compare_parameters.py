@@ -19,10 +19,13 @@ def run_model():
         "z": [23, 19, 21, 13, 29, 10]
     }
 
+    extra = [{"x": 2.2, "y": 1.3}]  # Add extra values (optional)
+
     df2 = pd.DataFrame(data2)
 
     save_compare_parameters([df1, df2],
-                            labels=['Model 1', 'Model 2'],
+                            labels=['Model 1', 'Model 2', 'Extra'],
+                            extra_values=extra,
                             type=CompareParametersType.TEXT,  # or GITLAB_LATEX
                             param_names=['x', 'y'])
 

@@ -30,7 +30,8 @@ def save_posterior_scatter_and_kde(
     info_path=InfoPath(),
     scatter_kde_params=ScatterKdeParams(),
     posterior_kde_params=PosteriorKdeParams(),
-    legend_labels=None):
+    legend_labels=None,
+    plot_fn=None):
     """
     Create a scatter plot for the data using `values` and `uncertainties`,
     show a KDE plot under it, and plot multiple posterior distributions
@@ -56,6 +57,18 @@ def save_posterior_scatter_and_kde(
         see distributions shown with different colors and markers.
     uncertainties: list of lists
         Uncertainties coresponding to the `values`.
+    plot_fn: [function(fig, axes, params), params]
+        function:
+            A function that can be used to add extra information to the
+            plot before it is saved.
+
+            Parameters
+            ----------
+
+            fig: Matplotlib's figure object
+            axes: list of Matplotlib's axes objects
+            params: custom parameters that are passed to the function
+        params: custom parameters that will be passed to the function
 
     Returns
     --------
@@ -99,6 +112,9 @@ def save_posterior_scatter_and_kde(
     ylim_new = ax2.get_ylim()
     ylim_max = ylim[1] * min(2, ylim_new[1] / ylim[1])
     ax2.set_ylim(ylim[0], ylim_max)
+
+    if plot_fn is not None:
+        plot_fn[0](fig, axes, params=plot_fn[1])
 
     info_path.set_codefile()
     info_path.base_name = info_path.base_name or "posterior_scatter_kde"

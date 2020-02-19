@@ -21,8 +21,14 @@ def run_model():
     fit2 = model.sample(data=data, chains=4, cores=4, seed=1,
                         sampling_iters=1000, warmup_iters=1000)
 
+    extra = [{"mu": 2.2, "tau": 1.3}]  # Add extra values (optional)
+
     save_compare_parameters([fit1, fit2],
-                            labels=['Original', 'Larger uncertainties'],
+                            labels=[
+                                'Original',
+                                'Larger uncertainties',
+                                'Extra'],
+                            extra_values=extra,
                             type=CompareParametersType.TEXT,  # or GITLAB_LATEX
                             param_names=['mu', 'tau'])
 

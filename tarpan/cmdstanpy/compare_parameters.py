@@ -12,6 +12,7 @@ from tarpan.shared.compare_parameters import (
 def save_compare_parameters(
         fits,
         labels,
+        extra_values=[],
         param_names=None,
         type: CompareParametersType = CompareParametersType.TEXT,
         info_path=InfoPath(),
@@ -29,6 +30,16 @@ def save_compare_parameters(
     labels : list of str
 
         Names of the models in `fits` list.
+
+    extra_values : list of dict
+        Additional values to be shown in the table:
+
+        [
+            {
+                "mu": 2.3,
+                "sigma": 3.3
+            }
+        ]
 
     param_names : list of str
 
@@ -52,7 +63,9 @@ def save_compare_parameters(
         samples = fit.get_drawset(params=param_names)
         models.append(samples)
 
-    shared_save_compare_parameters(models, labels=labels, type=type,
+    shared_save_compare_parameters(models, labels=labels,
+                                   extra_values=extra_values,
+                                   type=type,
                                    param_names=param_names,
                                    info_path=info_path,
                                    summary_params=summary_params)
