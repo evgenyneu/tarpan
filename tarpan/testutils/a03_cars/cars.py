@@ -1,6 +1,7 @@
 # Generate sampling output, to avoid running in unit tests
 
 from cmdstanpy import CmdStanModel
+import os
 from tarpan.cmdstanpy.cache import run
 from tarpan.shared.info_path import InfoPath
 
@@ -38,3 +39,23 @@ def get_fit():
                 )
 
     return run(info_path=info_path, func=run_model, data=get_data())
+
+
+def get_fit_larger_uncertainties():
+    """
+    Returns fit file for unit tests, uses data with larger uncertainties.
+    """
+
+    info_path = InfoPath(
+                    path='temp_data',
+                    dir_name="a01_eight_schools_large_uncert",
+                    sub_dir_name=InfoPath.DO_NOT_CREATE
+                )
+
+    run(info_path=info_path, func=run_model, data=get_data())
+
+    # Use data with increased uncertainties
+    data = get_data()
+    data["sigma"] = [u * 2 for u in data["sigma"]]
+
+    return run(info_path=info_path, func=run_model, data=data)
