@@ -3,7 +3,6 @@ data{
     vector[n] dist;
     int speed[n];
 }
-
 parameters{
     real a;
     real b;
