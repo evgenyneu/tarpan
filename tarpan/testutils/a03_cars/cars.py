@@ -28,7 +28,8 @@ def run_model(data, output_dir):
 
     return model.sample(data=data, chains=1, cores=1,
                         sampling_iters=1000, warmup_iters=500,
-                        output_dir=output_dir)
+                        output_dir=output_dir,
+                        seed=1)
 
 
 def get_fit():
