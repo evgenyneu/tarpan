@@ -1,10 +1,19 @@
 import math
 import numpy as np
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import List
 from scipy.special import logsumexp
 
+"""
+Prefix of the columns in Stan's output that contain log
+probability density value for each observation. For example,
+if lpd_column_name='possum', when output is expected to have
+columns 'possum.1', 'possum.2', ..., 'possum.33' given 33 observations.
+"""
+LPD_COLUMN_NAME_DEFAULT = "log_probability_density_pointwise"
 
+
+# Results of WAIC calculations
 @dataclass
 class WaicData:
     """
@@ -14,14 +23,10 @@ class WaicData:
     """
     waic: float
 
-    """
-    WAIC for each individual observation point.
-    """
+    """WAIC for each individual observation point."""
     waic_pointwise: List[float]
 
-    """
-    Standard error of WAIC (approximate).
-    """
+    """Standard error of WAIC (approximate)."""
     waic_std_err: float
 
     """
@@ -32,9 +37,7 @@ class WaicData:
     """
     lppd: float
 
-    """
-    LPPD for each individual observation point.
-    """
+    """LPPD for each individual observation point."""
     lppd_pointwise: List[float]
 
     """
@@ -46,13 +49,30 @@ class WaicData:
     """
     penalty: float
 
-    """
-    Penatiles of all individual observations.
-    """
+    """Penatiles of all individual observations."""
     penalty_pointwise: List[float]
 
 
-def waic(fit, lpd_column_name="log_probability_density_pointwise") -> WaicData:
+@dataclass
+class WaicModelCompared:
+    """Model name"""
+    name: str
+
+    """Results of WAIC calculations for the model"""
+    waic_data: WaicData
+
+    """
+    waic value difference between this model and the model with smallest waic.
+    """
+    waic_difference_best: float = None
+
+    """
+    Estimate of the standard error of the `waic_difference_best`.
+    """
+    waic_difference_best_std_err: float = None
+
+
+def waic(fit, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) -> WaicData:
     """
     Compute WAIC (Widely Aplicable Information Criterion).
     It provides an estimate of models accuracy (out-of-the-sample deviance)
@@ -70,6 +90,12 @@ def waic(fit, lpd_column_name="log_probability_density_pointwise") -> WaicData:
         probability density value for each observation. For example,
         if lpd_column_name='possum', when output is expected to have
         columns 'possum.1', 'possum.2', ..., 'possum.33' given 33 observations.
+
+    Returns
+    -------
+
+    WaicData:
+        Waic calculation result.
     """
 
     # Get log probability density of each observation.
@@ -131,5 +157,67 @@ def waic(fit, lpd_column_name="log_probability_density_pointwise") -> WaicData:
     return result
 
 
-def compare_waic():
-    pass
+def compare_waic(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT):
+    """
+    Compare models using WAIC (Widely Aplicable Information Criterion)
+    to see which models are more compatible with the data.
+
+    Parameters
+    ----------
+
+    models : list of dict
+        List of model samples from cmdstanpy to compare.
+
+        The dictionary has keys:
+            name: str
+                Model name
+            fit: cmdstanpy.stanfit.CmdStanMCMC
+                Contains the samples from cmdstanpy.
+
+    Returns
+    -------
+
+    list of WaicModelCompared:
+        List of WAIC comparisons. The list is sorted: models with
+        lower WAIC falues (more compatible with data) come first.
+    """
+
+    waic_results = [
+        WaicModelCompared(
+            name=model["name"],
+            waic_data=waic(fit=model["fit"], lpd_column_name=lpd_column_name)
+        ) for model in models
+    ]
+
+    # Sort by WAIC, lower (better) first
+    waic_results = sorted(waic_results, key=lambda x: x.waic_data.waic)
+
+    best_model = waic_results[0]  # Model with smallest WAIC
+
+    # Calculate WAIC difference between models
+    for i, model_result in enumerate(waic_results):
+        if i == 0:
+            continue
+
+        model_result.waic_difference_best = model_result.waic_data.waic - \
+            best_model.waic_data.waic
+
+        # Calculate standard error of the waic difference
+        # ------------
+
+        waic_difference_pointwise = \
+            np.array(model_result.waic_data.waic_pointwise) - \
+            np.array(best_model.waic_data.waic_pointwise)
+
+        n_points = len(model_result.waic_data.waic_pointwise)
+        n_points_preious = len(best_model.waic_data.waic_pointwise)
+
+        if n_points != n_points_preious:
+            raise AttributeError("Models have different number of data points")
+
+        # Using the central limit theorem
+        std_err = math.sqrt(n_points * waic_difference_pointwise.var())
+
+        model_result.waic_difference_best_std_err = std_err
+
+    return waic_results
