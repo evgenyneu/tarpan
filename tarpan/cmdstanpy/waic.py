@@ -129,3 +129,7 @@ def waic(fit, lpd_column_name="log_probability_density_pointwise") -> WaicData:
     )
 
     return result
+
+
+def compare_waic():
+    pass

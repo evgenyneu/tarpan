@@ -1,7 +1,8 @@
 # Generate sampling output, to avoid running in unit tests
+# The data contains car speed and breaking distance, it is
+# `borrowed` from https://github.com/rmcelreath/rethinking
 
 from cmdstanpy import CmdStanModel
-import os
 import pandas as pd
 from tarpan.cmdstanpy.cache import run
 from tarpan.shared.info_path import InfoPath

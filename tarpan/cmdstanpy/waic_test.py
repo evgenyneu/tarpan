@@ -1,6 +1,6 @@
 from pytest import approx
 from tarpan.testutils.a03_cars.cars import get_fit
-from tarpan.cmdstanpy.waic import waic
+from tarpan.cmdstanpy.waic import waic, compare_waic
 
 
 def test_waic():
@@ -29,3 +29,8 @@ def test_waic():
 
     assert result.penalty_pointwise[49] == approx(0.020835631318848448,
                                                   rel=1e-15)
+
+
+def test_compare_waic():
+    pass
+    # compare_waic
