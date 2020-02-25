@@ -2,6 +2,9 @@ from pytest import approx
 from tarpan.testutils.a03_cars.cars import get_fit
 from tarpan.cmdstanpy.waic import waic, compare_waic
 
+from tarpan.testutils.a04_height.height import (
+    get_fit1_intercept, get_fit2_fungus_treatment, get_fit3_treatment)
+
 
 def test_waic():
     fit = get_fit()
@@ -32,5 +35,7 @@ def test_waic():
 
 
 def test_compare_waic():
-    pass
-    # compare_waic
+    fit1_intercept = get_fit1_intercept()
+    fit2_fungus_treatment = get_fit2_fungus_treatment()
+    fit3_treatment = get_fit3_treatment()
+    compare_waic()

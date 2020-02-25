@@ -24,12 +24,69 @@ def get_data1_intercept():
     }
 
 
+def get_data2_fungus_treatment():
+    csv_path = "tarpan/testutils/a04_height/height.csv"
+    df = pd.read_csv(csv_path)
+
+    return {
+        "n": len(df.index),
+        "h0": df["h0"].tolist(),
+        "h1": df["h1"].tolist(),
+        "fungus": df["fungus"].tolist(),
+        "treatment": df["treatment"].tolist()
+    }
+
+
+def get_data3_treatment():
+    csv_path = "tarpan/testutils/a04_height/height.csv"
+    df = pd.read_csv(csv_path)
+
+    return {
+        "n": len(df.index),
+        "h0": df["h0"].tolist(),
+        "h1": df["h1"].tolist(),
+        "treatment": df["treatment"].tolist()
+    }
+
+
 def run_model1_intecept(data, output_dir, sampling_iters, warmup_iters):
     """
     Runs Stan model and saves fit to disk
     """
 
     model_path = "tarpan/testutils/a04_height/stan_model/height1_intercept.stan"
+    model = CmdStanModel(stan_file=model_path)
+
+    return model.sample(data=data, chains=1, cores=1,
+                        sampling_iters=sampling_iters,
+                        warmup_iters=warmup_iters,
+                        output_dir=output_dir,
+                        seed=1)
+
+
+def run_model2_fungus_treatment(data, output_dir, sampling_iters,
+                                warmup_iters):
+    """
+    Runs Stan model and saves fit to disk
+    """
+
+    model_path = "tarpan/testutils/a04_height/stan_model/height2_fungus_treatment.stan"
+    model = CmdStanModel(stan_file=model_path)
+
+    return model.sample(data=data, chains=1, cores=1,
+                        sampling_iters=sampling_iters,
+                        warmup_iters=warmup_iters,
+                        output_dir=output_dir,
+                        seed=1)
+
+
+def run_model3_treatment(data, output_dir, sampling_iters,
+                         warmup_iters):
+    """
+    Runs Stan model and saves fit to disk
+    """
+
+    model_path = "tarpan/testutils/a04_height/stan_model/height3_treatment.stan"
     model = CmdStanModel(stan_file=model_path)
 
     return model.sample(data=data, chains=1, cores=1,
@@ -58,5 +115,45 @@ def get_fit1_intercept():
     data = get_data1_intercept()
 
     return run(info_path=info_path, func=run_model1_intecept, data=data,
+               sampling_iters=iters["sampling_iters"],
+               warmup_iters=iters["warmup_iters"])
+
+
+def get_fit2_fungus_treatment():
+    """
+    Returns fit file for unit tests.
+    """
+
+    info_path = InfoPath(
+                    path='temp_data',
+                    dir_name="a04_height2_fungus_treatment",
+                    sub_dir_name=InfoPath.DO_NOT_CREATE
+                )
+
+    iters = get_iters()
+    data = get_data2_fungus_treatment()
+
+    return run(info_path=info_path, func=run_model2_fungus_treatment,
+               data=data,
+               sampling_iters=iters["sampling_iters"],
+               warmup_iters=iters["warmup_iters"])
+
+
+def get_fit3_treatment():
+    """
+    Returns fit file for unit tests.
+    """
+
+    info_path = InfoPath(
+                    path='temp_data',
+                    dir_name="a04_height3_treatment",
+                    sub_dir_name=InfoPath.DO_NOT_CREATE
+                )
+
+    iters = get_iters()
+    data = get_data3_treatment()
+
+    return run(info_path=info_path, func=run_model3_treatment,
+               data=data,
                sampling_iters=iters["sampling_iters"],
                warmup_iters=iters["warmup_iters"])
