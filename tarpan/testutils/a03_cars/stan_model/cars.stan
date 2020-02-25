@@ -19,13 +19,13 @@ model{
     dist ~ normal( mu , sigma );
 }
 generated quantities{
-    vector[n] point_log_probability_density;
+    vector[n] log_probability_density_pointwise;
     {
       real mu;
 
       for (i in 1:n) {
           mu = a + b * speed[i];
-          point_log_probability_density[i] = normal_lpdf(dist[i] | mu, sigma);
+          log_probability_density_pointwise[i] = normal_lpdf(dist[i] | mu, sigma);
       }
     }
 }
