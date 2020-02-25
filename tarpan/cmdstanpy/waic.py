@@ -15,6 +15,16 @@ class WaicData:
     waic: float
 
     """
+    WAIC for each individual observation point.
+    """
+    waic_pointwise: List[float]
+
+    """
+    Standard error of WAIC (approximate).
+    """
+    waic_std_err: float
+
+    """
     LPPD (log-pointwise-predictive-density) value.
     LPPD is a measure of the accuracy of the model,
     larger is better. It describes how well the model corresponds to the
@@ -23,7 +33,7 @@ class WaicData:
     lppd: float
 
     """
-    LPPD for each individual observations point.
+    LPPD for each individual observation point.
     """
     lppd_pointwise: List[float]
 
@@ -36,12 +46,30 @@ class WaicData:
     """
     penalty: float
 
+    """
+    Penatiles of all individual observations.
+    """
+    penalty_pointwise: List[float]
 
-def waic(fit) -> WaicData:
+
+def waic(fit, lpd_column_name="log_probability_density_pointwise") -> WaicData:
     """
     Compute WAIC (Widely Aplicable Information Criterion).
     It provides an estimate of models accuracy (out-of-the-sample deviance)
-    and is used for comparing models. Smaller WAIC values are better.
+    and is used for comparing models. Smaller WAIC values are better,
+    but they only make sense when compared.
+
+    Parameters
+    ----------
+
+    fit : cmdstanpy.stanfit.CmdStanMCMC
+        Contains the samples from cmdstanpy.
+
+    lpd_column_name : str
+        Prefix of the columns in Stan's output that contain log
+        probability density value for each observation. For example,
+        if lpd_column_name='possum', when output is expected to have
+        columns 'possum.1', 'possum.2', ..., 'possum.33' given 33 observations.
     """
 
     # Get log probability density of each observation.
@@ -50,7 +78,7 @@ def waic(fit) -> WaicData:
     #   2. Observation
     # ---------
 
-    lpd_pointwise = fit.get_drawset(params=["log_probability_density_pointwise"])
+    lpd_pointwise = fit.get_drawset(params=[lpd_column_name])
     n_samples = lpd_pointwise.shape[0]  # Number of samples
     n_observations = lpd_pointwise.shape[1]  # Number of observations
 
@@ -81,22 +109,23 @@ def waic(fit) -> WaicData:
     penalty = sum(penalty_pointwise)
     lppd = sum(lppd_pointwise)
     waic = -2*(lppd - penalty)
-    print(f'waic={waic}')
-    print(f'lppd={lppd}')
-    print(f'penalty={penalty}')
 
     # Approximate standard error of WAIC using the central limit theorem
     # -------
 
-    waic_pointwise = -2*(np.array(lppd) - np.array(penalty_pointwise))
+    waic_pointwise = -2*(np.array(lppd_pointwise) -
+                         np.array(penalty_pointwise))
+
     waic_std_err = math.sqrt(n_observations * waic_pointwise.var())
-    print(f'waic_std_err={waic_std_err}')
 
     result = WaicData(
         waic=waic,
+        waic_pointwise=waic_pointwise,
+        waic_std_err=waic_std_err,
         lppd=lppd,
         lppd_pointwise=lppd_pointwise,
-        penalty=penalty
+        penalty=penalty,
+        penalty_pointwise=penalty_pointwise,
     )
 
     return result
