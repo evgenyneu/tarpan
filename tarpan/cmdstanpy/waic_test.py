@@ -1,3 +1,4 @@
+import pytest
 from pytest import approx
 from tarpan.testutils.a03_cars.cars import get_fit
 from tarpan.cmdstanpy.waic import waic, compare_waic
@@ -75,3 +76,17 @@ def test_compare_waic():
 
     assert [round(model.waic_data.penalty, 1) for model in result] == \
         [3.4, 2.6, 1.6]
+
+
+def test_compare_waic__model_with_different_data_points():
+    cars_fit = get_fit()
+    plants_fit = get_fit1_intercept()
+
+    models = [
+        dict(name="Cars", fit=cars_fit),
+        dict(name="Plants", fit=plants_fit)
+    ]
+
+    with pytest.raises(AttributeError,
+                       match=r"different number of data points"):
+        compare_waic(models=models)

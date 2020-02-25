@@ -205,15 +205,15 @@ def compare_waic(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT):
         # Calculate standard error of the waic difference
         # ------------
 
-        waic_difference_pointwise = \
-            np.array(model_result.waic_data.waic_pointwise) - \
-            np.array(best_model.waic_data.waic_pointwise)
-
         n_points = len(model_result.waic_data.waic_pointwise)
         n_points_preious = len(best_model.waic_data.waic_pointwise)
 
         if n_points != n_points_preious:
             raise AttributeError("Models have different number of data points")
+
+        waic_difference_pointwise = \
+            np.array(model_result.waic_data.waic_pointwise) - \
+            np.array(best_model.waic_data.waic_pointwise)
 
         # Using the central limit theorem
         std_err = math.sqrt(n_points * waic_difference_pointwise.var())
