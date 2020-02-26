@@ -96,7 +96,7 @@ def psis(fit, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) -> PsisData:
         log_likelihood=lpd_column_name
     )
 
-    result = loo(cmdstanpy_data, pointwise=True)
+    result = loo(cmdstanpy_data, pointwise=True, scale="deviance")
 
     psis = float(result.loc["loo"])
     psis_pointwise = result.loc["loo_i"].values.tolist()
