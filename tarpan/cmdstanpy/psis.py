@@ -5,6 +5,7 @@ import numpy as np
 import arviz as az
 from arviz.stats.stats import loo
 from tarpan.cmdstanpy.waic import LPD_COLUMN_NAME_DEFAULT
+from tarpan.cmdstanpy.psis_from_arviz import _psislw
 
 
 # Results of PSIS calculations
@@ -97,6 +98,7 @@ def psis(fit, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) -> PsisData:
     )
 
     result = loo(cmdstanpy_data, pointwise=True, scale="deviance")
+    result2 = psis_calcualte(fit, lpd_column_name)
 
     psis = float(result.loc["loo"])
     psis_pointwise = result.loc["loo_i"].values.tolist()
@@ -188,3 +190,58 @@ def compare_psis(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) \
         model_result.psis_difference_best_std_err = std_err
 
     return psis_results
+
+
+def psis_calcualte(fit, lpd_column_name):
+    # Get log probability density of each observation.
+    # The point_lpd is a 2D array with indexes:
+    #   1. Sample
+    #   2. Observation
+    # ---------
+
+    log_likelihood = fit.get_drawset(params=[lpd_column_name]).to_numpy()
+    n_samples = log_likelihood.shape[0]  # Number of samples
+    n_observations = log_likelihood.shape[1]  # Number of observations
+
+    reff = 1.0
+
+    log_likelihood = log_likelihood.transpose()
+    log_weights, pareto_shape = psislw(-log_likelihood, reff)
+    log_weights += log_likelihood
+    # print(log_weights.shape)
+
+
+def psislw(log_weights, reff=1.0):
+    """
+    Pareto smoothed importance sampling (PSIS).
+
+    Parameters
+    ----------
+    log_weights : array
+        Array of size (n_observations, n_samples)
+    reff : float
+        relative MCMC efficiency, `ess / n`
+
+    Returns
+    -------
+    lw_out : array
+        Smoothed log weights
+    kss : array
+        Pareto tail indices
+    """
+
+    n_samples = log_weights.shape[-1]
+
+    # precalculate constants
+    cutoff_ind = -int(np.ceil(min(n_samples / 5.0, 3 * (n_samples / reff) ** 0.5))) - 1
+    cutoffmin = np.log(np.finfo(float).tiny)
+    k_min = 1.0 / 3
+
+    result = np.apply_along_axis(_psislw, axis=1, arr=log_weights,
+                                 cutoff_ind=cutoff_ind, cutoffmin=cutoffmin,
+                                 k_min=k_min)
+
+    log_weights = np.stack(result[:, 0], axis=0)
+    pareto_shape = result[:, 1]
+
+    return log_weights, pareto_shape
