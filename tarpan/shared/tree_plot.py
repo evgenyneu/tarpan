@@ -288,7 +288,7 @@ def tree_plot(groups, params: TreePlotParams = TreePlotParams()):
     fig.set_figheight(params.figure_height)
 
     # Plot vertical line around zero if neeeded
-    if ax.get_ylim()[0] < 0 and ax.get_ylim()[1] > 1:
+    if ax.get_xlim()[0] < 0 and ax.get_xlim()[1] > 1:
         ax.axvline(x=0, linestyle='dashed')
 
     if params.labels is not None:

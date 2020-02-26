@@ -3,12 +3,14 @@ from pytest import approx
 import os
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 from tarpan.testutils.a03_cars.cars import get_fit
 
 from tarpan.cmdstanpy.waic import (
     waic, compare_waic, save_compare_waic_csv, save_compare_waic_txt,
     waic_compared_to_df,
-    WaicData, WaicModelCompared)
+    WaicData, WaicModelCompared,
+    compare_waic_tree_plot)
 
 from tarpan.testutils.a04_height.height import (
     get_fit1_intercept, get_fit2_fungus_treatment, get_fit3_treatment)
@@ -200,3 +202,19 @@ def test_save_compare_waic_txt():
         assert "dWAIC" in data
         assert "Treatment" in data
         assert "402.71" in data
+
+
+def test_compare_waic_tree_plot():
+    fit1_intercept = get_fit1_intercept()
+    fit2_fungus_treatment = get_fit2_fungus_treatment()
+    fit3_treatment = get_fit3_treatment()
+
+    models = [
+        dict(name="Itercept", fit=fit1_intercept),
+        dict(name="Fungus+treatment", fit=fit2_fungus_treatment),
+        dict(name="Treatment", fit=fit3_treatment)
+    ]
+
+    fig, ax = compare_waic_tree_plot(models=models)
+
+    assert ax.get_xlabel() == "WAIC"

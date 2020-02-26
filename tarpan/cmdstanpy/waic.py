@@ -6,6 +6,8 @@ from typing import List
 from tabulate import tabulate
 from scipy.special import logsumexp
 from tarpan.shared.info_path import InfoPath, get_info_path
+from tarpan.shared.tree_plot import tree_plot, TreePlotParams
+
 
 
 """
@@ -364,3 +366,90 @@ def save_compare_waic_txt(models,
 
     with open(path, "w") as text_file:
         print(table, file=text_file)
+
+
+def compare_waic_tree_plot(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT,
+                           tree_plot_params: TreePlotParams = TreePlotParams()):
+    """
+    Show plot that compares models using WAIC
+    (Widely Aplicable Information Criterion).
+
+    Parameters
+    ----------
+
+    models : list of dict
+        List of model samples from cmdstanpy to compare.
+
+        The dictionary has keys:
+            name: str
+                Model name
+            fit: cmdstanpy.stanfit.CmdStanMCMC
+                Contains the samples from cmdstanpy.
+
+    lpd_column_name : str
+        Prefix of the columns in Stan's output that contain log
+        probability density value for each observation. For example,
+        if lpd_column_name='possum', when output is expected to have
+        columns 'possum.1', 'possum.2', ..., 'possum.33' given 33 observations.
+
+    Returns
+    -------
+    (fig, ax):
+        fig: Matplotlib's figure
+        ax: Matplotlib's axis
+    """
+
+    compared = compare_waic(models=models, lpd_column_name=lpd_column_name)
+    plot_groups = []
+
+    if tree_plot_params.labels is None:
+        tree_plot_params.labels = ["WAIC difference", "WAIC"]
+
+    if tree_plot_params.xlabel is None:
+        tree_plot_params.xlabel = "WAIC"
+
+    if tree_plot_params.title is None:
+        tree_plot_params.title = "Model comparison (smaller is better)"
+
+    for model in reversed(compared):
+        values = []
+        waic = model.waic_data
+        group = dict(name=model.name, values=values)
+        plot_groups.append(group)
+
+        # WAIC difference
+        # --------
+
+        value = dict(value=waic.waic, error_bars=[])
+
+        if model.waic_difference_best_std_err is not None:
+            error_bars = [
+                waic.waic - model.waic_difference_best_std_err,
+                waic.waic + model.waic_difference_best_std_err
+            ]
+
+            value = dict(value=waic.waic, error_bars=[error_bars])
+
+        values.append(value)
+
+        # WAIC value
+        # --------
+
+        error_bars = [
+            waic.waic - waic.waic_std_err,
+            waic.waic + waic.waic_std_err
+        ]
+
+        value = dict(value=waic.waic, error_bars=[error_bars])
+
+        values.append(value)
+
+    fig, ax = tree_plot(groups=plot_groups, params=tree_plot_params)
+
+    # Draw a vertical line through the best model
+    # ----------
+
+    model = compared[0]
+    ax.axvline(x=model.waic_data.waic, linestyle='dashed')
+
+    return fig, ax
