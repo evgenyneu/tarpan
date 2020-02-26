@@ -310,5 +310,4 @@ def save_compare_waic_csv(models,
 
     compared = compare_waic(models=models, lpd_column_name=lpd_column_name)
     df = waic_compared_to_df(compared)
-
-    # df.to_csv(path_to_summary_csv, index_label='Name')
+    df.to_csv(path_to_summary_csv, index_label='Name')

@@ -1,6 +1,8 @@
 import pytest
 from pytest import approx
 import os
+import numpy as np
+import pandas as pd
 from tarpan.testutils.a03_cars.cars import get_fit
 
 from tarpan.cmdstanpy.waic import (
@@ -153,4 +155,23 @@ def test_save_compare_waic_csv():
 
     save_compare_waic_csv(models=models)
 
-    # assert os.path.isfile(os.path.join(outdir, "compare_waic.csv"))
+    assert os.path.isfile(os.path.join(outdir, "compare_waic.csv"))
+
+    df = pd.read_csv(os.path.join(outdir, "compare_waic.csv"),
+                     index_col="Name")
+
+    assert len(df) == 3
+
+    row = df.loc["Fungus+treatment"]
+    assert row["WAIC"] == approx(361.44, rel=1e-3)
+    assert row["SE"] == approx(13.33, rel=1e-3)
+    assert np.isnan(row["dWAIC"])
+    assert np.isnan(row["dSE"])
+    assert row["pWAIC"] == approx(3.4388, rel=1e-3)
+
+    row = df.loc["Itercept"]
+    assert row["WAIC"] == approx(405.93, rel=1e-3)
+    assert row["SE"] == approx(11.292, rel=1e-3)
+    assert row["dWAIC"] == approx(44.48, rel=1e-3)
+    assert row["dSE"] == approx(11.55, rel=1e-3)
+    assert row["pWAIC"] == approx(1.5745, rel=1e-3)
