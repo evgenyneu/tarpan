@@ -6,7 +6,8 @@ import pandas as pd
 from tarpan.testutils.a03_cars.cars import get_fit
 
 from tarpan.cmdstanpy.waic import (
-    waic, compare_waic, save_compare_waic_csv, waic_compared_to_df,
+    waic, compare_waic, save_compare_waic_csv, save_compare_waic_txt,
+    waic_compared_to_df,
     WaicData, WaicModelCompared)
 
 from tarpan.testutils.a04_height.height import (
@@ -175,3 +176,27 @@ def test_save_compare_waic_csv():
     assert row["dWAIC"] == approx(44.48, rel=1e-3)
     assert row["dSE"] == approx(11.55, rel=1e-3)
     assert row["pWAIC"] == approx(1.5745, rel=1e-3)
+
+
+def test_save_compare_waic_txt():
+    fit1_intercept = get_fit1_intercept()
+    fit2_fungus_treatment = get_fit2_fungus_treatment()
+    fit3_treatment = get_fit3_treatment()
+
+    models = [
+        dict(name="Itercept", fit=fit1_intercept),
+        dict(name="Fungus+treatment", fit=fit2_fungus_treatment),
+        dict(name="Treatment", fit=fit3_treatment)
+    ]
+
+    outdir = "tarpan/cmdstanpy/model_info/waic_test"
+
+    save_compare_waic_txt(models=models)
+
+    assert os.path.isfile(os.path.join(outdir, "compare_waic.txt"))
+
+    with open(os.path.join(outdir, "compare_waic.txt"), 'r') as file:
+        data = file.read()
+        assert "dWAIC" in data
+        assert "Treatment" in data
+        assert "402.71" in data
