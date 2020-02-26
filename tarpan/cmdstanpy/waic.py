@@ -1,8 +1,11 @@
 import math
 import numpy as np
+import pandas as pd
 from dataclasses import dataclass
 from typing import List
 from scipy.special import logsumexp
+from tarpan.shared.info_path import InfoPath, get_info_path
+
 
 """
 Prefix of the columns in Stan's output that contain log
@@ -157,7 +160,8 @@ def waic(fit, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) -> WaicData:
     return result
 
 
-def compare_waic(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT):
+def compare_waic(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) \
+        -> List[WaicModelCompared]:
     """
     Compare models using WAIC (Widely Aplicable Information Criterion)
     to see which models are more compatible with the data.
@@ -173,6 +177,12 @@ def compare_waic(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT):
                 Model name
             fit: cmdstanpy.stanfit.CmdStanMCMC
                 Contains the samples from cmdstanpy.
+
+    lpd_column_name : str
+        Prefix of the columns in Stan's output that contain log
+        probability density value for each observation. For example,
+        if lpd_column_name='possum', when output is expected to have
+        columns 'possum.1', 'possum.2', ..., 'possum.33' given 33 observations.
 
     Returns
     -------
@@ -221,3 +231,84 @@ def compare_waic(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT):
         model_result.waic_difference_best_std_err = std_err
 
     return waic_results
+
+
+def waic_compared_to_df(compared: List[WaicModelCompared]):
+    """
+    Convert waic comparison to Pandas data frame.
+
+    Parameters
+    ----------
+    compared: List[WaicModelCompared]
+        Results of comparing WAIC between multiple models.
+
+    Returns
+    -------
+    Pandas' DataFrame:
+        WAIC comparison results.
+    """
+
+    column_names = ["WAIC", "SE", "dWAIC", "dSE", "pWAIC"]
+    model_names = [item.name for item in compared]
+    df = pd.DataFrame(index=model_names, columns=column_names)
+
+    for item in compared:
+        waic = item.waic_data
+
+        df.loc[item.name] = [
+            waic.waic,
+            waic.waic_std_err,
+            item.waic_difference_best,
+            item.waic_difference_best_std_err,
+            waic.penalty
+        ]
+
+    return df
+
+def save_compare_waic_csv(models,
+                          lpd_column_name=LPD_COLUMN_NAME_DEFAULT,
+                          info_path=InfoPath()):
+    """
+    Compare models using WAIC (Widely Aplicable Information Criterion)
+    to see which models are more compatible with the data. The result
+    is saved in a CSV file
+
+    Parameters
+    ----------
+
+    models : list of dict
+        List of model samples from cmdstanpy to compare.
+
+        The dictionary has keys:
+            name: str
+                Model name
+            fit: cmdstanpy.stanfit.CmdStanMCMC
+                Contains the samples from cmdstanpy.
+
+    lpd_column_name : str
+        Prefix of the columns in Stan's output that contain log
+        probability density value for each observation. For example,
+        if lpd_column_name='possum', when output is expected to have
+        columns 'possum.1', 'possum.2', ..., 'possum.33' given 33 observations.
+
+    info_path : InfoPath
+        Determines the location of the output file.
+
+    Returns
+    -------
+
+    list of WaicModelCompared:
+        List of WAIC comparisons. The list is sorted: models with
+        lower WAIC falues (more compatible with data) come first.
+    """
+
+    info_path.set_codefile()
+    info_path = InfoPath(**info_path.__dict__)
+    info_path.base_name = info_path.base_name or "compare_waic"
+    info_path.extension = 'csv'
+    path_to_summary_csv = get_info_path(info_path)
+
+    compared = compare_waic(models=models, lpd_column_name=lpd_column_name)
+    df = waic_compared_to_df(compared)
+
+    # df.to_csv(path_to_summary_csv, index_label='Name')

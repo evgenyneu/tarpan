@@ -1,7 +1,11 @@
 import pytest
 from pytest import approx
+import os
 from tarpan.testutils.a03_cars.cars import get_fit
-from tarpan.cmdstanpy.waic import waic, compare_waic
+
+from tarpan.cmdstanpy.waic import (
+    waic, compare_waic, save_compare_waic_csv, waic_compared_to_df,
+    WaicData, WaicModelCompared)
 
 from tarpan.testutils.a04_height.height import (
     get_fit1_intercept, get_fit2_fungus_treatment, get_fit3_treatment)
@@ -90,3 +94,63 @@ def test_compare_waic__model_with_different_data_points():
     with pytest.raises(AttributeError,
                        match=r"different number of data points"):
         compare_waic(models=models)
+
+
+def test_waic_compared_to_df():
+    compared = []
+
+    for i in range(1, 4):
+        waic = WaicData(
+            waic=i,
+            waic_pointwise=[i] * 3,
+            waic_std_err=i * 1.1,
+            lppd=i * 1.2,
+            lppd_pointwise=[i * 1.2] * 3,
+            penalty=i * 0.3,
+            penalty_pointwise=[i * 0.3] * 3,
+        )
+
+        compared_element = WaicModelCompared(
+            name=f"Model {i}",
+            waic_data=waic,
+            waic_difference_best=i * 1.3,
+            waic_difference_best_std_err=i * 1.4,
+        )
+
+        compared.append(compared_element)
+
+    result = waic_compared_to_df(compared=compared)
+
+    assert len(result) == 3
+
+    row = result.loc["Model 1"]
+    assert row["WAIC"] == 1
+    assert row["SE"] == 1.1
+    assert row["dWAIC"] == 1.3
+    assert row["dSE"] == 1.4
+    assert row["pWAIC"] == 0.3
+
+    row = result.loc["Model 2"]
+    assert row["WAIC"] == 2
+    assert row["SE"] == 2.2
+    assert row["dWAIC"] == 2.6
+    assert row["dSE"] == 2.8
+    assert row["pWAIC"] == 0.6
+
+
+def test_save_compare_waic_csv():
+    fit1_intercept = get_fit1_intercept()
+    fit2_fungus_treatment = get_fit2_fungus_treatment()
+    fit3_treatment = get_fit3_treatment()
+
+    models = [
+        dict(name="Itercept", fit=fit1_intercept),
+        dict(name="Fungus+treatment", fit=fit2_fungus_treatment),
+        dict(name="Treatment", fit=fit3_treatment)
+    ]
+
+    outdir = "tarpan/cmdstanpy/model_info/waic_test"
+
+    save_compare_waic_csv(models=models)
+
+    # assert os.path.isfile(os.path.join(outdir, "compare_waic.csv"))
