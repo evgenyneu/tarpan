@@ -24,6 +24,7 @@ def run_model(data, output_dir):
 
     return model.sample(data=data, chains=4, cores=4,
                         sampling_iters=1000, warmup_iters=1000,
+                        seed=1,
                         output_dir=output_dir)
 
 

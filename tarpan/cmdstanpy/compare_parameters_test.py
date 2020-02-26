@@ -24,7 +24,7 @@ def test_save_compare_parameters():
 
     with open(os.path.join(outdir, "parameters_compared.txt"), 'r') as file:
         data = file.read()
-        assert "2.09 (+5.54, -2.09)" in data
+        assert "2.36 (+5.41, -2.35)" in data
 
 
 def test_save_compare_parameters__extra_values():
@@ -60,7 +60,7 @@ def test_save_compare_parameters__extra_values():
 
     with open(os.path.join(outdir, "parameters_compared.txt"), 'r') as file:
         data = file.read()
-        assert "2.09 (+5.54, -2.09)" in data
+        assert "2.36 (+5.41, -2.35)" in data
         assert "Extra 1" in data
         assert "Extra 2" in data
         assert "30.1" in data
