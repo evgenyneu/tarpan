@@ -9,8 +9,6 @@ from scipy.special import logsumexp
 from tarpan.shared.info_path import InfoPath, get_info_path
 from tarpan.shared.tree_plot import tree_plot, TreePlotParams
 
-
-
 """
 Prefix of the columns in Stan's output that contain log
 probability density value for each observation. For example,

@@ -1,3 +1,7 @@
+/*
+  The model is borrowed from Statistical Rethinking textbook
+  by Richard McElreath.
+*/
 data{
     int n;
     vector[n] h1;
