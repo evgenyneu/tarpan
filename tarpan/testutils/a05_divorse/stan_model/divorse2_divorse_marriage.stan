@@ -29,10 +29,10 @@ model{
 }
 
 generated quantities{
-    vector[n] log_lik;
+    vector[n] log_probability_density_pointwise;
 
     for (i in 1:n) {
         real mu = a + bM * M[i];
-        log_lik[i] = normal_lpdf(D[i] | mu, sigma);
+        log_probability_density_pointwise[i] = normal_lpdf(D[i] | mu, sigma);
     }
 }

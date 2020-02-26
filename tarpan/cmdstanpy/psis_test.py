@@ -30,6 +30,7 @@ def test_psis():
 
 
 def test_compare_waic():
+    warnings.simplefilter("ignore")
     fit1_divorse_age = get_fit1_divorse_age()
     fit2_divorse_marriage = get_fit2_divorse_marriage()
     fit3_divorse_age_marriage = get_fit3_divorse_age_marriage()
@@ -41,32 +42,39 @@ def test_compare_waic():
     ]
 
     result = compare_psis(models=models)
-    #
-    # assert [model.name for model in result] == ['Fungus+treatment',
-    #                                             'Treatment',
-    #                                             'Itercept']
-    #
-    # assert [round(model.waic_data.waic, 2) for model in result] == \
-    #     [361.45, 402.71, 405.93]
-    #
-    # assert [round(model.waic_data.waic_std_err, 2) for model in result] == \
-    #     [13.34, 10.78, 11.29]
-    #
-    # difference = [
-    #     None if model.waic_difference_best is None
-    #     else round(model.waic_difference_best, 2)
-    #     for model in result
-    # ]
-    #
-    # assert difference == [None, 41.27, 44.48]
-    #
-    # std_err = [
-    #     None if model.waic_difference_best_std_err is None
-    #     else round(model.waic_difference_best_std_err, 2)
-    #     for model in result
-    # ]
-    #
-    # assert std_err == [None, 9.82, 11.55]
-    #
-    # assert [round(model.waic_data.penalty, 1) for model in result] == \
-    #     [3.4, 2.6, 1.6]
+
+    assert [model.name for model in result] == ['Divorse vs Age',
+                                                'Divorse vs Age+Marriage',
+                                                'Divorse vs Marriage']
+
+    assert [round(model.psis_data.psis, 2) for model in result] == \
+        [126.2, 127.07, 139.24]
+
+    assert [round(model.psis_data.psis_std_err, 2) for model in result] == \
+        [12.87, 12.39, 9.79]
+
+    difference = [
+        None if model.psis_difference_best is None
+        else round(model.psis_difference_best, 2)
+        for model in result
+    ]
+
+    assert difference == [None, 0.87, 13.04]
+
+    std_err = [
+        None if model.psis_difference_best_std_err is None
+        else round(model.psis_difference_best_std_err, 2)
+        for model in result
+    ]
+
+    assert std_err == [None, 1.08, 9.48]
+
+    assert [round(model.psis_data.penalty, 1) for model in result] == \
+        [3.9, 4.5, 2.9]
+
+    actual_largest_k = [
+        round(model.largest_pareto_k, 2)
+        for model in result
+    ]
+
+    assert actual_largest_k == [0.8, 0.56, 0.34]
