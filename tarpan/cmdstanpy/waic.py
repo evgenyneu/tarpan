@@ -1,6 +1,7 @@
 import math
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 from dataclasses import dataclass
 from typing import List
 from tabulate import tabulate
@@ -371,7 +372,7 @@ def save_compare_waic_txt(models,
 def compare_waic_tree_plot(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT,
                            tree_plot_params: TreePlotParams = TreePlotParams()):
     """
-    Show plot that compares models using WAIC
+    Make a plot that compares models using WAIC
     (Widely Aplicable Information Criterion).
 
     Parameters
@@ -453,3 +454,48 @@ def compare_waic_tree_plot(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT,
     ax.axvline(x=model.waic_data.waic, linestyle='dashed')
 
     return fig, ax
+
+
+def save_compare_waic_tree_plot(
+        models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT,
+        tree_plot_params: TreePlotParams = TreePlotParams(),
+        info_path=InfoPath()):
+    """
+    Make a plot that compares models using WAIC
+    (Widely Aplicable Information Criterion) and save it to a file.
+
+    Parameters
+    ----------
+
+    models : list of dict
+        List of model samples from cmdstanpy to compare.
+
+        The dictionary has keys:
+            name: str
+                Model name
+            fit: cmdstanpy.stanfit.CmdStanMCMC
+                Contains the samples from cmdstanpy.
+
+    lpd_column_name : str
+        Prefix of the columns in Stan's output that contain log
+        probability density value for each observation. For example,
+        if lpd_column_name='possum', when output is expected to have
+        columns 'possum.1', 'possum.2', ..., 'possum.33' given 33 observations.
+
+
+    info_path : InfoPath
+        Determines the location of the output file.
+    """
+
+    info_path.set_codefile()
+    info_path = InfoPath(**info_path.__dict__)
+
+    fig, ax = compare_waic_tree_plot(
+        models=models, lpd_column_name=lpd_column_name,
+        tree_plot_params=tree_plot_params)
+
+    info_path.base_name = info_path.base_name or 'compare_waic'
+    info_path.extension = info_path.extension or 'pdf'
+    the_path = get_info_path(info_path)
+    fig.savefig(the_path, dpi=info_path.dpi)
+    plt.close(fig)

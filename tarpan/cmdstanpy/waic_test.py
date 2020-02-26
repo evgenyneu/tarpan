@@ -1,16 +1,16 @@
 import pytest
 from pytest import approx
 import os
+import shutil
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
 from tarpan.testutils.a03_cars.cars import get_fit
 
 from tarpan.cmdstanpy.waic import (
     waic, compare_waic, save_compare_waic_csv, save_compare_waic_txt,
     waic_compared_to_df,
     WaicData, WaicModelCompared,
-    compare_waic_tree_plot)
+    compare_waic_tree_plot, save_compare_waic_tree_plot)
 
 from tarpan.testutils.a04_height.height import (
     get_fit1_intercept, get_fit2_fungus_treatment, get_fit3_treatment)
@@ -156,6 +156,9 @@ def test_save_compare_waic_csv():
 
     outdir = "tarpan/cmdstanpy/model_info/waic_test"
 
+    if os.path.isdir(outdir):
+        shutil.rmtree(outdir)
+
     save_compare_waic_csv(models=models)
 
     assert os.path.isfile(os.path.join(outdir, "compare_waic.csv"))
@@ -193,6 +196,9 @@ def test_save_compare_waic_txt():
 
     outdir = "tarpan/cmdstanpy/model_info/waic_test"
 
+    if os.path.isdir(outdir):
+        shutil.rmtree(outdir)
+
     save_compare_waic_txt(models=models)
 
     assert os.path.isfile(os.path.join(outdir, "compare_waic.txt"))
@@ -218,3 +224,24 @@ def test_compare_waic_tree_plot():
     fig, ax = compare_waic_tree_plot(models=models)
 
     assert ax.get_xlabel() == "WAIC"
+
+
+def test_save_compare_waic_tree_plot():
+    fit1_intercept = get_fit1_intercept()
+    fit2_fungus_treatment = get_fit2_fungus_treatment()
+    fit3_treatment = get_fit3_treatment()
+
+    models = [
+        dict(name="Itercept", fit=fit1_intercept),
+        dict(name="Fungus+treatment", fit=fit2_fungus_treatment),
+        dict(name="Treatment", fit=fit3_treatment)
+    ]
+
+    outdir = "tarpan/cmdstanpy/model_info/waic_test"
+
+    if os.path.isdir(outdir):
+        shutil.rmtree(outdir)
+
+    save_compare_waic_tree_plot(models=models)
+
+    assert os.path.isfile(os.path.join(outdir, "compare_waic.pdf"))
