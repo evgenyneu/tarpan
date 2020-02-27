@@ -155,6 +155,16 @@ def compare_psis(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) \
     return psis_results
 
 
+def calculate_reff(fit):
+    """
+    Calculate number of effective samples divided by
+    the number of actual samples.
+    """
+    df_summary = fit.summary()
+    neff = float(df_summary[['N_Eff']].astype(int).mean())
+    return neff / (fit.chains * fit.draws)
+
+
 def psis(fit, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) -> PsisData:
     """
     Compute PSIS (Pareto-smoothed importance sampling).
@@ -207,7 +217,7 @@ def psis(fit, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) -> PsisData:
     # Calculed smoothed log_weights using PSIS
     # --------
 
-    reff = 1.0
+    reff = calculate_reff(fit)
     log_likelihood_transposed = log_likelihood.transpose()
     log_weights, pareto_k = psislw(-log_likelihood_transposed, reff)
     log_weights += log_likelihood_transposed
@@ -261,6 +271,8 @@ def psislw(log_weights, reff=1.0):
 
     Original code comes from Aki Vehtari, Tuomas Sivula:
       https://github.com/avehtari/PSIS
+
+    Theory: https://arxiv.org/abs/1507.02646v5
 
     The function is changed by removing xarray functionality.
 

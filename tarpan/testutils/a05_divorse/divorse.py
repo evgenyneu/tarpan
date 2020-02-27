@@ -60,7 +60,7 @@ def run_model1_divorse_age(data, output_dir, sampling_iters, warmup_iters):
     model_path = "tarpan/testutils/a05_divorse/stan_model/divorse1_divorse_age.stan"
     model = CmdStanModel(stan_file=model_path)
 
-    return model.sample(data=data, chains=1, cores=1,
+    return model.sample(data=data, chains=4, cores=2,
                         sampling_iters=sampling_iters,
                         warmup_iters=warmup_iters,
                         output_dir=output_dir,

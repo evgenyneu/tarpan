@@ -9,6 +9,8 @@
 # Original code comes from Aki Vehtari, Tuomas Sivula:
 #   https://github.com/avehtari/PSIS
 #
+# Theory: https://arxiv.org/abs/1507.02646v5
+#
 
 import numpy as np
 from scipy.special import logsumexp
