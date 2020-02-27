@@ -8,6 +8,8 @@ from tabulate import tabulate
 from scipy.special import logsumexp
 from tarpan.shared.info_path import InfoPath, get_info_path
 from tarpan.shared.tree_plot import tree_plot, TreePlotParams
+from tarpan.shared.compare import model_weights
+
 
 """
 Prefix of the columns in Stan's output that contain log
@@ -75,6 +77,12 @@ class WaicModelCompared:
     Estimate of the standard error of the `waic_difference_best`.
     """
     waic_difference_best_std_err: float = None
+
+    """
+    Appriximate measure of the relevance of the model, higher numbers
+    correspond to models that are more compatible with the data.
+    """
+    weight: float = None
 
 
 def waic(fit, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) -> WaicData:
@@ -198,13 +206,30 @@ def compare_waic(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) \
         ) for name, fit in models.items()
     ]
 
+    # Ensure all models have same number of observations
+    # --------
+
+    deviances_lengths = [
+        len(result.waic_data.waic_pointwise) for result in waic_results
+    ]
+
+    if len(set(deviances_lengths)) > 1:
+        raise AttributeError("Models have different number of data points")
+
     # Sort by WAIC, lower (better) first
     waic_results = sorted(waic_results, key=lambda x: x.waic_data.waic)
 
     best_model = waic_results[0]  # Model with smallest WAIC
 
+    # Calculate model weights
+    deviances = [result.waic_data.waic_pointwise for result in waic_results]
+    weights = model_weights(deviances)
+
     # Calculate WAIC difference between models
     for i, model_result in enumerate(waic_results):
+        n_points = len(model_result.waic_data.waic_pointwise)
+        model_result.weight = weights[i]
+
         if i == 0:
             continue
 
@@ -213,12 +238,6 @@ def compare_waic(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) \
 
         # Calculate standard error of the waic difference
         # ------------
-
-        n_points = len(model_result.waic_data.waic_pointwise)
-        n_points_preious = len(best_model.waic_data.waic_pointwise)
-
-        if n_points != n_points_preious:
-            raise AttributeError("Models have different number of data points")
 
         waic_difference_pointwise = \
             np.array(model_result.waic_data.waic_pointwise) - \
@@ -247,7 +266,7 @@ def waic_compared_to_df(compared: List[WaicModelCompared]):
         WAIC comparison results.
     """
 
-    column_names = ["WAIC", "SE", "dWAIC", "dSE", "pWAIC"]
+    column_names = ["WAIC", "SE", "dWAIC", "dSE", "pWAIC", "Weight"]
     model_names = [item.name for item in compared]
     df = pd.DataFrame(index=model_names, columns=column_names)
 
@@ -259,7 +278,8 @@ def waic_compared_to_df(compared: List[WaicModelCompared]):
             waic.waic_std_err,
             item.waic_difference_best,
             item.waic_difference_best_std_err,
-            waic.penalty
+            waic.penalty,
+            item.weight
         ]
 
     return df

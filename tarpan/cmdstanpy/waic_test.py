@@ -86,6 +86,13 @@ def test_compare_waic():
     assert [round(model.waic_data.penalty, 1) for model in result] == \
         [3.4, 2.6, 1.6]
 
+    actual_weight = [
+        round(model.weight, 5)
+        for model in result
+    ]
+
+    assert actual_weight == [0.99986, 2e-05, 0.00012]
+
 
 def test_compare_waic__model_with_different_data_points():
     cars_fit = get_fit()
@@ -120,6 +127,7 @@ def test_waic_compared_to_df():
             waic_data=waic,
             waic_difference_best=i * 1.3,
             waic_difference_best_std_err=i * 1.4,
+            weight=i*1.7
         )
 
         compared.append(compared_element)
@@ -134,6 +142,7 @@ def test_waic_compared_to_df():
     assert row["dWAIC"] == 1.3
     assert row["dSE"] == 1.4
     assert row["pWAIC"] == 0.3
+    assert row["Weight"] == 1.7
 
     row = result.loc["Model 2"]
     assert row["WAIC"] == 2
@@ -141,6 +150,7 @@ def test_waic_compared_to_df():
     assert row["dWAIC"] == 2.6
     assert row["dSE"] == 2.8
     assert row["pWAIC"] == 0.6
+    assert row["Weight"] == 3.4
 
 
 def test_save_compare_waic_csv():
@@ -174,6 +184,7 @@ def test_save_compare_waic_csv():
     assert np.isnan(row["dWAIC"])
     assert np.isnan(row["dSE"])
     assert row["pWAIC"] == approx(3.4388, rel=1e-3)
+    assert row["Weight"] == approx(0.99985, rel=1e-3)
 
     row = df.loc["Itercept"]
     assert row["WAIC"] == approx(405.93, rel=1e-3)
@@ -181,6 +192,7 @@ def test_save_compare_waic_csv():
     assert row["dWAIC"] == approx(44.48, rel=1e-3)
     assert row["dSE"] == approx(11.55, rel=1e-3)
     assert row["pWAIC"] == approx(1.5745, rel=1e-3)
+    assert row["Weight"] == approx(0.00012332, rel=1e-3)
 
 
 def test_save_compare_waic_txt():
