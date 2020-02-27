@@ -387,11 +387,30 @@ def save_compare_psis_csv(models,
     """
 
     info_path.set_codefile()
+    compared = compare_psis(models=models, lpd_column_name=lpd_column_name)
+    save_compare_psis_csv_from_compared(compared=compared, info_path=info_path)
+
+
+def save_compare_psis_csv_from_compared(compared, info_path=InfoPath()):
+    """
+    Compare models using PSIS
+    to see which models are more compatible with the data. The result
+    is saved in a CSV file.
+
+    Parameters
+    ----------
+
+    compared : list of WaicModelCompared
+        List of compared models.
+
+    info_path : InfoPath
+        Determines the location of the output file.
+    """
+
+    info_path.set_codefile()
     info_path = InfoPath(**info_path.__dict__)
     info_path.base_name = info_path.base_name or "compare_psis"
     info_path.extension = 'csv'
-
-    compared = compare_psis(models=models, lpd_column_name=lpd_column_name)
     df = psis_compared_to_df(compared)
     path = get_info_path(info_path)
     df.to_csv(path, index_label='Name')
@@ -425,11 +444,30 @@ def save_compare_psis_txt(models,
     """
 
     info_path.set_codefile()
+    compared = compare_psis(models=models, lpd_column_name=lpd_column_name)
+    save_compare_psis_txt_from_compared(compared=compared, info_path=info_path)
+
+
+def save_compare_psis_txt_from_compared(compared, info_path=InfoPath()):
+    """
+    Compare models using PSIS
+    to see which models are more compatible with the data. The result
+    is saved in a text file.
+
+    Parameters
+    ----------
+
+    compared : list of WaicModelCompared
+        List of compared models.
+
+    info_path : InfoPath
+        Determines the location of the output file.
+    """
+
+    info_path.set_codefile()
     info_path = InfoPath(**info_path.__dict__)
     info_path.base_name = info_path.base_name or "compare_psis"
     info_path.extension = 'txt'
-
-    compared = compare_psis(models=models, lpd_column_name=lpd_column_name)
     df = psis_compared_to_df(compared)
     table = tabulate(df, headers=list(df), floatfmt=".2f", tablefmt="pipe")
     path = get_info_path(info_path)
@@ -466,6 +504,29 @@ def compare_psis_tree_plot(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT,
     """
 
     compared = compare_psis(models=models, lpd_column_name=lpd_column_name)
+
+    return compare_psis_tree_plot_from_compared(
+        compared=compared, tree_plot_params=tree_plot_params)
+
+
+def compare_psis_tree_plot_from_compared(
+        compared, tree_plot_params: TreePlotParams = TreePlotParams()):
+    """
+    Make a plot that compares models using PSIS.
+
+    Parameters
+    ----------
+
+    compared : list of WaicModelCompared
+        List of compared models.
+
+    Returns
+    -------
+    (fig, ax):
+        fig: Matplotlib's figure
+        ax: Matplotlib's axis
+    """
+
     plot_groups = []
     tree_plot_params = TreePlotParams(**tree_plot_params.__dict__)
 
@@ -533,14 +594,11 @@ def save_compare_psis_tree_plot(
     Parameters
     ----------
 
-    models : list of dict
-        List of model samples from cmdstanpy to compare.
-
-        The dictionary has keys:
-            name: str
-                Model name
-            fit: cmdstanpy.stanfit.CmdStanMCMC
-                Contains the samples from cmdstanpy.
+    models : dict
+        key: str
+            Model name.
+        value: cmdstanpy.stanfit.CmdStanMCMC
+            Contains the samples from cmdstanpy to compare.
 
     lpd_column_name : str
         Prefix of the columns in Stan's output that contain log
@@ -554,10 +612,37 @@ def save_compare_psis_tree_plot(
     """
 
     info_path.set_codefile()
+    compared = compare_psis(models=models, lpd_column_name=lpd_column_name)
+
+    save_compare_psis_tree_plot_from_compared(
+        compared=compared,
+        tree_plot_params=tree_plot_params,
+        info_path=info_path)
+
+
+def save_compare_psis_tree_plot_from_compared(
+        compared,
+        tree_plot_params: TreePlotParams = TreePlotParams(),
+        info_path=InfoPath()):
+    """
+    Make a plot that compares models using PSIS
+    and save it to a file.
+
+    Parameters
+    ----------
+
+    compared : list of WaicModelCompared
+        List of compared models.
+
+    info_path : InfoPath
+        Determines the location of the output file.
+    """
+
+    info_path.set_codefile()
     info_path = InfoPath(**info_path.__dict__)
 
-    fig, ax = compare_psis_tree_plot(
-        models=models, lpd_column_name=lpd_column_name,
+    fig, ax = compare_psis_tree_plot_from_compared(
+        compared=compared,
         tree_plot_params=tree_plot_params)
 
     info_path.base_name = info_path.base_name or 'compare_psis'

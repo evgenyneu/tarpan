@@ -1,6 +1,5 @@
 import os
 import shutil
-import time
 
 from tarpan.cmdstanpy.compare import save_compare
 
@@ -25,10 +24,7 @@ def test_save_compare():
     if os.path.isdir(outdir):
         shutil.rmtree(outdir)
 
-    start_time = time.time()
     save_compare(models=models)
-    elapsed = time.time() - start_time
-    print(f'Time elapsed: {elapsed}')
 
     # WAIC
     # ------

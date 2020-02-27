@@ -1,5 +1,8 @@
 from tarpan.cmdstanpy.psis import (
-    save_compare_psis_csv, save_compare_psis_txt, save_compare_psis_tree_plot)
+    save_compare_psis_csv_from_compared,
+    save_compare_psis_txt_from_compared,
+    save_compare_psis_tree_plot_from_compared,
+    compare_psis)
 
 from tarpan.cmdstanpy.waic import (
     save_compare_waic_csv_from_compared,
@@ -61,15 +64,11 @@ def save_compare(
     # Compare with PSIS
     # --------
 
-    save_compare_psis_csv(
-        models=models, lpd_column_name=lpd_column_name,
-        info_path=info_path)
+    compared = compare_psis(models=models, lpd_column_name=lpd_column_name)
+    save_compare_psis_csv_from_compared(compared=compared, info_path=info_path)
+    save_compare_psis_txt_from_compared(compared=compared, info_path=info_path)
 
-    save_compare_psis_txt(
-        models=models, lpd_column_name=lpd_column_name,
-        info_path=info_path)
-
-    save_compare_psis_tree_plot(
-        models=models, lpd_column_name=lpd_column_name,
+    save_compare_psis_tree_plot_from_compared(
+        compared=compared,
         tree_plot_params=tree_plot_params,
         info_path=info_path)
