@@ -3,7 +3,6 @@ from typing import List
 import math
 import numpy as np
 from scipy.special import logsumexp
-import arviz as az
 from tarpan.cmdstanpy.waic import LPD_COLUMN_NAME_DEFAULT
 from tarpan.cmdstanpy.psis_from_arviz import _psislw
 
@@ -231,6 +230,7 @@ def psis(fit, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) -> PsisData:
     # Compute penalty term, aka "effective number of parameters"
     # Variable `penalty_pointwise` is an array, each item corresponds
     # to one observation point.
+    # -------
 
     penalty_pointwise = lppd_pointwise - psis_pointwise
     penalty = sum(penalty_pointwise)  # Total penalty
@@ -242,8 +242,6 @@ def psis(fit, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) -> PsisData:
     psis = sum(psis_pointwise)
 
     # Approximate standard error of PSIS using the central limit theorem
-    # -------
-
     psis_std_err = math.sqrt(n_observations * psis_pointwise.var())
 
     result = PsisData(
