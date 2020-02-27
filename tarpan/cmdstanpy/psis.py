@@ -6,6 +6,7 @@ import numpy as np
 from scipy.special import logsumexp
 from tarpan.cmdstanpy.waic import LPD_COLUMN_NAME_DEFAULT
 from tarpan.cmdstanpy.psis_from_arviz import _psislw
+from tarpan.shared.info_path import InfoPath, get_info_path
 
 
 # Results of PSIS calculations
@@ -319,7 +320,7 @@ def psis_compared_to_df(compared: List[PsisModelCompared]):
         PSIS comparison results.
     """
 
-    column_names = ["PSIS", "SE", "dPSIS", "dSE", "pPSIS", "Max K"]
+    column_names = ["PSIS", "SE", "dPSIS", "dSE", "pPSIS", "MaxK"]
     model_names = [item.name for item in compared]
     df = pd.DataFrame(index=model_names, columns=column_names)
 
@@ -336,3 +337,41 @@ def psis_compared_to_df(compared: List[PsisModelCompared]):
         ]
 
     return df
+
+
+def save_compare_psis_csv(models,
+                          lpd_column_name=LPD_COLUMN_NAME_DEFAULT,
+                          info_path=InfoPath()):
+    """
+    Compare models using PSIS
+    to see which models are more compatible with the data. The result
+    is saved in a CSV file.
+
+    Parameters
+    ----------
+
+    models : dict
+        key: str
+            Model name.
+        value: cmdstanpy.stanfit.CmdStanMCMC
+            Contains the samples from cmdstanpy to compare.
+
+    lpd_column_name : str
+        Prefix of the columns in Stan's output that contain log
+        probability density value for each observation. For example,
+        if lpd_column_name='possum', when output is expected to have
+        columns 'possum.1', 'possum.2', ..., 'possum.33' given 33 observations.
+
+    info_path : InfoPath
+        Determines the location of the output file.
+    """
+
+    info_path.set_codefile()
+    info_path = InfoPath(**info_path.__dict__)
+    info_path.base_name = info_path.base_name or "compare_psis"
+    info_path.extension = 'csv'
+
+    compared = compare_psis(models=models, lpd_column_name=lpd_column_name)
+    df = psis_compared_to_df(compared)
+    path = get_info_path(info_path)
+    df.to_csv(path, index_label='Name')

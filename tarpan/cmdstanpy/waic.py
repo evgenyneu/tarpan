@@ -290,13 +290,6 @@ def save_compare_waic_csv(models,
 
     info_path : InfoPath
         Determines the location of the output file.
-
-    Returns
-    -------
-
-    list of WaicModelCompared:
-        List of WAIC comparisons. The list is sorted: models with
-        lower WAIC falues (more compatible with data) come first.
     """
 
     info_path.set_codefile()
@@ -335,13 +328,6 @@ def save_compare_waic_txt(models,
 
     info_path : InfoPath
         Determines the location of the output file.
-
-    Returns
-    -------
-
-    list of WaicModelCompared:
-        List of WAIC comparisons. The list is sorted: models with
-        lower WAIC falues (more compatible with data) come first.
     """
 
     info_path.set_codefile()
