@@ -10,7 +10,7 @@ from tabulate import tabulate
 
 from tarpan.cmdstanpy.psis import (
     psis, compare_psis, PsisData, PsisModelCompared, psis_compared_to_df,
-    save_compare_psis_csv)
+    save_compare_psis_csv, save_compare_psis_txt)
 
 from tarpan.testutils.a03_cars.cars import get_fit
 
@@ -90,7 +90,7 @@ def test_compare_psis():
     assert actual_largest_k == [0.74, 0.56, 0.39]
 
 
-def test_compare_waic__model_with_different_data_points():
+def test_compare_psis__model_with_different_data_points():
     cars_fit = get_fit()
     plant_fit = get_fit1_intercept()
 
@@ -192,7 +192,35 @@ def test_save_compare_psis_csv():
     assert row["MaxK"] == approx(0.56233, rel=1e-3)
 
 
+def test_save_compare_psis_txt():
+    fit1_divorse_age = get_fit1_divorse_age()
+    fit2_divorse_marriage = get_fit2_divorse_marriage()
+    fit3_divorse_age_marriage = get_fit3_divorse_age_marriage()
+
+    models = {
+        "Divorse vs Age": fit1_divorse_age,
+        "Divorse vs Marriage": fit2_divorse_marriage,
+        "Divorse vs Age+Marriage": fit3_divorse_age_marriage
+    }
+
+    outdir = "tarpan/cmdstanpy/model_info/psis_test"
+
+    if os.path.isdir(outdir):
+        shutil.rmtree(outdir)
+
+    save_compare_psis_txt(models=models)
+
+    assert os.path.isfile(os.path.join(outdir, "compare_psis.txt"))
+
+    with open(os.path.join(outdir, "compare_psis.txt"), 'r') as file:
+        data = file.read()
+        assert "dPSIS" in data
+        assert "Divorse vs Age" in data
+        assert "12.98" in data
+
+
 def test_compare_psis_arviz():
+    return
     fit1_divorse_age = get_fit1_divorse_age()
     fit2_divorse_marriage = get_fit2_divorse_marriage()
     fit3_divorse_age_marriage = get_fit3_divorse_age_marriage()

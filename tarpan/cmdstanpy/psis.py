@@ -3,6 +3,7 @@ from typing import List
 import math
 import pandas as pd
 import numpy as np
+from tabulate import tabulate
 from scipy.special import logsumexp
 from tarpan.cmdstanpy.waic import LPD_COLUMN_NAME_DEFAULT
 from tarpan.cmdstanpy.psis_from_arviz import _psislw
@@ -375,3 +376,44 @@ def save_compare_psis_csv(models,
     df = psis_compared_to_df(compared)
     path = get_info_path(info_path)
     df.to_csv(path, index_label='Name')
+
+
+def save_compare_psis_txt(models,
+                          lpd_column_name=LPD_COLUMN_NAME_DEFAULT,
+                          info_path=InfoPath()):
+    """
+    Compare models using PSIS
+    to see which models are more compatible with the data. The result
+    is saved in a text file.
+
+    Parameters
+    ----------
+
+    models : dict
+        key: str
+            Model name.
+        value: cmdstanpy.stanfit.CmdStanMCMC
+            Contains the samples from cmdstanpy to compare.
+
+    lpd_column_name : str
+        Prefix of the columns in Stan's output that contain log
+        probability density value for each observation. For example,
+        if lpd_column_name='possum', when output is expected to have
+        columns 'possum.1', 'possum.2', ..., 'possum.33' given 33 observations.
+
+    info_path : InfoPath
+        Determines the location of the output file.
+    """
+
+    info_path.set_codefile()
+    info_path = InfoPath(**info_path.__dict__)
+    info_path.base_name = info_path.base_name or "compare_waic"
+    info_path.extension = 'txt'
+
+    compared = compare_psis(models=models, lpd_column_name=lpd_column_name)
+    df = psis_compared_to_df(compared)
+    table = tabulate(df, headers=list(df), floatfmt=".2f", tablefmt="pipe")
+    path = get_info_path(info_path)
+
+    with open(path, "w") as text_file:
+        print(table, file=text_file)
