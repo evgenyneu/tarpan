@@ -99,7 +99,7 @@ The text summary format is such that the text can be pasted into Github/Gitlab/B
 
 * **N_Eff** is Stan's number of effective samples, the higher the better.
 
-* **R_hat** is a Stan's parameter representing the quality of the sampling. This value needs to be smaller than 1.00. After generating a model I usually immediately look at this R_hat column to see if the sampling was good.
+* **R_hat** is a Stan's parameter representing the quality of the sampling. This value needs to be around 1.00. After generating a model I usually immediately look at this R_hat column to see if the sampling was good.
 
 
 ### Summary without cmdstanpy
