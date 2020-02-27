@@ -1,7 +1,15 @@
 from pytest import approx
+from arviz.stats.stats import compare
+import arviz as az
+import pytest
+from tabulate import tabulate
 
 from tarpan.cmdstanpy.psis import (
-    psis, compare_psis)
+    psis, compare_psis, PsisData, PsisModelCompared, psis_compared_to_df)
+
+from tarpan.testutils.a03_cars.cars import get_fit
+
+from tarpan.testutils.a04_height.height import get_fit1_intercept
 
 from tarpan.testutils.a05_divorse.divorse import (
     get_fit1_divorse_age, get_fit2_divorse_marriage,
@@ -27,7 +35,7 @@ def test_psis():
     assert result.pareto_k[49] == approx(0.13764, rel=1e-4)
 
 
-def test_compare_waic():
+def test_compare_psis():
     fit1_divorse_age = get_fit1_divorse_age()
     fit2_divorse_marriage = get_fit2_divorse_marriage()
     fit3_divorse_age_marriage = get_fit3_divorse_age_marriage()
@@ -75,3 +83,96 @@ def test_compare_waic():
     ]
 
     assert actual_largest_k == [0.74, 0.56, 0.39]
+
+
+def test_compare_waic__model_with_different_data_points():
+    cars_fit = get_fit()
+    plant_fit = get_fit1_intercept()
+
+    models = [
+        dict(name="Cars", fit=cars_fit),
+        dict(name="Plants", fit=plant_fit)
+    ]
+
+    with pytest.raises(AttributeError,
+                       match=r"different number of data points"):
+        compare_psis(models=models)
+
+
+def test_waic_compared_to_df():
+    compared = []
+
+    for i in range(1, 4):
+        psis = PsisData(
+            psis=i,
+            psis_pointwise=[i] * 3,
+            psis_std_err=i * 1.1,
+            lppd=i * 1.2,
+            lppd_pointwise=[i * 1.2] * 3,
+            penalty=i * 0.3,
+            penalty_pointwise=[i * 0.3] * 3,
+            pareto_k=[i * 1.5] * 3
+        )
+
+        compared_element = PsisModelCompared(
+            name=f"Model {i}",
+            psis_data=psis,
+            psis_difference_best=i * 1.3,
+            psis_difference_best_std_err=i * 1.4,
+            largest_pareto_k=i * 1.6
+        )
+
+        compared.append(compared_element)
+
+    result = psis_compared_to_df(compared=compared)
+
+    assert len(result) == 3
+
+    row = result.loc["Model 1"]
+    assert row["PSIS"] == 1
+    assert row["SE"] == 1.1
+    assert row["dPSIS"] == 1.3
+    assert row["dSE"] == 1.4
+    assert row["pPSIS"] == 0.3
+    assert row["Max K"] == 1.6
+
+    row = result.loc["Model 2"]
+    assert row["PSIS"] == 2
+    assert row["SE"] == 2.2
+    assert row["dPSIS"] == 2.6
+    assert row["dSE"] == 2.8
+    assert row["pPSIS"] == 0.6
+    assert row["Max K"] == 3.2
+
+
+def test_compare_psis_arviz():
+    fit1_divorse_age = get_fit1_divorse_age()
+    fit2_divorse_marriage = get_fit2_divorse_marriage()
+    fit3_divorse_age_marriage = get_fit3_divorse_age_marriage()
+    lpd_column_name = "log_probability_density_pointwise"
+
+    data1 = az.from_cmdstanpy(
+        posterior=fit1_divorse_age,
+        log_likelihood=lpd_column_name
+    )
+
+    data2 = az.from_cmdstanpy(
+        posterior=fit2_divorse_marriage,
+        log_likelihood=lpd_column_name
+    )
+
+    data3 = az.from_cmdstanpy(
+        posterior=fit3_divorse_age_marriage,
+        log_likelihood=lpd_column_name
+    )
+
+    models = {
+        "Divorse vs Age": data1,
+        "Divorse vs Marriage": data2,
+        "Divorse vs Age+Marriage": data3
+    }
+
+    result = compare(models, ic="loo", scale="deviance")
+
+    text = tabulate(result, headers=list(result), floatfmt=".2f", tablefmt="pipe")
+    # print(text)

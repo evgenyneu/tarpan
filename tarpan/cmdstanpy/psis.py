@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import List
 import math
+import pandas as pd
 import numpy as np
 from scipy.special import logsumexp
 from tarpan.cmdstanpy.waic import LPD_COLUMN_NAME_DEFAULT
@@ -304,3 +305,37 @@ def psislw(log_weights, reff=1.0):
     pareto_k = result[:, 1]
 
     return log_weights, pareto_k
+
+
+def psis_compared_to_df(compared: List[PsisModelCompared]):
+    """
+    Convert PSIS comparison to Pandas data frame.
+
+    Parameters
+    ----------
+    compared: List[PsisModelCompared]
+        Results of comparing WAIC between multiple models.
+
+    Returns
+    -------
+    Pandas' DataFrame:
+        PSIS comparison results.
+    """
+
+    column_names = ["PSIS", "SE", "dPSIS", "dSE", "pPSIS", "Max K"]
+    model_names = [item.name for item in compared]
+    df = pd.DataFrame(index=model_names, columns=column_names)
+
+    for item in compared:
+        psis = item.psis_data
+
+        df.loc[item.name] = [
+            psis.psis,
+            psis.psis_std_err,
+            item.psis_difference_best,
+            item.psis_difference_best_std_err,
+            psis.penalty,
+            item.largest_pareto_k
+        ]
+
+    return df
