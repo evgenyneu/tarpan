@@ -4,7 +4,10 @@ import scipy.stats as st
 
 def model_weights(deviances, b_samples=1000):
     """
-    Calculate weights of the model that can be used for rough comparison.
+    Calculate weights of the model that can be used to compare them.
+
+    Pseudo-Bayesian Model averaging using Akaike-type
+    weighting. The weights are stabilized using the Bayesian bootstrap.
 
     The code is taken from `compare` function of stats.py file
     of arviz library (https://github.com/arviz-devs/arviz), version 0.6.1,
@@ -43,4 +46,4 @@ def model_weights(deviances, b_samples=1000):
         z_bs[i] = z_b
         weights[i] = u_weights / np.sum(u_weights)
 
-    return weights.mean(axis=0)
+    return weights.mean(axis=0).tolist()
