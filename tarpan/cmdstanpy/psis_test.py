@@ -274,7 +274,7 @@ def test_compare_psis_arviz():
     fit1_divorse_age = get_fit1_divorse_age()
     fit2_divorse_marriage = get_fit2_divorse_marriage()
     fit3_divorse_age_marriage = get_fit3_divorse_age_marriage()
-    lpd_column_name = "log_probability_density_pointwise"
+    lpd_column_name = "lpd_pointwise"
 
     data1 = az.from_cmdstanpy(
         posterior=fit1_divorse_age,

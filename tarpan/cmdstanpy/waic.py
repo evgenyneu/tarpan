@@ -17,7 +17,7 @@ probability density value for each observation. For example,
 if lpd_column_name='possum', when output is expected to have
 columns 'possum.1', 'possum.2', ..., 'possum.33' given 33 observations.
 """
-LPD_COLUMN_NAME_DEFAULT = "log_probability_density_pointwise"
+LPD_COLUMN_NAME_DEFAULT = "lpd_pointwise"
 
 
 # Results of WAIC calculations

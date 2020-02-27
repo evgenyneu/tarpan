@@ -30,11 +30,11 @@ model{
 }
 
 generated quantities{
-    vector[n] log_probability_density_pointwise;
+    vector[n] lpd_pointwise;
 
     for ( i in 1:n ) {
         real p = a + bt * treatment[i];
         real mu = h0[i] * p;
-        log_probability_density_pointwise[i] = normal_lpdf(h1[i] | mu, sigma);
+        lpd_pointwise[i] = normal_lpdf(h1[i] | mu, sigma);
     }
 }
