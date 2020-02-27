@@ -1,10 +1,13 @@
-# The following code is copied from arviz library, version 0.6.1,
+#
+# The following code is taken from arviz library
+# (https://github.com/arviz-devs/arviz), version 0.6.1,
 # distributed under Apache License Version 2.0.
 #
-# Source: https://github.com/arviz-devs/arviz
-#
-# Changes:
+# Changes made to arviz code:
 #  * Replaced _logsumexp with logsumexp from scipy.special
+#
+# Original code comes from Aki Vehtari, Tuomas Sivula:
+#   https://github.com/avehtari/PSIS
 #
 
 import numpy as np
