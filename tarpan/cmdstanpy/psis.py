@@ -3,11 +3,13 @@ from typing import List
 import math
 import pandas as pd
 import numpy as np
+import matplotlib.pyplot as plt
 from tabulate import tabulate
 from scipy.special import logsumexp
 from tarpan.cmdstanpy.waic import LPD_COLUMN_NAME_DEFAULT
 from tarpan.cmdstanpy.psis_from_arviz import _psislw
 from tarpan.shared.info_path import InfoPath, get_info_path
+from tarpan.shared.tree_plot import tree_plot, TreePlotParams
 
 
 # Results of PSIS calculations
@@ -407,7 +409,7 @@ def save_compare_psis_txt(models,
 
     info_path.set_codefile()
     info_path = InfoPath(**info_path.__dict__)
-    info_path.base_name = info_path.base_name or "compare_waic"
+    info_path.base_name = info_path.base_name or "compare_psis"
     info_path.extension = 'txt'
 
     compared = compare_psis(models=models, lpd_column_name=lpd_column_name)
@@ -417,3 +419,131 @@ def save_compare_psis_txt(models,
 
     with open(path, "w") as text_file:
         print(table, file=text_file)
+
+
+def compare_psis_tree_plot(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT,
+                           tree_plot_params: TreePlotParams = TreePlotParams()):
+    """
+    Make a plot that compares models using PSIS.
+
+    Parameters
+    ----------
+
+    models : dict
+        key: str
+            Model name.
+        value: cmdstanpy.stanfit.CmdStanMCMC
+            Contains the samples from cmdstanpy to compare.
+
+    lpd_column_name : str
+        Prefix of the columns in Stan's output that contain log
+        probability density value for each observation. For example,
+        if lpd_column_name='possum', when output is expected to have
+        columns 'possum.1', 'possum.2', ..., 'possum.33' given 33 observations.
+
+    Returns
+    -------
+    (fig, ax):
+        fig: Matplotlib's figure
+        ax: Matplotlib's axis
+    """
+
+    compared = compare_psis(models=models, lpd_column_name=lpd_column_name)
+    plot_groups = []
+
+    if tree_plot_params.labels is None:
+        tree_plot_params.labels = ["dPSIS", "PSIS"]
+
+    if tree_plot_params.xlabel is None:
+        tree_plot_params.xlabel = "PSIS"
+
+    if tree_plot_params.title is None:
+        tree_plot_params.title = "Model comparison (smaller is better)"
+
+    for model in reversed(compared):
+        values = []
+        psis = model.psis_data
+        group = dict(name=model.name, values=values)
+        plot_groups.append(group)
+
+        # PSIS difference
+        # --------
+
+        value = dict(value=psis.psis, error_bars=[])
+
+        if model.psis_difference_best_std_err is not None:
+            error_bars = [
+                psis.psis - model.psis_difference_best_std_err,
+                psis.psis + model.psis_difference_best_std_err
+            ]
+
+            value = dict(value=psis.psis, error_bars=[error_bars])
+
+        values.append(value)
+
+        # PSIS value
+        # --------
+
+        error_bars = [
+            psis.psis - psis.psis_std_err,
+            psis.psis + psis.psis_std_err
+        ]
+
+        value = dict(value=psis.psis, error_bars=[error_bars])
+
+        values.append(value)
+
+    fig, ax = tree_plot(groups=plot_groups, params=tree_plot_params)
+
+    # Draw a vertical line through the best model
+    # ----------
+
+    model = compared[0]
+    ax.axvline(x=model.psis_data.psis, linestyle='dashed')
+
+    return fig, ax
+
+
+def save_compare_psis_tree_plot(
+        models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT,
+        tree_plot_params: TreePlotParams = TreePlotParams(),
+        info_path=InfoPath()):
+    """
+    Make a plot that compares models using PSIS
+    and save it to a file.
+
+    Parameters
+    ----------
+
+    models : list of dict
+        List of model samples from cmdstanpy to compare.
+
+        The dictionary has keys:
+            name: str
+                Model name
+            fit: cmdstanpy.stanfit.CmdStanMCMC
+                Contains the samples from cmdstanpy.
+
+    lpd_column_name : str
+        Prefix of the columns in Stan's output that contain log
+        probability density value for each observation. For example,
+        if lpd_column_name='possum', when output is expected to have
+        columns 'possum.1', 'possum.2', ..., 'possum.33' given 33 observations.
+
+
+    info_path : InfoPath
+        Determines the location of the output file.
+    """
+
+    info_path.set_codefile()
+    info_path = InfoPath(**info_path.__dict__)
+
+    fig, ax = compare_psis_tree_plot(
+        models=models, lpd_column_name=lpd_column_name,
+        tree_plot_params=tree_plot_params)
+
+    info_path.base_name = info_path.base_name or 'compare_psis'
+    info_path.extension = info_path.extension or 'pdf'
+    the_path = get_info_path(info_path)
+    fig.savefig(the_path, dpi=info_path.dpi)
+    plt.close(fig)

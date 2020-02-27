@@ -10,7 +10,8 @@ from tabulate import tabulate
 
 from tarpan.cmdstanpy.psis import (
     psis, compare_psis, PsisData, PsisModelCompared, psis_compared_to_df,
-    save_compare_psis_csv, save_compare_psis_txt)
+    save_compare_psis_csv, save_compare_psis_txt,
+    compare_psis_tree_plot, save_compare_psis_tree_plot)
 
 from tarpan.testutils.a03_cars.cars import get_fit
 
@@ -217,6 +218,43 @@ def test_save_compare_psis_txt():
         assert "dPSIS" in data
         assert "Divorse vs Age" in data
         assert "12.98" in data
+
+
+def test_compare_psis_tree_plot():
+    fit1_divorse_age = get_fit1_divorse_age()
+    fit2_divorse_marriage = get_fit2_divorse_marriage()
+    fit3_divorse_age_marriage = get_fit3_divorse_age_marriage()
+
+    models = {
+        "Divorse vs Age": fit1_divorse_age,
+        "Divorse vs Marriage": fit2_divorse_marriage,
+        "Divorse vs Age+Marriage": fit3_divorse_age_marriage
+    }
+
+    fig, ax = compare_psis_tree_plot(models=models)
+
+    assert ax.get_xlabel() == "PSIS"
+
+
+def test_save_compare_psis_tree_plot():
+    fit1_divorse_age = get_fit1_divorse_age()
+    fit2_divorse_marriage = get_fit2_divorse_marriage()
+    fit3_divorse_age_marriage = get_fit3_divorse_age_marriage()
+
+    models = {
+        "Divorse vs Age": fit1_divorse_age,
+        "Divorse vs Marriage": fit2_divorse_marriage,
+        "Divorse vs Age+Marriage": fit3_divorse_age_marriage
+    }
+
+    outdir = "tarpan/cmdstanpy/model_info/psis_test"
+
+    if os.path.isdir(outdir):
+        shutil.rmtree(outdir)
+
+    save_compare_psis_tree_plot(models=models)
+
+    assert os.path.isfile(os.path.join(outdir, "compare_psis.pdf"))
 
 
 def test_compare_psis_arviz():

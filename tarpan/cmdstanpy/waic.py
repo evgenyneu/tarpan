@@ -376,7 +376,7 @@ def compare_waic_tree_plot(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT,
     plot_groups = []
 
     if tree_plot_params.labels is None:
-        tree_plot_params.labels = ["WAIC difference", "WAIC"]
+        tree_plot_params.labels = ["dWAIC", "WAIC"]
 
     if tree_plot_params.xlabel is None:
         tree_plot_params.xlabel = "WAIC"
