@@ -90,6 +90,13 @@ def test_compare_psis():
 
     assert actual_largest_k == [0.74, 0.56, 0.39]
 
+    actual_weight = [
+        round(model.weight, 2)
+        for model in result
+    ]
+
+    assert actual_weight == [0.57, 0.36, 0.08]
+
 
 def test_compare_psis__model_with_different_data_points():
     cars_fit = get_fit()
@@ -125,7 +132,8 @@ def test_psis_compared_to_df():
             psis_data=psis,
             psis_difference_best=i * 1.3,
             psis_difference_best_std_err=i * 1.4,
-            largest_pareto_k=i * 1.6
+            largest_pareto_k=i * 1.6,
+            weight=i * 1.7
         )
 
         compared.append(compared_element)
@@ -141,6 +149,7 @@ def test_psis_compared_to_df():
     assert row["dSE"] == 1.4
     assert row["pPSIS"] == 0.3
     assert row["MaxK"] == 1.6
+    assert row["Weight"] == 1.7
 
     row = result.loc["Model 2"]
     assert row["PSIS"] == 2
@@ -149,6 +158,7 @@ def test_psis_compared_to_df():
     assert row["dSE"] == 2.8
     assert row["pPSIS"] == 0.6
     assert row["MaxK"] == 3.2
+    assert row["Weight"] == 3.4
 
 
 def test_save_compare_psis_csv():
@@ -183,6 +193,7 @@ def test_save_compare_psis_csv():
     assert np.isnan(row["dSE"])
     assert row["pPSIS"] == approx(3.8938, rel=1e-3)
     assert row["MaxK"] == approx(0.74203, rel=1e-3)
+    assert row["Weight"] == approx(0.5665, rel=1e-3)
 
     row = df.loc["Divorse vs Age+Marriage"]
     assert row["PSIS"] == approx(127.06, rel=1e-3)
@@ -191,6 +202,7 @@ def test_save_compare_psis_csv():
     assert row["dSE"] == approx(1.14009, rel=1e-3)
     assert row["pPSIS"] == approx(4.45447, rel=1e-3)
     assert row["MaxK"] == approx(0.56233, rel=1e-3)
+    assert row["Weight"] == approx(0.3552, rel=1e-3)
 
 
 def test_save_compare_psis_txt():
@@ -236,25 +248,25 @@ def test_compare_psis_tree_plot():
     assert ax.get_xlabel() == "PSIS"
 
 
-def test_save_compare_psis_tree_plot():
-    fit1_divorse_age = get_fit1_divorse_age()
-    fit2_divorse_marriage = get_fit2_divorse_marriage()
-    fit3_divorse_age_marriage = get_fit3_divorse_age_marriage()
-
-    models = {
-        "Divorse vs Age": fit1_divorse_age,
-        "Divorse vs Marriage": fit2_divorse_marriage,
-        "Divorse vs Age+Marriage": fit3_divorse_age_marriage
-    }
-
-    outdir = "tarpan/cmdstanpy/model_info/psis_test"
-
-    if os.path.isdir(outdir):
-        shutil.rmtree(outdir)
-
-    save_compare_psis_tree_plot(models=models)
-
-    assert os.path.isfile(os.path.join(outdir, "compare_psis.pdf"))
+# def test_save_compare_psis_tree_plot():
+#     fit1_divorse_age = get_fit1_divorse_age()
+#     fit2_divorse_marriage = get_fit2_divorse_marriage()
+#     fit3_divorse_age_marriage = get_fit3_divorse_age_marriage()
+#
+#     models = {
+#         "Divorse vs Age": fit1_divorse_age,
+#         "Divorse vs Marriage": fit2_divorse_marriage,
+#         "Divorse vs Age+Marriage": fit3_divorse_age_marriage
+#     }
+#
+#     outdir = "tarpan/cmdstanpy/model_info/psis_test"
+#
+#     if os.path.isdir(outdir):
+#         shutil.rmtree(outdir)
+#
+#     save_compare_psis_tree_plot(models=models)
+#
+#     assert os.path.isfile(os.path.join(outdir, "compare_psis.pdf"))
 
 
 def test_compare_psis_arviz():

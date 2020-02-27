@@ -10,6 +10,7 @@ from tarpan.cmdstanpy.waic import LPD_COLUMN_NAME_DEFAULT
 from tarpan.cmdstanpy.psis_from_arviz import _psislw
 from tarpan.shared.info_path import InfoPath, get_info_path
 from tarpan.shared.tree_plot import tree_plot, TreePlotParams
+from tarpan.shared.compare import model_weights
 
 
 # Results of PSIS calculations
@@ -83,6 +84,12 @@ class PsisModelCompared:
     """
     largest_pareto_k: float = None
 
+    """
+    Appriximate measure of the relevance of the model, higher numbers
+    correspond to models that are more compatible with the data.
+    """
+    weight: float = None
+
 
 def compare_psis(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) \
         -> List[PsisModelCompared]:
@@ -120,14 +127,29 @@ def compare_psis(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) \
         ) for name, fit in models.items()
     ]
 
+    # Ensure all models have same number of observations
+    # --------
+
+    deviances_lengths = [
+        len(result.psis_data.psis_pointwise) for result in psis_results
+    ]
+
+    if len(set(deviances_lengths)) > 1:
+        raise AttributeError("Models have different number of data points")
+
     # Sort by PSIS, lower (better) first
     psis_results = sorted(psis_results, key=lambda x: x.psis_data.psis)
-
     best_model = psis_results[0]  # Model with smallest PSIS
+
+    # Calculate model weights
+    deviances = [result.psis_data.psis_pointwise for result in psis_results]
+    weights = model_weights(deviances)
 
     # Calculate PSIS difference between models
     for i, model_result in enumerate(psis_results):
+        n_points = len(model_result.psis_data.psis_pointwise)
         model_result.largest_pareto_k = max(model_result.psis_data.pareto_k)
+        model_result.weight = weights[i]
 
         if i == 0:
             continue
@@ -137,12 +159,6 @@ def compare_psis(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) \
 
         # Calculate standard error of the psis difference
         # ------------
-
-        n_points = len(model_result.psis_data.psis_pointwise)
-        n_points_preious = len(best_model.psis_data.psis_pointwise)
-
-        if n_points != n_points_preious:
-            raise AttributeError("Models have different number of data points")
 
         psis_difference_pointwise = \
             np.array(model_result.psis_data.psis_pointwise) - \
@@ -323,7 +339,7 @@ def psis_compared_to_df(compared: List[PsisModelCompared]):
         PSIS comparison results.
     """
 
-    column_names = ["PSIS", "SE", "dPSIS", "dSE", "pPSIS", "MaxK"]
+    column_names = ["PSIS", "SE", "dPSIS", "dSE", "pPSIS", "MaxK", "Weight"]
     model_names = [item.name for item in compared]
     df = pd.DataFrame(index=model_names, columns=column_names)
 
@@ -336,7 +352,8 @@ def psis_compared_to_df(compared: List[PsisModelCompared]):
             item.psis_difference_best,
             item.psis_difference_best_std_err,
             psis.penalty,
-            item.largest_pareto_k
+            item.largest_pareto_k,
+            item.weight
         ]
 
     return df
