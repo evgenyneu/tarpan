@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import List
 import math
 import numpy as np
+from scipy.special import logsumexp
 import arviz as az
 from arviz.stats.stats import loo
 from tarpan.cmdstanpy.waic import LPD_COLUMN_NAME_DEFAULT
@@ -25,6 +26,17 @@ class PsisData:
     psis_std_err: float
 
     """
+    LPPD (log-pointwise-predictive-density) value.
+    LPPD is a measure of the accuracy of the model,
+    larger is better. It describes how well the model corresponds to the
+    observations.
+    """
+    lppd: float
+
+    """LPPD for each individual observation point."""
+    lppd_pointwise: List[float]
+
+    """
     Penalty term, aka "effective number of parameters", which tells
     how much probabilities of observations vary across samples. The penalty
     The penlaty is added to PSIS number. The purpose of this is
@@ -32,6 +44,9 @@ class PsisData:
     penlaties and larger PSIS.
     """
     penalty: float
+
+    """Penatiles of all individual observations."""
+    penalty_pointwise: List[float]
 
     """
     Pareto k values for each observation. Used as to diagnose the
@@ -98,7 +113,7 @@ def psis(fit, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) -> PsisData:
     )
 
     result = loo(cmdstanpy_data, pointwise=True, scale="deviance")
-    result2 = psis_calcualte(fit, lpd_column_name)
+    result2 = psis_calculate(fit, lpd_column_name)
 
     psis = float(result.loc["loo"])
     psis_pointwise = result.loc["loo_i"].values.tolist()
@@ -111,7 +126,10 @@ def psis(fit, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) -> PsisData:
         psis_pointwise=psis_pointwise,
         psis_std_err=psis_std_err,
         penalty=penalty,
-        pareto_k=pareto_k
+        pareto_k=pareto_k,
+        lppd=None,
+        lppd_pointwise=None,
+        penalty_pointwise=None
     )
 
     return result
@@ -192,7 +210,7 @@ def compare_psis(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) \
     return psis_results
 
 
-def psis_calcualte(fit, lpd_column_name):
+def psis_calculate(fit, lpd_column_name):
     # Get log probability density of each observation.
     # The point_lpd is a 2D array with indexes:
     #   1. Sample
@@ -203,12 +221,59 @@ def psis_calcualte(fit, lpd_column_name):
     n_samples = log_likelihood.shape[0]  # Number of samples
     n_observations = log_likelihood.shape[1]  # Number of observations
 
-    reff = 1.0
+    # Compute LPPD (log-pointwise-predictive-density) values for each
+    # observation. LPPD is a measure of the accuracy of the model,
+    # larger is better. It describes how well the model corresponds to the
+    # observations.
+    # ----------
 
-    log_likelihood = log_likelihood.transpose()
-    log_weights, pareto_shape = psislw(-log_likelihood, reff)
-    log_weights += log_likelihood
-    # print(log_weights.shape)
+    lppd_pointwise = [
+        (logsumexp(log_likelihood[:, i]) - math.log(n_samples))
+        for i in range(n_observations)
+    ]
+
+    lppd = sum(lppd_pointwise)  # Total LPPD
+
+    # Calculed smoothed log_weights using PSIS
+    # --------
+
+    reff = 1.0
+    log_likelihood_transposed = log_likelihood.transpose()
+    log_weights, pareto_k = psislw(-log_likelihood_transposed, reff)
+    log_weights += log_likelihood_transposed
+    log_weights = log_weights.transpose()
+
+    # Calculate PSIS standard error of WAIC using the central limit theorem
+    # -------
+
+    psis_pointwise = np.apply_along_axis(logsumexp, axis=0, arr=log_weights)
+    psis = sum(psis_pointwise)  # Total PSIS
+
+    # Approximate standard error of PSIS using the central limit theorem
+    # -------
+
+    psis_std_err = math.sqrt(n_observations * psis_pointwise.var())
+
+    # Compute penalty term, aka "effective number of parameters"
+    # Variable `penalty_pointwise` is an array, each item corresponds
+    # to one observation point.
+
+    penalty_pointwise = lppd_pointwise - psis_pointwise
+    penalty = sum(penalty_pointwise)  # Total penalty
+    psis_pointwise *= -2  # Convert from LPPD score to deviance
+
+    result = PsisData(
+        psis=psis,
+        psis_pointwise=psis_pointwise,
+        psis_std_err=psis_std_err,
+        lppd=lppd,
+        lppd_pointwise=lppd_pointwise,
+        penalty=penalty,
+        penalty_pointwise=penalty_pointwise,
+        pareto_k=pareto_k
+    )
+
+    return result
 
 
 def psislw(log_weights, reff=1.0):
@@ -227,7 +292,7 @@ def psislw(log_weights, reff=1.0):
     lw_out : array
         Smoothed log weights
     kss : array
-        Pareto tail indices
+        Pareto tail indices (Pareto k values)
     """
 
     n_samples = log_weights.shape[-1]
@@ -242,6 +307,6 @@ def psislw(log_weights, reff=1.0):
                                  k_min=k_min)
 
     log_weights = np.stack(result[:, 0], axis=0)
-    pareto_shape = result[:, 1]
+    pareto_k = result[:, 1]
 
-    return log_weights, pareto_shape
+    return log_weights, pareto_k
