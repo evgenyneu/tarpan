@@ -120,6 +120,8 @@ def psis(fit, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) -> PsisData:
     psis_std_err = float(result.loc["loo_se"])
     penalty = float(result.loc["p_loo"])
     pareto_k = result.loc["pareto_k"].values.tolist()
+    print(psis)
+    print(result2.psis)
 
     result = PsisData(
         psis=psis,
@@ -243,11 +245,10 @@ def psis_calculate(fit, lpd_column_name):
     log_weights += log_likelihood_transposed
     log_weights = log_weights.transpose()
 
-    # Calculate PSIS standard error of WAIC using the central limit theorem
+    # Calculate PSIS for all observations
     # -------
 
     psis_pointwise = np.apply_along_axis(logsumexp, axis=0, arr=log_weights)
-    psis = sum(psis_pointwise)  # Total PSIS
 
     # Approximate standard error of PSIS using the central limit theorem
     # -------
@@ -260,7 +261,9 @@ def psis_calculate(fit, lpd_column_name):
 
     penalty_pointwise = lppd_pointwise - psis_pointwise
     penalty = sum(penalty_pointwise)  # Total penalty
-    psis_pointwise *= -2  # Convert from LPPD score to deviance
+
+    psis_pointwise *= -2  # Convert PSIS from LPPD score to deviance
+    psis = sum(psis_pointwise)  # Total PSIS
 
     result = PsisData(
         psis=psis,
