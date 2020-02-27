@@ -262,7 +262,6 @@ def psislw(log_weights, reff=1.0):
     """
     Pareto smoothed importance sampling (PSIS).
 
-
     The function is taken from arviz library `psislw` function (stats.py)
     (https://github.com/arviz-devs/arviz), version 0.6.1,
     distributed under Apache License Version 2.0.
