@@ -4,7 +4,6 @@ import math
 import numpy as np
 from scipy.special import logsumexp
 import arviz as az
-from arviz.stats.stats import loo
 from tarpan.cmdstanpy.waic import LPD_COLUMN_NAME_DEFAULT
 from tarpan.cmdstanpy.psis_from_arviz import _psislw
 
@@ -79,62 +78,6 @@ class PsisModelCompared:
     Largest value of pareto k. Values above 0.7 indicate possible outliers.
     """
     largest_pareto_k: float = None
-
-
-def psis(fit, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) -> PsisData:
-    """
-    Compute PSIS (Pareto-smoothed importance sampling).
-    It provides an estimate of models accuracy (out-of-the-sample deviance)
-    and is used for comparing models. Smaller PSIS values are better,
-    but they only make sense when compared.
-
-    Parameters
-    ----------
-
-    fit : cmdstanpy.stanfit.CmdStanMCMC
-        Contains the samples from cmdstanpy.
-
-    lpd_column_name : str
-        Prefix of the columns in Stan's output that contain log
-        probability density value for each observation. For example,
-        if lpd_column_name='possum', when output is expected to have
-        columns 'possum.1', 'possum.2', ..., 'possum.33' given 33 observations.
-
-    Returns
-    -------
-
-    PsisData:
-        PSIS calculation result.
-    """
-
-    cmdstanpy_data = az.from_cmdstanpy(
-        posterior=fit,
-        log_likelihood=lpd_column_name
-    )
-
-    result = loo(cmdstanpy_data, pointwise=True, scale="deviance")
-    result2 = psis_calculate(fit, lpd_column_name)
-
-    psis = float(result.loc["loo"])
-    psis_pointwise = result.loc["loo_i"].values.tolist()
-    psis_std_err = float(result.loc["loo_se"])
-    penalty = float(result.loc["p_loo"])
-    pareto_k = result.loc["pareto_k"].values.tolist()
-    print(psis)
-    print(result2.psis)
-
-    result = PsisData(
-        psis=psis,
-        psis_pointwise=psis_pointwise,
-        psis_std_err=psis_std_err,
-        penalty=penalty,
-        pareto_k=pareto_k,
-        lppd=None,
-        lppd_pointwise=None,
-        penalty_pointwise=None
-    )
-
-    return result
 
 
 def compare_psis(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) \
@@ -212,7 +155,32 @@ def compare_psis(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) \
     return psis_results
 
 
-def psis_calculate(fit, lpd_column_name):
+def psis(fit, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) -> PsisData:
+    """
+    Compute PSIS (Pareto-smoothed importance sampling).
+    It provides an estimate of models accuracy (out-of-the-sample deviance)
+    and is used for comparing models. Smaller PSIS values are better,
+    but they only make sense when compared.
+
+    Parameters
+    ----------
+
+    fit : cmdstanpy.stanfit.CmdStanMCMC
+        Contains the samples from cmdstanpy.
+
+    lpd_column_name : str
+        Prefix of the columns in Stan's output that contain log
+        probability density value for each observation. For example,
+        if lpd_column_name='possum', when output is expected to have
+        columns 'possum.1', 'possum.2', ..., 'possum.33' given 33 observations.
+
+    Returns
+    -------
+
+    PsisData:
+        PSIS calculation result.
+    """
+
     # Get log probability density of each observation.
     # The point_lpd is a 2D array with indexes:
     #   1. Sample
@@ -250,11 +218,6 @@ def psis_calculate(fit, lpd_column_name):
 
     psis_pointwise = np.apply_along_axis(logsumexp, axis=0, arr=log_weights)
 
-    # Approximate standard error of PSIS using the central limit theorem
-    # -------
-
-    psis_std_err = math.sqrt(n_observations * psis_pointwise.var())
-
     # Compute penalty term, aka "effective number of parameters"
     # Variable `penalty_pointwise` is an array, each item corresponds
     # to one observation point.
@@ -262,8 +225,16 @@ def psis_calculate(fit, lpd_column_name):
     penalty_pointwise = lppd_pointwise - psis_pointwise
     penalty = sum(penalty_pointwise)  # Total penalty
 
-    psis_pointwise *= -2  # Convert PSIS from LPPD score to deviance
-    psis = sum(psis_pointwise)  # Total PSIS
+    # Convert PSIS from LPPD score to deviance
+    psis_pointwise *= -2
+
+    # Calculate total PSIS value
+    psis = sum(psis_pointwise)
+
+    # Approximate standard error of PSIS using the central limit theorem
+    # -------
+
+    psis_std_err = math.sqrt(n_observations * psis_pointwise.var())
 
     result = PsisData(
         psis=psis,
