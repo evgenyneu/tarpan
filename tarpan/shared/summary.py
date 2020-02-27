@@ -1,7 +1,6 @@
 """Create summary of parameter distributions: mean, std, mode etc."""
 
 from dataclasses import dataclass, field
-import arviz as az
 import numpy as np
 import pandas as pd
 from tabulate import tabulate
@@ -9,6 +8,7 @@ from scipy.stats import gaussian_kde
 from typing import List
 from tarpan.shared.info_path import InfoPath, get_info_path
 from tarpan.shared.param_names import filter_param_names
+from tarpan.shared.stats import hpdi
 
 
 @dataclass
@@ -168,8 +168,8 @@ def sample_summary(df, extra_values=None, params=SummaryParams()):
 
         summary_values = [column, mean, std, mode]
 
-        for i, hpdi in enumerate(params.hpdis):
-            hpdi_value = az.hpd(values, credible_interval=hpdi).tolist()
+        for i, probability in enumerate(params.hpdis):
+            hpdi_value = hpdi(values, probability=probability)
 
             if i == 0:
                 # For the first interval, calculate upper and

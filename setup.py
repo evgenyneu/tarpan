@@ -19,7 +19,6 @@ setuptools.setup(
         'tabulate>=0.8.6,<0.9.0',
         'pandas>=0.25.3,<0.26.0',
         'numpy>=1.18.1,<2.0.0',
-        'arviz>=0.6.1,<0.7.0',
         'matplotlib>=3.1.2,<4.0.0',
         'seaborn>=0.10.0,<0.11.0'
     ],
