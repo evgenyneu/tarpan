@@ -40,11 +40,11 @@ def test_compare_psis():
     fit2_divorse_marriage = get_fit2_divorse_marriage()
     fit3_divorse_age_marriage = get_fit3_divorse_age_marriage()
 
-    models = [
-        dict(name="Divorse vs Age", fit=fit1_divorse_age),
-        dict(name="Divorse vs Marriage", fit=fit2_divorse_marriage),
-        dict(name="Divorse vs Age+Marriage", fit=fit3_divorse_age_marriage)
-    ]
+    models = {
+        "Divorse vs Age": fit1_divorse_age,
+        "Divorse vs Marriage": fit2_divorse_marriage,
+        "Divorse vs Age+Marriage": fit3_divorse_age_marriage
+    }
 
     result = compare_psis(models=models)
 
@@ -89,17 +89,17 @@ def test_compare_waic__model_with_different_data_points():
     cars_fit = get_fit()
     plant_fit = get_fit1_intercept()
 
-    models = [
-        dict(name="Cars", fit=cars_fit),
-        dict(name="Plants", fit=plant_fit)
-    ]
+    models = {
+        "Cars": cars_fit,
+        "Plants": plant_fit
+    }
 
     with pytest.raises(AttributeError,
                        match=r"different number of data points"):
         compare_psis(models=models)
 
 
-def test_waic_compared_to_df():
+def test_psis_compared_to_df():
     compared = []
 
     for i in range(1, 4):

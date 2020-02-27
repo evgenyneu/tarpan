@@ -49,11 +49,11 @@ def test_compare_waic():
     fit2_fungus_treatment = get_fit2_fungus_treatment()
     fit3_treatment = get_fit3_treatment()
 
-    models = [
-        dict(name="Itercept", fit=fit1_intercept),
-        dict(name="Fungus+treatment", fit=fit2_fungus_treatment),
-        dict(name="Treatment", fit=fit3_treatment)
-    ]
+    models = {
+        "Itercept": fit1_intercept,
+        "Fungus+treatment": fit2_fungus_treatment,
+        "Treatment": fit3_treatment
+    }
 
     result = compare_waic(models=models)
 
@@ -91,10 +91,10 @@ def test_compare_waic__model_with_different_data_points():
     cars_fit = get_fit()
     plants_fit = get_fit1_intercept()
 
-    models = [
-        dict(name="Cars", fit=cars_fit),
-        dict(name="Plants", fit=plants_fit)
-    ]
+    models = {
+        "Cars": cars_fit,
+        "Plants": plants_fit
+    }
 
     with pytest.raises(AttributeError,
                        match=r"different number of data points"):
@@ -148,11 +148,11 @@ def test_save_compare_waic_csv():
     fit2_fungus_treatment = get_fit2_fungus_treatment()
     fit3_treatment = get_fit3_treatment()
 
-    models = [
-        dict(name="Itercept", fit=fit1_intercept),
-        dict(name="Fungus+treatment", fit=fit2_fungus_treatment),
-        dict(name="Treatment", fit=fit3_treatment)
-    ]
+    models = {
+        "Itercept": fit1_intercept,
+        "Fungus+treatment": fit2_fungus_treatment,
+        "Treatment": fit3_treatment
+    }
 
     outdir = "tarpan/cmdstanpy/model_info/waic_test"
 
@@ -188,11 +188,11 @@ def test_save_compare_waic_txt():
     fit2_fungus_treatment = get_fit2_fungus_treatment()
     fit3_treatment = get_fit3_treatment()
 
-    models = [
-        dict(name="Itercept", fit=fit1_intercept),
-        dict(name="Fungus+treatment", fit=fit2_fungus_treatment),
-        dict(name="Treatment", fit=fit3_treatment)
-    ]
+    models = {
+        "Itercept": fit1_intercept,
+        "Fungus+treatment": fit2_fungus_treatment,
+        "Treatment": fit3_treatment
+    }
 
     outdir = "tarpan/cmdstanpy/model_info/waic_test"
 
@@ -215,11 +215,11 @@ def test_compare_waic_tree_plot():
     fit2_fungus_treatment = get_fit2_fungus_treatment()
     fit3_treatment = get_fit3_treatment()
 
-    models = [
-        dict(name="Itercept", fit=fit1_intercept),
-        dict(name="Fungus+treatment", fit=fit2_fungus_treatment),
-        dict(name="Treatment", fit=fit3_treatment)
-    ]
+    models = {
+        "Itercept": fit1_intercept,
+        "Fungus+treatment": fit2_fungus_treatment,
+        "Treatment": fit3_treatment
+    }
 
     fig, ax = compare_waic_tree_plot(models=models)
 
@@ -231,11 +231,11 @@ def test_save_compare_waic_tree_plot():
     fit2_fungus_treatment = get_fit2_fungus_treatment()
     fit3_treatment = get_fit3_treatment()
 
-    models = [
-        dict(name="Itercept", fit=fit1_intercept),
-        dict(name="Fungus+treatment", fit=fit2_fungus_treatment),
-        dict(name="Treatment", fit=fit3_treatment)
-    ]
+    models = {
+        "Itercept": fit1_intercept,
+        "Fungus+treatment": fit2_fungus_treatment,
+        "Treatment": fit3_treatment
+    }
 
     outdir = "tarpan/cmdstanpy/model_info/waic_test"
 

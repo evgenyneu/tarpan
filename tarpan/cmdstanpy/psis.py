@@ -89,14 +89,11 @@ def compare_psis(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) \
     Parameters
     ----------
 
-    models : list of dict
-        List of model samples from cmdstanpy to compare.
-
-        The dictionary has keys:
-            name: str
-                Model name
-            fit: cmdstanpy.stanfit.CmdStanMCMC
-                Contains the samples from cmdstanpy.
+    models : dict
+        key: str
+            Model name.
+        value: cmdstanpy.stanfit.CmdStanMCMC
+            Contains the samples from cmdstanpy to compare.
 
     lpd_column_name : str
         Prefix of the columns in Stan's output that contain log
@@ -114,9 +111,9 @@ def compare_psis(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) \
 
     psis_results = [
         PsisModelCompared(
-            name=model["name"],
-            psis_data=psis(fit=model["fit"], lpd_column_name=lpd_column_name)
-        ) for model in models
+            name=name,
+            psis_data=psis(fit=fit, lpd_column_name=lpd_column_name)
+        ) for name, fit in models.items()
     ]
 
     # Sort by PSIS, lower (better) first

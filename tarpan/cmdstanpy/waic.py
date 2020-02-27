@@ -171,14 +171,11 @@ def compare_waic(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) \
     Parameters
     ----------
 
-    models : list of dict
-        List of model samples from cmdstanpy to compare.
-
-        The dictionary has keys:
-            name: str
-                Model name
-            fit: cmdstanpy.stanfit.CmdStanMCMC
-                Contains the samples from cmdstanpy.
+    models : dict
+        key: str
+            Model name
+        value: cmdstanpy.stanfit.CmdStanMCMC
+            Contains the samples from cmdstanpy to compare
 
     lpd_column_name : str
         Prefix of the columns in Stan's output that contain log
@@ -196,9 +193,9 @@ def compare_waic(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT) \
 
     waic_results = [
         WaicModelCompared(
-            name=model["name"],
-            waic_data=waic(fit=model["fit"], lpd_column_name=lpd_column_name)
-        ) for model in models
+            name=name,
+            waic_data=waic(fit=fit, lpd_column_name=lpd_column_name)
+        ) for name, fit in models.items()
     ]
 
     # Sort by WAIC, lower (better) first
@@ -279,14 +276,11 @@ def save_compare_waic_csv(models,
     Parameters
     ----------
 
-    models : list of dict
-        List of model samples from cmdstanpy to compare.
-
-        The dictionary has keys:
-            name: str
-                Model name
-            fit: cmdstanpy.stanfit.CmdStanMCMC
-                Contains the samples from cmdstanpy.
+    models : dict
+        key: str
+            Model name.
+        value: cmdstanpy.stanfit.CmdStanMCMC
+            Contains the samples from cmdstanpy to compare.
 
     lpd_column_name : str
         Prefix of the columns in Stan's output that contain log
@@ -327,14 +321,11 @@ def save_compare_waic_txt(models,
     Parameters
     ----------
 
-    models : list of dict
-        List of model samples from cmdstanpy to compare.
-
-        The dictionary has keys:
-            name: str
-                Model name
-            fit: cmdstanpy.stanfit.CmdStanMCMC
-                Contains the samples from cmdstanpy.
+    models : dict
+        key: str
+            Model name.
+        value: cmdstanpy.stanfit.CmdStanMCMC
+            Contains the samples from cmdstanpy to compare.
 
     lpd_column_name : str
         Prefix of the columns in Stan's output that contain log
@@ -376,14 +367,11 @@ def compare_waic_tree_plot(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT,
     Parameters
     ----------
 
-    models : list of dict
-        List of model samples from cmdstanpy to compare.
-
-        The dictionary has keys:
-            name: str
-                Model name
-            fit: cmdstanpy.stanfit.CmdStanMCMC
-                Contains the samples from cmdstanpy.
+    models : dict
+        key: str
+            Model name.
+        value: cmdstanpy.stanfit.CmdStanMCMC
+            Contains the samples from cmdstanpy to compare.
 
     lpd_column_name : str
         Prefix of the columns in Stan's output that contain log
