@@ -272,7 +272,7 @@ def psislw(log_weights, reff=1.0):
 
     Theory: https://arxiv.org/abs/1507.02646v5
 
-    The function is changed by removing xarray functionality.
+    The original arviz function was modified by removing xarray functionality.
 
 
     Parameters
