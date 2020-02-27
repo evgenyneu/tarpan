@@ -331,7 +331,7 @@ def psis_compared_to_df(compared: List[PsisModelCompared]):
     Parameters
     ----------
     compared: List[PsisModelCompared]
-        Results of comparing WAIC between multiple models.
+        Results of comparing PSIS between multiple models.
 
     Returns
     -------
@@ -467,6 +467,7 @@ def compare_psis_tree_plot(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT,
 
     compared = compare_psis(models=models, lpd_column_name=lpd_column_name)
     plot_groups = []
+    tree_plot_params = TreePlotParams(**tree_plot_params.__dict__)
 
     if tree_plot_params.labels is None:
         tree_plot_params.labels = ["dPSIS", "PSIS"]

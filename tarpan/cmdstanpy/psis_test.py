@@ -248,25 +248,25 @@ def test_compare_psis_tree_plot():
     assert ax.get_xlabel() == "PSIS"
 
 
-# def test_save_compare_psis_tree_plot():
-#     fit1_divorse_age = get_fit1_divorse_age()
-#     fit2_divorse_marriage = get_fit2_divorse_marriage()
-#     fit3_divorse_age_marriage = get_fit3_divorse_age_marriage()
-#
-#     models = {
-#         "Divorse vs Age": fit1_divorse_age,
-#         "Divorse vs Marriage": fit2_divorse_marriage,
-#         "Divorse vs Age+Marriage": fit3_divorse_age_marriage
-#     }
-#
-#     outdir = "tarpan/cmdstanpy/model_info/psis_test"
-#
-#     if os.path.isdir(outdir):
-#         shutil.rmtree(outdir)
-#
-#     save_compare_psis_tree_plot(models=models)
-#
-#     assert os.path.isfile(os.path.join(outdir, "compare_psis.pdf"))
+def test_save_compare_psis_tree_plot():
+    fit1_divorse_age = get_fit1_divorse_age()
+    fit2_divorse_marriage = get_fit2_divorse_marriage()
+    fit3_divorse_age_marriage = get_fit3_divorse_age_marriage()
+
+    models = {
+        "Divorse vs Age": fit1_divorse_age,
+        "Divorse vs Marriage": fit2_divorse_marriage,
+        "Divorse vs Age+Marriage": fit3_divorse_age_marriage
+    }
+
+    outdir = "tarpan/cmdstanpy/model_info/psis_test"
+
+    if os.path.isdir(outdir):
+        shutil.rmtree(outdir)
+
+    save_compare_psis_tree_plot(models=models)
+
+    assert os.path.isfile(os.path.join(outdir, "compare_psis.pdf"))
 
 
 def test_compare_psis_arviz():

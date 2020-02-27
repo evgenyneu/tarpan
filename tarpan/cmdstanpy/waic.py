@@ -313,11 +313,29 @@ def save_compare_waic_csv(models,
     """
 
     info_path.set_codefile()
+    compared = compare_waic(models=models, lpd_column_name=lpd_column_name)
+    save_compare_waic_csv_from_compared(compared=compared, info_path=info_path)
+
+
+def save_compare_waic_csv_from_compared(compared, info_path=InfoPath()):
+    """
+    Compare models using WAIC (Widely Aplicable Information Criterion)
+    to see which models are more compatible with the data. The result
+    is saved in a CSV file.
+
+    Parameters
+    ----------
+
+    compared : list of WaicModelCompared
+        List of compared models.
+    info_path : InfoPath
+        Determines the location of the output file.
+    """
+
+    info_path.set_codefile()
     info_path = InfoPath(**info_path.__dict__)
     info_path.base_name = info_path.base_name or "compare_waic"
     info_path.extension = 'csv'
-
-    compared = compare_waic(models=models, lpd_column_name=lpd_column_name)
     df = waic_compared_to_df(compared)
     path = get_info_path(info_path)
     df.to_csv(path, index_label='Name')
@@ -351,11 +369,30 @@ def save_compare_waic_txt(models,
     """
 
     info_path.set_codefile()
+    compared = compare_waic(models=models, lpd_column_name=lpd_column_name)
+    save_compare_waic_txt_from_compared(compared=compared, info_path=info_path)
+
+
+def save_compare_waic_txt_from_compared(compared, info_path=InfoPath()):
+    """
+    Compare models using WAIC (Widely Aplicable Information Criterion)
+    to see which models are more compatible with the data. The result
+    is saved in a text file.
+
+    Parameters
+    ----------
+
+    compared : list of WaicModelCompared
+        List of compared models.
+
+    info_path : InfoPath
+        Determines the location of the output file.
+    """
+
+    info_path.set_codefile()
     info_path = InfoPath(**info_path.__dict__)
     info_path.base_name = info_path.base_name or "compare_waic"
     info_path.extension = 'txt'
-
-    compared = compare_waic(models=models, lpd_column_name=lpd_column_name)
     df = waic_compared_to_df(compared)
     table = tabulate(df, headers=list(df), floatfmt=".2f", tablefmt="pipe")
     path = get_info_path(info_path)
@@ -393,7 +430,32 @@ def compare_waic_tree_plot(models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT,
     """
 
     compared = compare_waic(models=models, lpd_column_name=lpd_column_name)
+
+    return compare_waic_tree_plot_from_compared(
+            compared=compared, tree_plot_params=tree_plot_params)
+
+
+def compare_waic_tree_plot_from_compared(
+        compared, tree_plot_params: TreePlotParams = TreePlotParams()):
+    """
+    Make a plot that compares models using WAIC
+    (Widely Aplicable Information Criterion).
+
+    Parameters
+    ----------
+
+    compared : list of WaicModelCompared
+        List of compared models.
+
+    Returns
+    -------
+    (fig, ax):
+        fig: Matplotlib's figure
+        ax: Matplotlib's axis
+    """
+
     plot_groups = []
+    tree_plot_params = TreePlotParams(**tree_plot_params.__dict__)
 
     if tree_plot_params.labels is None:
         tree_plot_params.labels = ["dWAIC", "WAIC"]
@@ -480,10 +542,44 @@ def save_compare_waic_tree_plot(
     """
 
     info_path.set_codefile()
+    compared = compare_waic(models=models, lpd_column_name=lpd_column_name)
+
+    save_compare_waic_tree_plot_from_compared(
+        compared=compared,
+        tree_plot_params=tree_plot_params,
+        info_path=info_path)
+
+
+def save_compare_waic_tree_plot_from_compared(
+        compared,
+        tree_plot_params: TreePlotParams = TreePlotParams(),
+        info_path=InfoPath()):
+    """
+    Make a plot that compares models using WAIC
+    (Widely Aplicable Information Criterion) and save it to a file.
+
+    Parameters
+    ----------
+
+    compared : list of WaicModelCompared
+        List of compared models.
+
+    lpd_column_name : str
+        Prefix of the columns in Stan's output that contain log
+        probability density value for each observation. For example,
+        if lpd_column_name='possum', when output is expected to have
+        columns 'possum.1', 'possum.2', ..., 'possum.33' given 33 observations.
+
+
+    info_path : InfoPath
+        Determines the location of the output file.
+    """
+
+    info_path.set_codefile()
     info_path = InfoPath(**info_path.__dict__)
 
-    fig, ax = compare_waic_tree_plot(
-        models=models, lpd_column_name=lpd_column_name,
+    fig, ax = compare_waic_tree_plot_from_compared(
+        compared=compared,
         tree_plot_params=tree_plot_params)
 
     info_path.base_name = info_path.base_name or 'compare_waic'
