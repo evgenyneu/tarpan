@@ -298,7 +298,7 @@ save_histogram(df, param_names=['mu', 'sigma'])
 
 ## Comparing models
 
-Run `save_compare` to compare multiple models using WAIC and PSIS methods in order to see which models are more compatible with the data. If this sounds unfamiliar, I would recommend reading Statistical Rethinking textbook by Richard McElreath.
+Run `save_compare` to compare multiple models using WAIC and PSIS methods in order to see which models are more compatible with the data.
 
 ```python
 from tarpan.cmdstanpy.compare import save_compare
