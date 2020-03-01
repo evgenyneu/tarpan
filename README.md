@@ -330,17 +330,17 @@ The `save_compare` function will also create text and csv files containing the s
 
 Summary columns are:
 
-    * **PSIS/WAIC, SE**: PSIS and WAIC values and their standard errors.
+* **PSIS/WAIC, SE**: PSIS and WAIC values and their standard errors.
 
-    * **dPSIS/dWAIC, dSE**: The difference of PSIS and WAIC from the best model (i.e. model with lowest WAIC/PSIS) and the standard error of this difference.
+* **dPSIS/dWAIC, dSE**: The difference of PSIS and WAIC from the best model (i.e. model with lowest WAIC/PSIS) and the standard error of this difference.
 
-    * **pWAIC/pPSIS**: the penalty (aka effective number of parameters). The purpose of number is
-    to combat overfitting. Penalties are already included in the WAIC/PSIS numbers, so models with too many parameters will have larger penalties, and therefore, larger WAIC/PSIS values.
+* **pWAIC/pPSIS**: the penalty (aka effective number of parameters). The purpose of number is
+to combat overfitting. Penalties are already included in the WAIC/PSIS numbers, so models with too many parameters will have larger penalties, and therefore, larger WAIC/PSIS values.
 
-    * **Weight**: Very approximate measure of the relevance of the model, with higher numbers
-    correspond to models that are more compatible with the data. Since this number is approximate and does not have uncertainty, it's better to use dWAIC/dPSIS with dSE to compare models.
+* **Weight**: Very approximate measure of the relevance of the model, with higher numbers
+correspond to models that are more compatible with the data. Since this number is approximate and does not have uncertainty, it's better to use dWAIC/dPSIS with dSE to compare models.
 
-    * **MaxK**: The maximum value of Pareto K parameter from the observations. If this value is above 0.5, and especially above 0.7, the PSIS/WAIC model comparisons might not be reliable.
+* **MaxK**: The maximum value of Pareto K parameter from the observations. If this value is above 0.5, and especially above 0.7, the PSIS/WAIC model comparisons might not be reliable.
 
 
 
