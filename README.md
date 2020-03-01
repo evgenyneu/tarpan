@@ -295,7 +295,10 @@ save_histogram(df, param_names=['mu', 'sigma'])
 * [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/save_histogram/a02_no_cmdstanpy)
 
 
+
 ## Comparing models
+
+Run `save_compare` to compare multiple models using WAIC and PSIS methods in order to see which models are more compatible with the data. If this sounds unfamiliar, I would recommend reading Statistical Rethinking textbook by Richard McElreath.
 
 ```python
 from tarpan.cmdstanpy.compare import save_compare
@@ -314,6 +317,7 @@ save_compare(models=models, lpd_column_name="lpd_pointwise")
 ```
 
 * [Full example code](docs/examples/save_compare/a01_compare)
+
 
 ### WAIC and PSIS plots
 
@@ -343,7 +347,6 @@ correspond to models that are more compatible with the data. Since this number i
 * **MaxK**: The maximum value of Pareto K parameter from the observations. If this value is above 0.5, and especially above 0.7, the PSIS/WAIC model comparisons might not be reliable.
 
 
-
 #### WAIC summary
 
 |                  |   WAIC |    SE |   dWAIC |   dSE |   pWAIC |   Weight |
@@ -366,7 +369,7 @@ correspond to models that are more compatible with the data. Since this number i
 
 The `save_compare` function creates plots of Pareto K values for each data points for the models. The data points with Pareto K values higher than 0.7 are highlighted in red, with their index shown below the markers.
 
-<img src="https://github.com/evgenyneu/tarpan/raw/master/docs/examples/save_compare/a01_compare/model_info/height/pareto_k_divorse.png" width="600" alt="Plot of pareto K values">
+<img src="https://github.com/evgenyneu/tarpan/raw/master/docs/examples/save_compare/a01_compare/model_info/height/pareto_k_divorse.png" width="600" alt="Plot of Pareto K values">
 
 
 ## Saving cmdstan samples to disk
