@@ -89,7 +89,7 @@ def run_model():
         "Treatment": fit3_treatment
     }
 
-    save_compare(models=models)
+    save_compare(models=models, lpd_column_name="lpd_pointwise")
 
 
 if __name__ == '__main__':
