@@ -570,7 +570,7 @@ def compare_psis_tree_plot_from_compared(
         tree_plot_params.labels = ["dPSIS", "PSIS"]
 
     if tree_plot_params.xlabel is None:
-        tree_plot_params.xlabel = "PSIS"
+        tree_plot_params.xlabel = "PSIS (deviance)"
 
     if tree_plot_params.title is None:
         tree_plot_params.title = "Model comparison (smaller is better)"
@@ -827,10 +827,12 @@ def psis_pareto_k_plot_from_psis_data(
     if pareto_k_plot_params.ylabel is not None:
         ax.set_ylabel(pareto_k_plot_params.ylabel)
 
-    if pareto_k_plot_params.title is None:
-        pareto_k_plot_params.title = f"'{name}' Pareto K values"
+    title = pareto_k_plot_params.title
 
-    ax.set_title(pareto_k_plot_params.title)
+    if title is None:
+        title = f"'{name}' Pareto K values"
+
+    ax.set_title(title)
 
     ax.grid(color=pareto_k_plot_params.grid_color, linewidth=1,
             alpha=pareto_k_plot_params.grid_alpha)

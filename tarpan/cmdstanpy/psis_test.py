@@ -244,7 +244,7 @@ def test_compare_psis_tree_plot():
 
     fig, ax = compare_psis_tree_plot(models=models)
 
-    assert ax.get_xlabel() == "PSIS"
+    assert ax.get_xlabel() == "PSIS (deviance)"
 
 
 def test_save_compare_psis_tree_plot():

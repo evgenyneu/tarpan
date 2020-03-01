@@ -461,7 +461,7 @@ def compare_waic_tree_plot_from_compared(
         tree_plot_params.labels = ["dWAIC", "WAIC"]
 
     if tree_plot_params.xlabel is None:
-        tree_plot_params.xlabel = "WAIC"
+        tree_plot_params.xlabel = "WAIC (deviance)"
 
     if tree_plot_params.title is None:
         tree_plot_params.title = "Model comparison (smaller is better)"

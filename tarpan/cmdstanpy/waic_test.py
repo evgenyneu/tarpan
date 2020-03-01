@@ -235,7 +235,7 @@ def test_compare_waic_tree_plot():
 
     fig, ax = compare_waic_tree_plot(models=models)
 
-    assert ax.get_xlabel() == "WAIC"
+    assert ax.get_xlabel() == "WAIC (deviance)"
 
 
 def test_save_compare_waic_tree_plot():
