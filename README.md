@@ -362,7 +362,7 @@ correspond to models that are more compatible with the data. Since this number i
 | Intercept        | 405.88 | 11.29 |   44.40 | 11.56 |    1.53 |   0.28 |     0.00 |
 
 
-#### Plots of Pareto K values
+### Plots of Pareto K values
 
 The `save_compare` function creates plots of Pareto K values for each data points for the models. The data points with Pareto K values higher than 0.7 are highlighted in red, with their index shown below the markers.
 
