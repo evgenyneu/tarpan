@@ -316,7 +316,7 @@ models = {
 save_compare(models=models, lpd_column_name="lpd_pointwise")
 ```
 
-Here the `lpd_column_name` parameter take the name of the array variable from the [generated quantities](docs/examples/save_compare/a01_compare/stan_model/height1_intercept.stan) block that contains log probability densities of all data points.
+Here the `lpd_column_name` parameter takes the name of the array variable from the [generated quantities](docs/examples/save_compare/a01_compare/stan_model/height1_intercept.stan) block that contains log probability densities of all data points.
 
 * [Full example code](docs/examples/save_compare/a01_compare)
 
