@@ -330,7 +330,7 @@ The `save_compare` function will create the plots showing WAIC and PSIS values (
 
 ### Numerical summaries for WAIC and PSIS
 
-The `save_compare` function will also create text and csv files containing the summaries shown in the above plots.
+The `save_compare` function will also create text and csv files which are text versions of the above plots.
 
 Summary columns are:
 
