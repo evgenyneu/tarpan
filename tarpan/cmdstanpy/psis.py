@@ -755,7 +755,7 @@ def psis_pareto_k_plot_from_psis_data(
         ax: Matplotlib's axis
     """
 
-    k_values = psis_data.penalty_pointwise
+    k_values = psis_data.pareto_k
 
     fig, ax = plt.subplots(1, 1,
                            figsize=(pareto_k_plot_params.plot_width,

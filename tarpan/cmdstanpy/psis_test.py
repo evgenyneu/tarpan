@@ -292,8 +292,6 @@ def test_save_psis_pareto_k_plot():
 
 
 def test_save_psis_pareto_k_plot_from_compared():
-    fit_divorse_age = get_fit1_divorse_age()
-
     outdir = "tarpan/cmdstanpy/model_info/psis_test"
 
     compared = []
