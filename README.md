@@ -513,3 +513,5 @@ This work is in [public domain](https://github.com/evgenyneu/tarpan/blob/master/
 ## 🐴🐴🐴
 
 This work is dedicated to [Tarpan](https://en.wikipedia.org/wiki/Tarpan), an extinct subspecies of wild horse.
+
+Special thanks to Richard McElreath, who wrote [Statistical Rethinking textbook](https://xcelab.net/rm/statistical-rethinking/), as well as [Stan](https://discourse.mc-stan.org) and [arviz](https://github.com/arviz-devs/arviz) people.
