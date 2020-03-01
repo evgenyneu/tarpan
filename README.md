@@ -93,7 +93,7 @@ The text summary format is such that the text can be pasted into Github/Gitlab/B
 
 *  **Name, Mean, Std** are the name of the parameter, its mean and standard deviation.
 
-*  **68CI-, 68CI+, 95CI-, 95CI+** are the 68% and 95% HPDIs (highest probability density intervals). These values [are configurable](https://github.com/evgenyneu/tarpan/blob/master/docs/hpdi.md).
+*  **68CI-, 68CI+, 95CI-, 95CI+** are the 68% and 95% HPDIs (highest posterior density intervals). These values [are configurable](https://github.com/evgenyneu/tarpan/blob/master/docs/hpdi.md).
 
 * **Mode, +, -** is a mode of distribution with upper and lower uncertainties, which are calculated as distances to 68% HPDI.
 
