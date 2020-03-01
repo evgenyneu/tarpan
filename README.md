@@ -367,7 +367,7 @@ correspond to models that are more compatible with the data. Since this number i
 
 ### Plots of Pareto K values
 
-The `save_compare` function creates plots of Pareto K values for each data points for the models. The data points with Pareto K values higher than 0.7 are highlighted in red, with their index shown below the markers.
+The `save_compare` function creates plots of Pareto K values for  data points. Points with Pareto K values higher than 0.7 are highlighted in red, with their indices shown below the markers.
 
 <img src="https://github.com/evgenyneu/tarpan/raw/master/docs/examples/save_compare/a01_compare/model_info/height/pareto_k_divorse.png" width="600" alt="Plot of Pareto K values">
 
