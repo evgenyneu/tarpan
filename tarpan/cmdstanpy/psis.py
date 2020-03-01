@@ -20,7 +20,12 @@ class ParetoKPlotParams:
     ylabel: str = "Pareto K"
 
     marker_color: str = "#0060ff44"
-    marker_edgecolor = "#0060ff"
+    marker_edgecolor: str = "#0060ff"
+
+    # Colors for values above `max_pareto_k_value`
+    marker_color_bad: str = "#ff002144"
+    marker_edgecolor_bad: str = "#ff0021"
+
     marker: str = "o"
 
     grid_color: str = "#aaaaaa"
@@ -757,14 +762,36 @@ def psis_pareto_k_plot_from_psis_data(
     if x_values is None:
         x_values = list(range(len(k_values)))
 
-    ax.scatter(x_values, k_values,
+    x_values = np.array(x_values)
+    k_values = np.array(k_values)
+
+    # Plot 'good' values (below max_pareto_k_value)
+    # ------
+
+    x = x_values[k_values <= pareto_k_plot_params.max_pareto_k_value]
+    y = k_values[k_values <= pareto_k_plot_params.max_pareto_k_value]
+
+    ax.scatter(x, y,
                marker=pareto_k_plot_params.marker,
                color=pareto_k_plot_params.marker_color,
                edgecolor=pareto_k_plot_params.marker_edgecolor,
                s=pareto_k_plot_params.markersize)
 
-    ax.axhline(y=pareto_k_plot_params.max_pareto_k_value, linestyle='dashed',
-               color=pareto_k_plot_params.marker_edgecolor)
+    # Plot 'bad' values (above max_pareto_k_value)
+    # ------
+
+    x = x_values[k_values > pareto_k_plot_params.max_pareto_k_value]
+    y = k_values[k_values > pareto_k_plot_params.max_pareto_k_value]
+
+    ax.scatter(x, y,
+               marker=pareto_k_plot_params.marker,
+               color=pareto_k_plot_params.marker_color_bad,
+               edgecolor=pareto_k_plot_params.marker_edgecolor_bad,
+               s=pareto_k_plot_params.markersize)
+
+    ax.axhline(y=pareto_k_plot_params.max_pareto_k_value,
+               linestyle='dashed',
+               color=pareto_k_plot_params.marker_edgecolor_bad)
 
     # Determine marker size in data coordinates
     # This will be used to place text below the markers
@@ -792,7 +819,7 @@ def psis_pareto_k_plot_from_psis_data(
                     horizontalalignment='center',
                     verticalalignment='center',
                     size=pareto_k_plot_params.point_label_size,
-                    color=pareto_k_plot_params.marker_edgecolor)
+                    color=pareto_k_plot_params.marker_edgecolor_bad)
 
     if pareto_k_plot_params.xlabel is not None:
         ax.set_xlabel(pareto_k_plot_params.xlabel)
