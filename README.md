@@ -313,6 +313,9 @@ models = {
 save_compare(models=models, lpd_column_name="lpd_pointwise")
 ```
 
+* [Full example code](docs/examples/save_compare/a01_compare)
+
+
 
 
 ## Saving cmdstan samples to disk
