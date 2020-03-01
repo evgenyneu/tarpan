@@ -309,7 +309,7 @@ model2 = CmdStanModel(stan_file="your_model2.stan")
 fit2 = model2.sample(data=your_data)
 
 models = {
-    "Model one": fit1,
+    "Model": fit1,
     "Another model": fit2
 }
 
