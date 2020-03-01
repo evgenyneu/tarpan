@@ -50,9 +50,9 @@ class WaicData:
     """
     Penalty term, aka "effective number of parameters", which tells
     how much probabilities of observations vary across samples. The penalty
-    The penlaty is added to WAIC number. The purpose of this is
+    The penalty is added to WAIC number. The purpose of this is
     to combat overfitting, so models with too many parameters will have larger
-    penlaties and larger WAIC.
+    penlties and larger WAIC.
     """
     penalty: float
 
@@ -79,7 +79,7 @@ class WaicModelCompared:
     waic_difference_best_std_err: float = None
 
     """
-    Appriximate measure of the relevance of the model, higher numbers
+    Approximate measure of the relevance of the model, higher numbers
     correspond to models that are more compatible with the data.
     """
     weight: float = None

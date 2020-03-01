@@ -315,7 +315,58 @@ save_compare(models=models, lpd_column_name="lpd_pointwise")
 
 * [Full example code](docs/examples/save_compare/a01_compare)
 
+### WAIC and PSIS plots
 
+The `save_compare` function will create the plots showing WAIC and PSIS values (red round markers). The lower WAIC and PSIS values mean the model is more compatible with the data. The blue triangle marker show the difference between the model and the best model. The error bars correspond to standard errors.
+
+<img src="https://github.com/evgenyneu/tarpan/raw/master/docs/examples/save_compare/a01_compare/model_info/height/compare_waic.png" width="600" alt="Compare models with WAIC">
+
+<img src="https://github.com/evgenyneu/tarpan/raw/master/docs/examples/save_compare/a01_compare/model_info/height/compare_psis.png" width="600" alt="Compare models with PSIS">
+
+
+### Numerical summaries for WAIC and PSIS
+
+The `save_compare` function will also create text and csv files containing the summaries shown in the above plots.
+
+Summary columns are:
+
+    * **PSIS/WAIC, SE**: PSIS and WAIC values and their standard errors.
+
+    * **dPSIS/dWAIC, dSE**: The difference of PSIS and WAIC from the best model (i.e. model with lowest WAIC/PSIS) and the standard error of this difference.
+
+    * **pWAIC/pPSIS**: the penalty (aka effective number of parameters). The purpose of number is
+    to combat overfitting. Penalties are already included in the WAIC/PSIS numbers, so models with too many parameters will have larger penalties, and therefore, larger WAIC/PSIS values.
+
+    * **Weight**: Very approximate measure of the relevance of the model, with higher numbers
+    correspond to models that are more compatible with the data. Since this number is approximate and does not have uncertainty, it's better to use dWAIC/dPSIS with dSE to compare models.
+
+    * **MaxK**: The maximum value of Pareto K parameter from the observations. If this value is above 0.5, and especially above 0.7, the PSIS/WAIC model comparisons might not be reliable.
+
+
+
+#### WAIC summary
+
+|                  |   WAIC |    SE |   dWAIC |   dSE |   pWAIC |   Weight |
+|:-----------------|-------:|------:|--------:|------:|--------:|---------:|
+| Fungus+treatment | 361.48 | 13.36 |         |       |    3.49 |     1.00 |
+| Treatment        | 402.68 | 10.66 |   41.20 |  9.82 |    2.53 |     0.00 |
+| Intercept        | 405.88 | 11.29 |   44.40 | 11.56 |    1.53 |     0.00 |
+
+
+#### PSIS summary
+
+|                  |   PSIS |    SE |   dPSIS |   dSE |   pPSIS |   MaxK |   Weight |
+|:-----------------|-------:|------:|--------:|------:|--------:|-------:|---------:|
+| Fungus+treatment | 361.48 | 13.36 |         |       |    3.49 |   0.25 |     1.00 |
+| Treatment        | 402.69 | 10.67 |   41.21 |  9.82 |    2.54 |   0.33 |     0.00 |
+| Intercept        | 405.88 | 11.29 |   44.40 | 11.56 |    1.53 |   0.28 |     0.00 |
+
+
+#### Plots of Pareto K values
+
+The `save_compare` function creates plots of Pareto K values for each data points for the models. The data points with Pareto K values higher than 0.7 are highlighted in red, with their index shown below the markers.
+
+<img src="https://github.com/evgenyneu/tarpan/raw/master/docs/examples/save_compare/a01_compare/model_info/height/pareto_k_divorse.png" width="600" alt="Plot of pareto K values">
 
 
 ## Saving cmdstan samples to disk

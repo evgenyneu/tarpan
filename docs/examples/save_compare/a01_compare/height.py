@@ -84,7 +84,7 @@ def run_model():
     fit3_treatment = run_model3_treatment(data3)
 
     models = {
-        "Itercept": fit1_intercept,
+        "Intercept": fit1_intercept,
         "Fungus+treatment": fit2_fungus_treatment,
         "Treatment": fit3_treatment
     }
