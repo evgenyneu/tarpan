@@ -295,6 +295,25 @@ save_histogram(df, param_names=['mu', 'sigma'])
 * [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/save_histogram/a02_no_cmdstanpy)
 
 
+## Comparing models
+
+```python
+from tarpan.cmdstanpy.compare import save_compare
+
+model1 = CmdStanModel(stan_file="your_model1.stan")
+fit1 = model1.sample(data=your_data)
+model2 = CmdStanModel(stan_file="your_model2.stan")
+fit2 = model2.sample(data=your_data)
+
+models = {
+    "Model one": fit1,
+    "Another model": fit2
+}
+
+save_compare(models=models, lpd_column_name="lpd_pointwise")
+```
+
+
 
 ## Saving cmdstan samples to disk
 
