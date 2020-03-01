@@ -2,7 +2,8 @@ from tarpan.cmdstanpy.psis import (
     save_compare_psis_csv_from_compared,
     save_compare_psis_txt_from_compared,
     save_compare_psis_tree_plot_from_compared,
-    compare_psis, save_psis_pareto_k_plot_from_compared)
+    compare_psis, save_psis_pareto_k_plot_from_compared,
+    ParetoKPlotParams)
 
 from tarpan.cmdstanpy.waic import (
     save_compare_waic_csv_from_compared,
@@ -18,7 +19,8 @@ from tarpan.shared.info_path import InfoPath
 def save_compare(
         models, lpd_column_name=LPD_COLUMN_NAME_DEFAULT,
         tree_plot_params: TreePlotParams = TreePlotParams(),
-        info_path=InfoPath()):
+        info_path=InfoPath(),
+        pareto_k_plot_params: ParetoKPlotParams = ParetoKPlotParams()):
     """
     Compare multiple models using WAIC (Widely Aplicable Information Criterion)
     and PSIS (Pareto-smoothed importance sampling) methods. Saves the analysis
@@ -73,5 +75,7 @@ def save_compare(
         tree_plot_params=tree_plot_params,
         info_path=info_path)
 
-    save_psis_pareto_k_plot_from_compared(compared=compared,
-                                          info_path=info_path)
+    save_psis_pareto_k_plot_from_compared(
+        compared=compared,
+        info_path=info_path,
+        pareto_k_plot_params=pareto_k_plot_params)
