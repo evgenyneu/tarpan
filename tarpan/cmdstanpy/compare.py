@@ -2,7 +2,7 @@ from tarpan.cmdstanpy.psis import (
     save_compare_psis_csv_from_compared,
     save_compare_psis_txt_from_compared,
     save_compare_psis_tree_plot_from_compared,
-    compare_psis)
+    compare_psis, save_psis_pareto_k_plot_from_compared)
 
 from tarpan.cmdstanpy.waic import (
     save_compare_waic_csv_from_compared,
@@ -72,3 +72,6 @@ def save_compare(
         compared=compared,
         tree_plot_params=tree_plot_params,
         info_path=info_path)
+
+    save_psis_pareto_k_plot_from_compared(compared=compared,
+                                          info_path=info_path)

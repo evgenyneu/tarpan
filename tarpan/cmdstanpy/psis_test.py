@@ -10,7 +10,8 @@ from tarpan.cmdstanpy.psis import (
     psis, compare_psis, PsisData, PsisModelCompared, psis_compared_to_df,
     save_compare_psis_csv, save_compare_psis_txt,
     compare_psis_tree_plot, save_compare_psis_tree_plot,
-    psis_pareto_k_plot, save_psis_pareto_k_plot)
+    psis_pareto_k_plot, save_psis_pareto_k_plot,
+    save_psis_pareto_k_plot_from_compared)
 
 from tarpan.testutils.a03_cars.cars import get_fit
 
@@ -288,3 +289,43 @@ def test_save_psis_pareto_k_plot():
     save_psis_pareto_k_plot(fit=fit_divorse_age, name="Divorse vs age")
 
     assert os.path.isfile(os.path.join(outdir, "pareto_k_divorse_vs_age.pdf"))
+
+
+def test_save_psis_pareto_k_plot_from_compared():
+    fit_divorse_age = get_fit1_divorse_age()
+
+    outdir = "tarpan/cmdstanpy/model_info/psis_test"
+
+    compared = []
+
+    for i in range(1, 4):
+        psis = PsisData(
+            psis=i,
+            psis_pointwise=[i] * 3,
+            psis_std_err=i * 1.1,
+            lppd=i * 1.2,
+            lppd_pointwise=[i * 1.2] * 3,
+            penalty=i * 0.3,
+            penalty_pointwise=[i * 0.3] * 3,
+            pareto_k=[i * 1.5] * 3
+        )
+
+        compared_element = PsisModelCompared(
+            name=f"Model {i}",
+            psis_data=psis,
+            psis_difference_best=i * 1.3,
+            psis_difference_best_std_err=i * 1.4,
+            largest_pareto_k=i * 1.6,
+            weight=i * 1.7
+        )
+
+        compared.append(compared_element)
+
+    if os.path.isdir(outdir):
+        shutil.rmtree(outdir)
+
+    save_psis_pareto_k_plot_from_compared(compared=compared)
+
+    assert os.path.isfile(os.path.join(outdir, "pareto_k_model_1.pdf"))
+    assert os.path.isfile(os.path.join(outdir, "pareto_k_model_2.pdf"))
+    assert os.path.isfile(os.path.join(outdir, "pareto_k_model_3.pdf"))

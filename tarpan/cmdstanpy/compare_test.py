@@ -39,3 +39,12 @@ def test_save_compare():
     assert os.path.isfile(os.path.join(outdir, "compare_psis.csv"))
     assert os.path.isfile(os.path.join(outdir, "compare_psis.txt"))
     assert os.path.isfile(os.path.join(outdir, "compare_psis.pdf"))
+
+    assert os.path.isfile(os.path.join(outdir,
+                          "pareto_k_divorse_vs_age_marriage.pdf"))
+
+    assert os.path.isfile(os.path.join(outdir,
+                                       "pareto_k_divorse_vs_age.pdf"))
+
+    assert os.path.isfile(os.path.join(outdir,
+                                       "pareto_k_divorse_vs_marriage.pdf"))
