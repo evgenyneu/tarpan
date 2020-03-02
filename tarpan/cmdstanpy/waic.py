@@ -499,13 +499,16 @@ def compare_waic_tree_plot_from_compared(
 
         values.append(value)
 
+    tree_plot_params.draw_zero_line_if_in_range = False
     fig, ax = tree_plot(groups=plot_groups, params=tree_plot_params)
 
     # Draw a vertical line through the best model
     # ----------
 
     model = compared[0]
-    ax.axvline(x=model.waic_data.waic, linestyle='dashed')
+
+    ax.axvline(x=model.waic_data.waic, linestyle='dashed',
+               color=tree_plot_params.marker_edge_colors[0])
 
     return fig, ax
 
