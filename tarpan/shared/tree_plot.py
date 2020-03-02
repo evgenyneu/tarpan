@@ -295,8 +295,10 @@ def tree_plot(groups, params: TreePlotParams = TreePlotParams()):
     fig.set_figheight(params.figure_height)
 
     # Plot vertical line through zero zero is within the data range
+    bounds = sorted([ax.get_xlim()[0], ax.get_xlim()[1]])
+
     if params.draw_zero_line_if_in_range and\
-       ax.get_xlim()[0] < 0 and ax.get_xlim()[1] > 1:
+            bounds[0] < 0 and bounds[1] > 0:
         ax.axvline(x=0, linestyle='dashed', color=params.marker_edge_colors[0])
 
     if params.labels is not None:
