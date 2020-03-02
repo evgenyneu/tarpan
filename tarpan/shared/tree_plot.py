@@ -44,9 +44,13 @@ class TreePlotParams:
     title: str = None
     xlabel: str = None
     xlim: list = None
+
     # When true and zero in within x limits of the data, draw the vertical
     # line through zero
     draw_zero_line_if_in_range: bool = True
+
+    grid_color: str = "#aaaaaa"
+    grid_alpha: float = 0.2
 
 
 def make_tree_plot(df_summary, param_names=None, info_path=InfoPath(),
@@ -309,7 +313,10 @@ def tree_plot(groups, params: TreePlotParams = TreePlotParams()):
 
     ax.set_yticks(range(0, len(groups)))
     ax.set_yticklabels(group_names)
-    ax.grid(axis='x', zorder=-10)
+
+    ax.grid(axis='x', zorder=-10,
+            color=params.grid_color, linewidth=1,
+            alpha=params.grid_alpha)
 
     fig.tight_layout()
 
