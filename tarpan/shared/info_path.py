@@ -70,6 +70,17 @@ class InfoPath:
         module = inspect.getmodule(frame[0])
         self.codefile_path = module.__file__
 
+    def __str__(self):
+        """
+        Returns
+        --------
+        str:
+            Get full path to the plot or summary file.
+        """
+        self.set_codefile()
+
+        return get_info_path(self)
+
 
 def get_info_path(info_path=InfoPath()):
     """
