@@ -77,9 +77,20 @@ class InfoPath:
         str:
             Get full path to the plot or summary file.
         """
-        self.set_codefile()
 
+        self.set_codefile()
         return get_info_path(self)
+
+    def dir(self):
+        """
+        Returns
+        --------
+        str:
+            Get full path to the directory where plot files are placed.
+        """
+
+        self.set_codefile()
+        return get_info_dir(self)
 
 
 def get_info_path(info_path=InfoPath()):
