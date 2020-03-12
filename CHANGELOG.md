@@ -1,5 +1,10 @@
 # Tarpan version history
 
+## 0.3.8 (2020-03-12)
+
+Added `str` and `dir` methods to InfoPath class.
+
+
 ## 0.3.6 (2020-02-19)
 
 Added extra_values parameter to `save_compare_parameters` function.
