@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="tarpan",
-    version="0.3.8",
+    version="0.3.9",
     author="Evgenii Neumerzhitckii",
     author_email="sausageskin@gmail.com",
     description="A collection of tools for analysing cmdspanpy output, written in Python",
@@ -14,7 +14,7 @@ setuptools.setup(
     url="https://github.com/evgenyneu/tarpan",
     packages=setuptools.find_packages(),
     install_requires=[
-        'cmdstanpy>=0.8.0,<0.9.0',
+        'cmdstanpy>=0.9.0,<0.10.0',
         'scipy>=1.4.1,<2.0.0',
         'tabulate>=0.8.6,<0.9.0',
         'pandas>=0.25.3,<0.26.0',
