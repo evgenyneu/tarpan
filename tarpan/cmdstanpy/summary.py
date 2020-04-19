@@ -99,3 +99,42 @@ def make_summary(fit, param_names, summary_params=SummaryParams()):
                                        params=summary_params)
 
     return df_summary, table, samples
+
+
+def print_summary(fit, param_names=None, summary_params=SummaryParams()):
+    """
+    Saves statistical summary of the samples using mean, std, mode, hpdi.
+
+    Parameters
+    ----------
+
+    fit : cmdstanpy.stanfit.CmdStanMCMC
+
+        Contains the samples from cmdstanpy.
+
+    param_names : list of str
+
+        Names of parameters to be included in the summary. Include all if None.
+
+
+    Returns
+    -------
+    dict:
+        df:
+            Panda's data frame containing the summary
+        table: str
+            Summary table in text format.
+        samples: Panda's data frame
+            Combined samples from all chains.
+    """
+
+    df_summary, summary, samples = make_summary(
+        fit, param_names=param_names, summary_params=summary_params)
+
+    print(summary)
+
+    return {
+        "df": df_summary,
+        "table": summary,
+        "samples": samples
+    }

@@ -80,6 +80,8 @@ save_summary(fit, param_names=['mu', 'tau', 'eta.1'])
 
 * [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/save_summary/a01_save_summary)
 
+* Call `print_summary` to print summary to console instead of saving to a file.
+
 The text summary format is such that the text can be pasted into Github/Gitlab/Bitbucket's Markdown file, like this:
 
 | Name   |   Mean |   Std |   Mode |    + |    - |   68CI- |   68CI+ |   95CI- |   95CI+ |   N_Eff |   R_hat |
@@ -112,7 +114,6 @@ save_summary(df, param_names=['mu', 'sigma'])
 ```
 
 * [Full example code](https://github.com/evgenyneu/tarpan/tree/master/docs/examples/save_summary/a03_no_cmdstanpy)
-
 
 
 ## Tree plot: `save_tree_plot`
