@@ -252,7 +252,7 @@ def scatter_and_kde(values,
 
 def gaussian_kde(eval_points, values, uncertainties):
     """
-    Computer Gaussian KDE (kernel density estimator) using values and their
+    Compute a Gaussian KDE (kernel density estimator) using values and their
     uncertianties by adding PDFs of Normal distributions at each value that
     have mean equal to the value and standard deviation equal to value's
     uncertainty.
