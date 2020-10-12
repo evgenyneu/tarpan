@@ -119,7 +119,7 @@ save_summary(df, param_names=['mu', 'sigma'])
 ## Tree plot: `save_tree_plot`
 
 This function shows exactly the same information as `save_summary`, but in
-the form a plot. The markers are the modes of the distributions, and the two error bars
+the form of a plot. The markers are the modes of the distributions, and the two error bars
 indicate 68% and 95% HPDIs (highest posterior density intervals).
 
 ```Python
