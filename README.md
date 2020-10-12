@@ -324,7 +324,7 @@ Here the `lpd_column_name` parameter takes the name of the array variable from t
 
 ### WAIC and PSIS plots
 
-The `save_compare` function will create the plots showing WAIC and PSIS values (red round markers). The lower WAIC and PSIS values mean the model is more compatible with the data. The blue triangle marker show the difference between the model and the best model. The error bars correspond to standard errors.
+The `save_compare` function will create the plots showing WAIC and PSIS values (red round markers). The lower WAIC and PSIS values mean the model is more compatible with the data. The blue triangle marker shows the difference between the model and the best model. The error bars correspond to standard errors.
 
 <img src="https://github.com/evgenyneu/tarpan/raw/master/docs/examples/save_compare/a01_compare/model_info/height/compare_waic.png" width="600" alt="Compare models with WAIC">
 
